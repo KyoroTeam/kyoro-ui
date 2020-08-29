@@ -1,12 +1,12 @@
-import Header from './Header.svelte';
+import Header from "./Header.svelte";
 
 export default {
-  title: 'Example/Header',
+  title: "Example/Header",
   component: Header,
   argTypes: {
-    onLogin: { action: 'onLogin' },
-    onLogout: { action: 'onLogout' },
-    onCreateAccount: { action: 'onCreateAccount' },
+    onLogin: { action: "onLogin" },
+    onLogout: { action: "onLogout" },
+    onCreateAccount: { action: "onCreateAccount" },
   },
 };
 
