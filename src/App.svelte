@@ -1,5 +1,15 @@
 <script lang="ts">
   export let name: string;
+  let ankiConnectText: string;
+
+  async function onClick() {
+    name = "Shion";
+    const response = await fetch("http://localhost:8765", {
+      mode: "cors",
+      cache: "no-cache",
+    });
+    ankiConnectText = await response.text();
+  }
 </script>
 
 <style>
@@ -24,9 +34,11 @@
   }
 </style>
 
+<p>AnkiConnect: {ankiConnectText}</p>
+
 <main>
   <h1>Hello {name}!</h1>
-  <button>Text</button>
+  <button on:click={onClick}>Button Text</button>
   <p>
     Visit the
     <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
