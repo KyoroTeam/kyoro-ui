@@ -1,6 +1,5 @@
-/node_modules/
-/public/build/
-
+build/
+kyoro-addon/
 # Logs
 logs
 *.log
