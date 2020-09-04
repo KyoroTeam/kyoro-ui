@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "smelte/src/tailwind.css";
   export let name: string;
   let ankiConnectText: string;
 
@@ -36,12 +37,8 @@
 
 <p>AnkiConnect: {ankiConnectText}</p>
 
-<main>
-  <h1>Hello {name}!</h1>
+<main class="md:flex shadow-lg md:text-xs">
+  <h1 class="shadow-md">Hello {name}!</h1>
   <button on:click={onClick}>Button Text</button>
-  <p>
-    Visit the
-    <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
-    to learn how to build Svelte apps.
-  </p>
+  <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 </main>
