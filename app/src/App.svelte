@@ -2,6 +2,9 @@
   import "smelte/src/tailwind.css";
   import Button from "smelte/src/components/Button";
   import Image from "smelte/src/components/Image";
+  import List from "smelte/src/components/List";
+  import Icon from "smelte/src/components/Icon";
+  import DataTable from "smelte/src/components/DataTable";
   import { Card } from "smelte/src";
 
   export let name: string;
@@ -15,6 +18,21 @@
     });
     ankiConnectText = await response.text();
   }
+
+  const listOneLine = [
+    {
+      text: "Item 1",
+      icon: "favorite",
+    },
+    {
+      text: "Item 2",
+      icon: "favorite",
+    },
+    {
+      text: "Item 3",
+      icon: "favorite",
+    },
+  ];
 </script>
 
 <p>AnkiConnect: {ankiConnectText}</p>
@@ -52,4 +70,7 @@
     <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
     to learn how to build Svelte apps.
   </p>
+
 </main>
+<h6 class="mb-3 mt-6">One-line</h6>
+<List items={listOneLine} />
