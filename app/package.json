@@ -30,11 +30,12 @@
     "svelte-check": "^1.0.0",
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^4.0.0",
+    "svelte-typed-component": "^1.1.1",
     "tslib": "^2.0.0",
     "typescript": "^3.9.3"
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",
-    "smelte": "^1.0.15"
+    "smelte": "git+https://github.com/matyunya/smelte.git"
   }
 }

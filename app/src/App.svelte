@@ -1,5 +1,9 @@
 <script lang="ts">
   import "smelte/src/tailwind.css";
+  import Button from "smelte/src/components/Button";
+  import Image from "smelte/src/components/Image";
+  import { Card } from "smelte/src";
+
   export let name: string;
   let ankiConnectText: string;
 
@@ -13,32 +17,39 @@
   }
 </script>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
-
 <p>AnkiConnect: {ankiConnectText}</p>
 
-<main class="md:flex shadow-lg md:text-xs">
-  <h1 class="shadow-md">Hello {name}!</h1>
-  <button on:click={onClick}>Button Text</button>
-  <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+<main class="md:flex shadow-lg text-left md:border">
+  <Card.Card class="m-5">
+    <div slot="title">
+      <Card.Title title="The three little kittens" subheader="A kitten poem" avatar="https://placekitten.com/64/64" />
+    </div>
+    <div slot="media">
+      <Image class="w-full" src="https://placekitten.com/300/200" alt="kitty" />
+    </div>
+    <div slot="text" class="p-5 pb-0 pt-3 text-gray-700 body-2">
+      The three little kittens, they lost their mittens,
+      <br />
+      And they began to cry,
+      <br />
+      "Oh, mother dear, we sadly fear,
+      <br />
+      That we have lost our mittens."
+    </div>
+    <div slot="actions">
+      <div class="p-4">
+        <Button color={'success'}>OK</Button>
+        <Button text>Meow</Button>
+      </div>
+    </div>
+  </Card.Card>
+  <h1 class="shadow-md text-orange-700">Hello {name}!</h1>
+  <div class="p-4">
+    <Button on:click={onClick}>Button Text</Button>
+  </div>
+  <p class="text-blue-500">
+    Visit the
+    <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
+    to learn how to build Svelte apps.
+  </p>
 </main>
