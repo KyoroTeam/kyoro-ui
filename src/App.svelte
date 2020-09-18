@@ -10,4 +10,4 @@
 </script>
 
 <Nav {menuItems} />
-<Button text="Something" />
+<Button text={a} />
