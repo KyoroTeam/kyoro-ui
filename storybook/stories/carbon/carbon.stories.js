@@ -3,14 +3,14 @@ import '../../css/utils.css';
 import { storiesOf } from '@storybook/svelte';
 import { action } from '@storybook/addon-actions';
 import ButtonSimple from '../../components/buttons/ButtonSimple.svelte';
-import Header from "../../../src/components/Header.svelte"
+import App from "../../../src/App.svelte";
 
-storiesOf('Buttons | Buttons', module)
+storiesOf('Carbon | Carbon', module)
     //Simple Button
     .add(
         'Simple',
         () => ({
-            Component: Header,
+            Component: App,
             on: {
                 customEventHandler: action('This custom event handler works'),
             },

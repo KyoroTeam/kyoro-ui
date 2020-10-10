@@ -18,7 +18,7 @@
   }
 </script>
 
-<Header company="IBM" platformName="Carbon Components Svelte" href="/">
+<Header company="Kyoro" platformName="Carbon Components Svelte" href="/">
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
