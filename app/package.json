@@ -1,6 +1,6 @@
 {
-    "name": "svelte-storybook-tailwind",
-    "author": "Jerric Lyns John",
+    "name": "kyoro-ui",
+    "author": "Kyorotects",
     "license": "MIT",
     "version": "0.0.2",
     "scripts": {
