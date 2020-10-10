@@ -11,10 +11,43 @@
     Tab,
     Select,
     SelectItem,
+    Table,
+    TableHead,
+    TableCell,
+    TableBody,
+    TableHeader,
+    TableContainer,
+    TableRow,
+    DataTable,
+    Search,
   } from 'carbon-components-svelte';
+  import { object_without_properties } from 'svelte/internal';
   import Header from './components/Header.svelte';
+  import SentenceCard from './components/SentenceCard.svelte';
   import Theme from './components/Theme.svelte';
   let theme: 'g10' = 'g10';
+
+  const rows = [
+    {
+      id: 'load-balancer-1',
+      name: 'Load Balancer 1',
+      rule: 'Round robin',
+      status: 'Starting',
+    },
+    {
+      id: 'load-balancer-2',
+      name: 'Load Balancer 2',
+      rule: 'DNS delegation',
+      status: 'Active',
+    },
+    {
+      id: 'load-balancer-3',
+      name: 'Load Balancer 3',
+      rule: 'Round robin',
+      status: 'Disabled',
+    },
+  ];
+  const headers = ['Name', 'Rule', 'Status'];
 </script>
 
 <Theme bind:theme>
@@ -31,7 +64,7 @@
       </Row>
 
       <Row>
-        <Column noGutter>
+        <Column noGutter lg={16}>
           <Tabs aria-label="Tab navigation">
             <Tab label="About" />
             <Tab label="Design" />
@@ -78,6 +111,29 @@
               </Grid>
             </div>
           </Tabs>
+          <Search />
+          <DataTable>
+            <Table zebra>
+              <TableHead>
+                <TableRow>
+                  {#each headers as header}
+                    <TableHeader>{header}</TableHeader>
+                  {/each}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {#each rows as row}
+                  <TableRow>
+                    {#each Object.keys(row).filter(k => k !== 'id') as key}
+                      <TableCell>
+                        <SentenceCard kanji={'hey'} explination={'lol'} />
+                      </TableCell>
+                    {/each}
+                  </TableRow>
+                {/each}
+              </TableBody>
+            </Table>
+          </DataTable>
         </Column>
       </Row>
     </Grid>
