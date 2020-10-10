@@ -18,19 +18,20 @@ class KyroWebView(AnkiWebView):
 
         with open(os.path.join(addon_path, "bundle.js"), "r") as f:
             appContents = f.read()
-        with open(os.path.join(addon_path, "global.css"), "r") as f:
-            globalCss = f.read()
         with open(os.path.join(addon_path, "bundle.css"), "r") as f:
             appCss = f.read()
+        with open(os.path.join(addon_path, "carbon.css"), "r") as f:
+            carbonCss = f.read()
 
         html = """
             <script defer>{0}</script>
             <style>{1}</style>
             <style>{2}</style>
             <!DOCTYPE html><body></body></html>
-        """.format(appContents, globalCss, appCss)
+        """.format(appContents, appCss, carbonCss)
 
-        self.stdHtml(html)
+        self.stdHtml(
+            html, css=["all.css"])
 
 
 def showApp():

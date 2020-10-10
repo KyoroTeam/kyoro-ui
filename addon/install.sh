@@ -1,1 +1,1 @@
-cp __init__.py ../app/public/global.css ../app/public/build/bundle.js ../app/public/build/bundle.css ~/.local/share/Anki2/addons21/kyoro
+cp __init__.py ../app/public/bundle.js ../app/public/bundle.css ~/.local/share/Anki2/addons21/kyoro

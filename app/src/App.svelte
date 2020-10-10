@@ -17,7 +17,7 @@
   let theme: 'g10' = 'g10';
 </script>
 
-<Theme persist bind:theme>
+<Theme bind:theme>
   <Header />
   <Content style="background: none; padding: 1rem">
     <Grid>
