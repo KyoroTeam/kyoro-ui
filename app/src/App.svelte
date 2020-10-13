@@ -12,9 +12,10 @@
     Select,
     SelectItem,
   } from 'carbon-components-svelte';
-  import AnkiconnectStatus from './components/AnkiconnectStatus.svelte';
+  import AnkiConectGate from './components/AnkiConectGate.svelte';
   import Header from './components/Header.svelte';
   import Theme from './components/Theme.svelte';
+  import AnkiConnectProvider from './services/AnkiConnectProvider.svelte';
   let theme: 'g10' = 'g10';
 </script>
 
@@ -73,7 +74,9 @@
                         Carbon provides styles and components in Vanilla, React, Angular, Vue and Svelte for anyone
                         building on the web.
                       </p>
-                      <AnkiconnectStatus />
+                      <AnkiConnectProvider>
+                        <AnkiConectGate>OK</AnkiConectGate>
+                      </AnkiConnectProvider>
                     </Column>
                   </Row>
                 </TabContent>
