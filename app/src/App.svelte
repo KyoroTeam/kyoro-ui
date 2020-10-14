@@ -11,12 +11,45 @@
     Tab,
     Select,
     SelectItem,
+    Table,
+    TableHeader,
+    TableContainer,
+    TableRow,
+    TableCell,
+    TableHead,
+    TableBody,
+    Search,
+    Button,
+    DataTable,
+    MultiSelect,
   } from 'carbon-components-svelte';
   import AnkiConectGate from './components/AnkiConectGate.svelte';
   import Header from './components/Header.svelte';
   import Theme from './components/Theme.svelte';
   import AnkiConnectProvider from './services/AnkiConnectProvider.svelte';
   let theme: 'g10' = 'g10';
+
+  const rows = [
+    {
+      id: 'load-balancer-1',
+      name: 'Load Balancer 1',
+      rule: 'Round robin',
+      Status: 'Starting',
+    },
+    {
+      id: 'load-balancer-2',
+      name: 'Load Balancer 2',
+      rule: 'DNS delegation',
+      status: 'Active',
+    },
+    {
+      id: 'load-balancer-3',
+      name: 'Load Balancer 3',
+      rule: 'Round robin',
+      status: 'Disabled',
+    },
+  ];
+  const headers = ['Name', 'Rule', 'Status'];
 </script>
 
 <Theme bind:theme>
@@ -24,56 +57,60 @@
   <Content style="background: none; padding: 1rem">
     <Grid>
       <Row>
-        <Column lg={16}>
-          <Breadcrumb noTrailingSlash aria-label="Page navigation">
-            <BreadcrumbItem href="/">Getting started</BreadcrumbItem>
-          </Breadcrumb>
-          <h1 style="margin-bottom: 1.5rem">Design &amp; build with Carbon</h1>
-        </Column>
-      </Row>
-
-      <Row>
         <Column noGutter>
           <Tabs aria-label="Tab navigation">
-            <Tab label="About" />
-            <Tab label="Design" />
-            <Tab label="Develop" />
+            <Tab label="Search" />
+            <Tab label="Sources" />
+            <Tab label="Settings" />
             <div slot="content" class="tabbed-content">
               <Grid as fullWidth let:props>
                 <TabContent {...props}>
                   <Row>
                     <Column md={4} lg={7}>
-                      <Select labelText="Carbon theme" bind:selected={theme} style="margin-bottom: 1rem">
-                        <SelectItem value="white" text="White" />
-                        <SelectItem value="g10" text="Gray 10" />
-                        <SelectItem value="g90" text="Gray 90" />
-                        <SelectItem value="g100" text="Gray 100" />
-                      </Select>
-                      <p>
-                        Carbon is IBM’s open-source design system for digital products and experiences. With the IBM
-                        Design Language as its foundation, the system consists of working code, design tools and
-                        resources, human interface guidelines, and a vibrant community of contributors.
-                      </p>
+                      <Search placeholder="Enter a phrase..." />
+                    </Column>
+                    <Column>
+                      <MultiSelect
+                        size="xl"
+                        label="Sentence Sources"
+                        items={[{ id: '0', text: 'Slack' }, { id: '1', text: 'Email' }, { id: '2', text: 'Fax' }]}
+                        selectedIds={['0', '1']} />
+                    </Column>
+                    <Column>
+                      <Button>Search</Button>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column md={4} lg={8}>
+                      <DataTable>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              {#each headers as header}
+                                <TableHeader>{header}</TableHeader>
+                              {/each}
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {#each rows as row}
+                              <TableRow>
+                                {#each Object.keys(row).filter(key => key !== 'id') as key}
+                                  <TableCell>{row[key]}</TableCell>
+                                {/each}
+                              </TableRow>
+                            {/each}
+                          </TableBody>
+                        </Table>
+                      </DataTable>
                     </Column>
                   </Row>
                 </TabContent>
                 <TabContent {...props}>
-                  <Row>
-                    <Column md={4} lg={7}>
-                      <p>
-                        Rapidly build beautiful and accessible experiences. The Carbon kit contains all resources you
-                        need to get started.
-                      </p>
-                    </Column>
-                  </Row>
+                  <Row />
                 </TabContent>
                 <TabContent {...props}>
                   <Row>
                     <Column md={4} lg={7}>
-                      <p>
-                        Carbon provides styles and components in Vanilla, React, Angular, Vue and Svelte for anyone
-                        building on the web.
-                      </p>
                       <AnkiConnectProvider>
                         <AnkiConectGate>OK</AnkiConectGate>
                       </AnkiConnectProvider>
