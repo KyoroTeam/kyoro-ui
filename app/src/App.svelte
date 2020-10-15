@@ -27,6 +27,7 @@
   import Header from './components/Header.svelte';
   import Theme from './components/Theme.svelte';
   import AnkiConnectProvider from './services/AnkiConnectProvider.svelte';
+  import Add16 from 'carbon-icons-svelte/lib/Add16';
   let theme: 'g10' = 'g10';
 
   const rows = [
@@ -81,7 +82,7 @@
                     </Column>
                   </Row>
                   <Row>
-                    <Column md={4} lg={8}>
+                    <Column md={4} lg={7}>
                       <DataTable>
                         <Table>
                           <TableHead>
@@ -102,6 +103,19 @@
                           </TableBody>
                         </Table>
                       </DataTable>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column md={4} lg={5}>
+                      <Select labelText="Target Deck" selected="g10">
+                        <SelectItem value="white" text="White" />
+                        <SelectItem value="g10" text="Gray 10" />
+                        <SelectItem value="g90" text="Gray 90" />
+                        <SelectItem value="g100" text="Gray 100" />
+                      </Select>
+                    </Column>
+                    <Column lg={2}>
+                      <Button icon={Add16}>Add Selected</Button>
                     </Column>
                   </Row>
                 </TabContent>
