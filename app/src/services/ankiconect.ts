@@ -1,6 +1,9 @@
 export interface IAnkiConnect {
   version: () => Promise<AnkiConnectResponse>;
   getNumCardsReviewedToday: () => Promise<AnkiConnectResponse>;
+  deckNames: () => Promise<string[]>;
+  modelNames: () => Promise<string[]>;
+  modelFieldNames: (modelName: string) => Promise<string[]>;
 }
 
 export class AnkiConnect implements IAnkiConnect {
@@ -18,6 +21,18 @@ export class AnkiConnect implements IAnkiConnect {
 
   getNumCardsReviewedToday() {
     return Promise.resolve<AnkiConnectResponse>({ result: 5, error: null });
+  }
+
+  deckNames() {
+    return Promise.resolve(["A", "B", "C"]);
+  }
+
+  modelNames() {
+    return Promise.resolve(["A", "VCD", "C"]);
+  }
+
+  modelFieldNames(modelName: string) {
+    return  Promise.resolve([modelName, "Front", "Back", "Other"]);
   }
 }
 
