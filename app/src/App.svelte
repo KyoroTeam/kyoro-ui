@@ -26,58 +26,58 @@
     Checkbox,
     Pagination,
     ButtonSet,
-  } from 'carbon-components-svelte';
-  import AnkiConectGate from './components/AnkiConectGate.svelte';
-  import Header from './components/Header.svelte';
-  import Theme from './components/Theme.svelte';
-  import AnkiConnectProvider from './services/AnkiConnectProvider.svelte';
-  import Add16 from 'carbon-icons-svelte/lib/Add16';
-  import DeckSelect from './components/DeckSelect.svelte';
-  import MappingCreator from './components/MappingCreator.svelte';
-  let theme: 'g10' = 'g10';
+  } from "carbon-components-svelte";
+  import AnkiConectGate from "./components/AnkiConectGate.svelte";
+  import Header from "./components/Header.svelte";
+  import Theme from "./components/Theme.svelte";
+  import AnkiConnectProvider from "./services/AnkiConnectProvider.svelte";
+  import DeckSelect from "./components/DeckSelect.svelte";
+  import MappingCreator from "./components/MappingCreator.svelte";
+  import Add16 from "carbon-icons-svelte/lib/Add16";
+  let theme: "g10" = "g10";
 
   const rows = [
     {
-      id: 'load-balancer-1',
-      name: 'Load Balancer 1',
-      rule: 'Round robin',
-      Status: 'Starting',
+      id: "load-balancer-1",
+      name: "Load Balancer 1",
+      rule: "Round robin",
+      Status: "Starting",
     },
     {
-      id: 'load-balancer-2',
-      name: 'Load Balancer 2',
-      rule: 'DNS delegation',
-      status: 'Active',
+      id: "load-balancer-2",
+      name: "Load Balancer 2",
+      rule: "DNS delegation",
+      status: "Active",
     },
     {
-      id: 'load-balancer-3',
-      name: 'Load Balancer 3',
-      rule: 'Round robin',
-      status: 'Disabled',
+      id: "load-balancer-3",
+      name: "Load Balancer 3",
+      rule: "Round robin",
+      status: "Disabled",
     },
   ];
-  const headers = ['Use', 'Sentence', 'Source', 'Tags'];
+  const headers = ["Use", "Sentence", "Source", "Tags"];
 </script>
 
 <Theme bind:theme>
   <Header />
   <AnkiConnectProvider>
     <AnkiConectGate>
-      <Content style="background: none; padding: 1rem">
+      <Content>
         <Grid>
           <Row>
             <Column noGutter>
-              <Tabs aria-label="Tab navigation" selected={2}>
+              <Tabs aria-label="Tab navigation">
                 <Tab label="Search" />
                 <Tab label="Sources" />
                 <Tab label="Settings" />
                 <div slot="content" class="tabbed-content">
-                  <Grid as fullWidth let:props>
-                    <TabContent {...props}>
+                  <Grid as fullWidth>
+                    <TabContent>
                       <Row>
                         <Column lg={8}>
                           <ButtonSet>
-                            <Search placeholder="Enter a phrase..." />
+                            <Search placeholder="Enter a phrase...!" />
                             <Button>Search</Button>
                           </ButtonSet>
                         </Column>
@@ -89,7 +89,7 @@
                             selectedIds={['0', '1']} />
                         </Column>
                       </Row>
-                      <Row class="py-4">
+                      <Row>
                         <Column md={4} lg={12}>
                           <DataTable>
                             <Table>
@@ -102,14 +102,20 @@
                               </TableHead>
                               <TableBody>
                                 {#each rows as row}
-                                  <TableRow on:click={() => console.log('nice')}>
+                                  <TableRow
+                                    on:click={() => console.log('nice')}>
                                     <TableCell>
                                       <Checkbox />
                                     </TableCell>
                                     <TableCell>
-                                      <Column class="py-1" noGutterLeft>
-                                        <p class="border-gray-400">I could not persuade him that it was true.</p>
-                                        <p>それが本当だと彼に<b>納得</b>させることができなかった。</p>
+                                      <Column noGutterLeft>
+                                        <p class="border-gray-400">
+                                          I could not persuade him that it was
+                                          true.
+                                        </p>
+                                        <p>
+                                          それが本当だと彼に<b>納得</b>させることができなかった。
+                                        </p>
                                       </Column>
                                     </TableCell>
                                     <TableCell>Tatoeba</TableCell>
@@ -118,17 +124,17 @@
                                       <Tag>male name</Tag>
                                     </TableCell>
                                     <!-- {#each Object.keys(row).filter(key => key !== 'id') as key}
-                                  <TableCell>{row[key]}</TableCell>
-                                {/each} -->
+									<TableCell>{row[key]}</TableCell>
+								  {/each} -->
                                   </TableRow>
                                 {/each}
                               </TableBody>
                             </Table>
                           </DataTable>
-                          <Pagination/>
+                          <Pagination />
                         </Column>
                       </Row>
-                      <Row class="pt-1">
+                      <Row>
                         <Column lg={6}>
                           <ButtonSet>
                             <DeckSelect />
@@ -141,14 +147,21 @@
                           </ButtonSet>
                         </Column>
                         <Column lg={{ span: 2, offset: 4 }}>
-                          <Button icon={Add16}>Add Selected</Button>
+                          <Button>
+                            Add Selected
+                            <svelte:component
+                              this={Add16}
+                              aria-hidden="true"
+                              class="bx--btn__icon"
+                              aria-label="Add" />
+                          </Button>
                         </Column>
                       </Row>
                     </TabContent>
-                    <TabContent {...props}>
+                    <TabContent>
                       <Row />
                     </TabContent>
-                    <TabContent {...props}>
+                    <TabContent>
                       <MappingCreator />
                       <Row>
                         <Column md={4} lg={7}>

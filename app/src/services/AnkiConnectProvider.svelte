@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { setContext } from 'svelte';
-  import { AnkiConnect, IAnkiConnect } from './ankiconect';
-  setContext<IAnkiConnect>('anki', new AnkiConnect());
+  import { setContext } from "svelte";
+  import * as Anki from "./ankiconect";
+  setContext<Anki.IAnkiConnect>("anki", new Anki.AnkiConnect());
 </script>
 
-<slot/>
+<slot />
