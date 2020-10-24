@@ -5,6 +5,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@snowpack/plugin-webpack": "^2.0.17",
     "carbon-components-svelte": "^0.15.0",
     "carbon-icons-svelte": "^10.17.0",
     "svelte": "^3.12.1"
@@ -21,6 +22,7 @@
     "@types/jest": "^26.0.4",
     "@types/snowpack-env": "^2.3.0",
     "jest": "^26.2.2",
+    "serve": "^11.3.2",
     "snowpack": "^2.15.1",
     "svelte-check": "^1.0.0",
     "svelte-preprocess": "^4.0.8",

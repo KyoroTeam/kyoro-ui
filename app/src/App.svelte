@@ -1,8 +1,6 @@
 <script lang="ts">
   import {
     Content,
-    Breadcrumb,
-    BreadcrumbItem,
     Grid,
     Row,
     Column,
@@ -13,7 +11,6 @@
     SelectItem,
     Table,
     TableHeader,
-    TableContainer,
     TableRow,
     TableCell,
     TableHead,

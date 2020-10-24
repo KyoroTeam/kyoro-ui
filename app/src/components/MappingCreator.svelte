@@ -19,25 +19,25 @@
   <Row>
     <!-- <ModelSelect bind:selected={modelSelecton} /> -->
   </Row>
-  <Row class="shadow-sm p-4">
+  <Row>
     <Column>English</Column>
     <Column>
       <ModelFieldSelect modelName={modelSelecton} />
     </Column>
   </Row>
-  <Row class="shadow-sm p-4">
+  <Row>
     <Column>Japanese</Column>
     <Column>
       <ModelFieldSelect modelName={modelSelecton} />
     </Column>
   </Row>
-  <Row class="shadow-sm p-4">
+  <Row>
     <Column>Tags</Column>
     <Column>
       <ModelFieldSelect modelName={modelSelecton} />
     </Column>
   </Row>
-  <Row class="shadow-sm p-4">
+  <Row>
     <Column />
     <Column>
       Mapping Name
