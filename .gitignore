@@ -1,5 +1,6 @@
 app/public/bundle*
 app/public/utils.css
+app/build
 kyoro-env/
 # Logs
 logs

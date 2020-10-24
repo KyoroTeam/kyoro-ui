@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Select, SelectItem, SelectSkeleton } from 'carbon-components-svelte';
-  import { getContext } from 'svelte';
-  import type { IAnkiConnect } from '../services/ankiconect';
+  import { Select, SelectItem, SelectSkeleton } from "carbon-components-svelte";
+  import { getContext } from "svelte";
+  import type { IAnkiConnect } from "../services/ankiconect";
 
   export let selected: string;
 
-  const ankiConnect = getContext<IAnkiConnect>('anki');
+  const ankiConnect = getContext<IAnkiConnect>("anki");
   const models = ankiConnect.modelNames();
 </script>
 
