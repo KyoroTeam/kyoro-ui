@@ -8,10 +8,10 @@
   const ctx: { dark: any; light: any; updateVar: any } = getContext('Theme');
 
   $: if (ctx) {
-    ctx.dark.subscribe(value => {
+    ctx.dark.subscribe((value: any) => {
       console.log('dark mode?', value);
     });
-    ctx.light.subscribe(value => {
+    ctx.light.subscribe((value: any) => {
       console.log('light mode?', value);
     });
     ctx.updateVar('--cds-productive-heading-06-font-size', '4rem');

@@ -7,8 +7,8 @@
   import { onMount, afterUpdate, setContext } from 'svelte';
   import { writable, derived } from 'svelte/store';
 
-  const isValidTheme = value => themes.includes(value);
-  const isDark = value => isValidTheme(value) && (value === 'g90' || value === 'g100');
+  const isValidTheme = (value: any) => themes.includes(value);
+  const isDark = (value: any) => isValidTheme(value) && (value === 'g90' || value === 'g100');
 
   const dark = writable(isDark(theme));
   const light = derived(dark, _ => !_);
