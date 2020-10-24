@@ -4,6 +4,7 @@
   import type { IAnkiConnect } from '../services/ankiconect';
 
   export let modelName: string = '';
+  export let noLabel: boolean = true;
 
   const ankiConnect = getContext<IAnkiConnect>('anki');
 
@@ -16,7 +17,7 @@
 {#await models}
   <SelectSkeleton />
 {:then modelNames}
-  <Select labelText="Target Model">
+  <Select labelText={!noLabel ? 'Target Model' : ''}>
     {#each modelNames as model}
       <SelectItem value={model} text={model} />
     {/each}

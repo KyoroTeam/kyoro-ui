@@ -67,7 +67,7 @@
         <Grid>
           <Row>
             <Column noGutter>
-              <Tabs aria-label="Tab navigation">
+              <Tabs aria-label="Tab navigation" selected={2}>
                 <Tab label="Search" />
                 <Tab label="Sources" />
                 <Tab label="Settings" />
