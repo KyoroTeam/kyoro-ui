@@ -98,7 +98,7 @@
                                 </TableRow>
                               </TableHead>
                               <TableBody>
-                                {#each rows as row}
+                                {#each rows as _}
                                   <TableRow
                                     on:click={() => console.log('nice')}>
                                     <TableCell>

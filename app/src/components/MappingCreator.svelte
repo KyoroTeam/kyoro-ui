@@ -1,17 +1,6 @@
 <script lang="ts">
-  import {
-    Button,
-    ButtonSet,
-    Column,
-    Row,
-    Select,
-    SelectItem,
-    TextArea,
-    TextInput,
-    Tile,
-  } from "carbon-components-svelte";
+  import { Button, Column, Row, Tile } from "carbon-components-svelte";
   import Edit16 from "carbon-icons-svelte/lib/Edit16";
-  import Add16 from "carbon-icons-svelte/lib/Add16";
   import CheckboxChecked16 from "carbon-icons-svelte/lib/CheckboxChecked16";
   import CloseFilled16 from "carbon-icons-svelte/lib/CloseFilled16";
 
@@ -23,14 +12,14 @@
 
   let selectedModelName: string;
   let editing: boolean = false;
-
-  function handleClick() {
-    editing = !editing;
-    console.log(editing);
-  }
 </script>
 
 <!-- {@debug editing} -->
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
 
 <Column md={4}>
   <Tile>
@@ -44,25 +33,24 @@
               hasIconOnly
               iconDescription={editing ? 'Save Changes' : 'Edit'}
               tooltipPosition="top"
-              on:click={handleClick}>
+              on:click={() => (editing = !editing)}>
               {#if editing}
                 <CheckboxChecked16 />
               {:else}
                 <Edit16 />
               {/if}
             </Button>
-            {#if editing}
-              <span>
-                <Button
-                  size={'small'}
-                  hasIconOnly
-                  kind="ghost"
-                  iconDescription={'Discard Changes'}
-                  tooltipPosition="top">
-                  <CloseFilled16 />
-                </Button>
-              </span>
-            {/if}
+            <span class:hidden={!editing}>
+              <Button
+                size={'small'}
+                hasIconOnly
+                kind="ghost"
+                iconDescription={'Discard Changes'}
+                tooltipPosition="top"
+                on:click={() => (editing = false)}>
+                <CloseFilled16 />
+              </Button>
+            </span>
             <Button
               size={'small'}
               hasIconOnly

@@ -3,11 +3,7 @@
     SkipToContent,
     Header,
     HeaderUtilities,
-    HeaderGlobalAction,
   } from "carbon-components-svelte";
-  import Notification20 from "carbon-icons-svelte/lib/Notification20";
-  import UserAvatar20 from "carbon-icons-svelte/lib/UserAvatar20";
-  import AppSwitcher20 from "carbon-icons-svelte/lib/AppSwitcher20";
   import { getContext } from "svelte";
 
   const ctx: { dark: any; light: any; updateVar: any } = getContext("Theme");
