@@ -74,7 +74,7 @@
                       <Row>
                         <Column lg={8}>
                           <ButtonSet>
-                            <Search placeholder="Enter a phrase...!" />
+                            <Search placeholder="Enter a phrase..." />
                             <Button>Search</Button>
                           </ButtonSet>
                         </Column>
@@ -159,12 +159,7 @@
                       <Row />
                     </TabContent>
                     <TabContent>
-                      <MappingCreator />
-                      <Row>
-                        <Column md={4} lg={7}>
-                          <p>Ok</p>
-                        </Column>
-                      </Row>
+                      <MappingCreator mappingName={'Migaku Japanese'} />
                     </TabContent>
                   </Grid>
                 </div>
