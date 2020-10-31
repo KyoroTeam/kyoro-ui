@@ -3,7 +3,6 @@
   import Edit16 from "carbon-icons-svelte/lib/Edit16";
   import CheckboxChecked16 from "carbon-icons-svelte/lib/CheckboxChecked16";
   import CloseFilled16 from "carbon-icons-svelte/lib/CloseFilled16";
-
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import ModelFieldSelect from "./ModelFieldSelect.svelte";
   import ModelSelect from "./ModelSelect.svelte";

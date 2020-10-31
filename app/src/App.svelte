@@ -31,6 +31,7 @@
   import DeckSelect from "./components/DeckSelect.svelte";
   import MappingCreator from "./components/MappingCreator.svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
+  import MappingsCreator from "./components/MappingsCreator.svelte";
   let theme: "g10" = "g10";
 
   const rows = [
@@ -152,7 +153,7 @@
                       <Row />
                     </TabContent>
                     <TabContent>
-                      <MappingCreator mappingName={'Migaku Japanese'} />
+                      <MappingsCreator />
                     </TabContent>
                   </Grid>
                 </div>

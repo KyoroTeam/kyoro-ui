@@ -16,7 +16,10 @@ export class AnkiConnect implements IAnkiConnect {
   }
 
   version() {
-    return Promise.resolve<AnkiConnectResponse>({ result: 5, error: null });
+    return new Promise<AnkiConnectResponse>(resolve => {
+      setTimeout(() => resolve({ result: 5, error: null }), 100);
+    })
+    // return Promise.resolve<AnkiConnectResponse>({ result: 5, error: null });
   }
 
   getNumCardsReviewedToday() {
