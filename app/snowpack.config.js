@@ -21,6 +21,7 @@ module.exports = {
     /* ... */
   ],
   installOptions: {
+    packageLookupFields: ["svelte"],
     /* ... */
   },
   devOptions: {
