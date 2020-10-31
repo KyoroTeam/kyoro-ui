@@ -144,14 +144,7 @@
                           </ButtonSet>
                         </Column>
                         <Column lg={{ span: 2, offset: 4 }}>
-                          <Button>
-                            Add Selected
-                            <svelte:component
-                              this={Add16}
-                              aria-hidden="true"
-                              class="bx--btn__icon"
-                              aria-label="Add" />
-                          </Button>
+                          <Button icon={Add16}>Add Selected</Button>
                         </Column>
                       </Row>
                     </TabContent>

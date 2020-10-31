@@ -14,13 +14,6 @@
   let editing: boolean = false;
 </script>
 
-<!-- {@debug editing} -->
-<style>
-  .hidden {
-    display: none;
-  }
-</style>
-
 <Column md={4}>
   <Tile>
     <Row>
@@ -33,32 +26,25 @@
               hasIconOnly
               iconDescription={editing ? 'Save Changes' : 'Edit'}
               tooltipPosition="top"
-              on:click={() => (editing = !editing)}>
-              {#if editing}
-                <CheckboxChecked16 />
-              {:else}
-                <Edit16 />
-              {/if}
-            </Button>
-            <span class:hidden={!editing}>
+              icon={editing ? CheckboxChecked16 : Edit16}
+              on:click={() => (editing = !editing)} />
+            {#if editing}
               <Button
                 size={'small'}
                 hasIconOnly
                 kind="ghost"
                 iconDescription={'Discard Changes'}
                 tooltipPosition="top"
-                on:click={() => (editing = false)}>
-                <CloseFilled16 />
-              </Button>
-            </span>
+                icon={CloseFilled16}
+                on:click={() => (editing = false)} />
+            {/if}
             <Button
               size={'small'}
               hasIconOnly
               kind="ghost"
               iconDescription={'Delete'}
-              tooltipPosition="top">
-              <Delete16 />
-            </Button>
+              tooltipPosition="top"
+              icon={Delete16} />
           </Row>
         </Tile>
         <ModelSelect disabled={!editing} bind:selected={selectedModelName} />

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, onMount } from "svelte";
+  import { getContext } from "svelte";
   import {
     Column,
     Loading,
@@ -10,11 +10,8 @@
     AnkiConnectResponse,
     IAnkiConnect,
   } from "../services/ankiconect";
-  let promise: Promise<AnkiConnectResponse>;
   const anki = getContext<IAnkiConnect>("anki");
-  onMount(() => {
-    promise = anki.version();
-  });
+  const promise: Promise<AnkiConnectResponse> = anki.version();
 </script>
 
 <div>
