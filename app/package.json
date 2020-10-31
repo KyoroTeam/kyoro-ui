@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "snowpack dev",
+    "start-static": "sirv build",
     "build": "snowpack build",
     "test": "jest"
   },
@@ -23,6 +24,7 @@
     "@types/snowpack-env": "^2.3.0",
     "jest": "^26.2.2",
     "serve": "^11.3.2",
+    "sirv-cli": "^1.0.8",
     "snowpack": "^2.16.0",
     "svelte-check": "^1.0.0",
     "svelte-preprocess": "^4.0.8",
