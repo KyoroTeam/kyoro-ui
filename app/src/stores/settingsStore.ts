@@ -10,4 +10,4 @@ export interface IUserSettings {
   cardMappings: ICardMapping[];
 }
 
-export default writable({} as IUserSettings);
+export default writable({ cardMappings: [] } as IUserSettings);

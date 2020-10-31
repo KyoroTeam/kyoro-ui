@@ -1,19 +1,45 @@
 <script lang="ts">
-  import { Button } from "carbon-components-svelte";
+  import {
+    Button,
+    Modal,
+    TextInput,
+    ToastNotification,
+  } from "carbon-components-svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import settingsStore from "../stores/settingsStore";
+  import type { IUserSettings } from "../stores/settingsStore";
   import MappingCreator from "./MappingCreator.svelte";
+  import MappingAddModal from "./MappingAddModal.svelte";
 
-  let settings: any;
+  let settings: IUserSettings;
   settingsStore.subscribe((value) => (settings = value));
+
+  let modalOpen: boolean = false;
 </script>
 
-<p>Test</p>
+{#if settings.cardMappings?.length > 0}
+  {#each settings.cardMappings as mapping}
+    <MappingCreator mappingName={mapping.mappingName} />
+  {/each}
+{:else}
+  <ToastNotification
+    kind="info"
+    hideCloseButton
+    title="No Mappings Defined"
+    caption="Click Add New to create a model mapping." />
+{/if}
 
 <Button
-  size={'small'}
   hasIconOnly
   iconDescription={'Add New'}
   tooltipPosition="top"
   icon={Add16}
-  on:click={() => {}} />
+  on:click={() => {
+    modalOpen = true;
+  }} />
+
+<MappingAddModal
+  open={modalOpen}
+  onSubmitted={(possibleName) => {
+    modalOpen = false;
+  }} />

@@ -13,7 +13,6 @@
     /* Additional Options */
     "strict": true,
     "skipLibCheck": true,
-    "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "useDefineForClassFields": true,
