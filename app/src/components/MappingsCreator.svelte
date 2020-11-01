@@ -1,10 +1,5 @@
 <script lang="ts">
-  import {
-    Button,
-    Modal,
-    TextInput,
-    ToastNotification,
-  } from "carbon-components-svelte";
+  import { Row, Button, ToastNotification } from "carbon-components-svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import settingsStore from "../stores/settingsStore";
   import type { IUserSettings } from "../stores/settingsStore";
@@ -18,9 +13,11 @@
 </script>
 
 {#if settings.cardMappings?.length > 0}
-  {#each settings.cardMappings as mapping}
-    <MappingCreator mappingName={mapping.mappingName} />
-  {/each}
+  <Row>
+    {#each settings.cardMappings as mapping}
+      <MappingCreator mappingName={mapping.mappingName} />
+    {/each}
+  </Row>
 {:else}
   <ToastNotification
     kind="info"
@@ -30,6 +27,7 @@
 {/if}
 
 <Button
+  style="margin-top:20px"
   hasIconOnly
   iconDescription={'Add New'}
   tooltipPosition="top"
@@ -42,4 +40,17 @@
   open={modalOpen}
   onSubmitted={(possibleName) => {
     modalOpen = false;
+    if (possibleName !== undefined) {
+      settingsStore.update((v) => ({
+        ...v,
+        cardMappings: [
+          ...v.cardMappings,
+          {
+            mappingName: possibleName,
+            modelName: '',
+            fieldMappings: {},
+          },
+        ],
+      }));
+    }
   }} />

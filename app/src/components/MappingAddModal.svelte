@@ -33,9 +33,8 @@
   primaryButtonText="Confirm"
   primaryButtonDisabled={!validResults[0]}
   secondaryButtonText="Cancel"
-  on:click:button--secondary
-  on:open
-  on:cancel={() => onSubmitted(undefined)}
+  on:open={() => (mappingName = '')}
+  on:click:button--secondary={() => onSubmitted(undefined)}
   on:close={() => onSubmitted(undefined)}
   on:submit={() => onSubmitted(mappingName)}>
   <TextInput
