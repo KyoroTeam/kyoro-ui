@@ -59,8 +59,8 @@
 <Theme bind:theme>
   <Header />
   <AnkiConnectProvider>
-    <AnkiConectGate>
-      <Content style="background: none; margin-top: 1.5rem">
+    <Content>
+      <AnkiConectGate>
         <Grid>
           <Row>
             <Column noGutter>
@@ -160,7 +160,7 @@
             </Column>
           </Row>
         </Grid>
-      </Content>
-    </AnkiConectGate>
+      </AnkiConectGate>
+    </Content>
   </AnkiConnectProvider>
 </Theme>

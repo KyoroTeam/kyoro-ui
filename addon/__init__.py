@@ -8,31 +8,45 @@ from aqt.utils import showInfo
 from aqt.qt import *
 import io
 import os
+import glob
 
 addon_path = os.path.dirname(__file__)
-
 
 class KyroWebView(AnkiWebView):
     def __init__(self):
         AnkiWebView.__init__(self, title="Kyoro")
 
-        with open(os.path.join(addon_path, "bundle.js"), "r") as f:
-            appContents = f.read()
-        with open(os.path.join(addon_path, "bundle.css"), "r") as f:
-            appCss = f.read()
-        with open(os.path.join(addon_path, "carbon.css"), "r") as f:
-            carbonCss = f.read()
-
         html = """
-            <script defer>{0}</script>
-            <style>{1}</style>
-            <style>{2}</style>
-            <!DOCTYPE html><body></body></html>
-        """.format(appContents, appCss, carbonCss)
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Web site created using create-snowpack-app"
+    />
+    <title>Snowpack App</title>
+    {0}
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    {1}
+  </body>
+</html>
+        """
 
-        self.stdHtml(
-            html, css=["all.css"])
+        cssTemplate = "<style>{0}</style>"
+        jsTemplate = "<script>{0}</script>"
 
+        jsFiles = glob.glob(os.path.join(addon_path, "js/*"))
+        cssFiles = glob.glob(os.path.join(addon_path, "css/*"))
+
+        jsHtml = [jsTemplate.format(open(fileName).read()) for fileName in jsFiles]
+        cssHtml = [cssTemplate.format(open(fileName).read()) for fileName in cssFiles]   
+
+        self.stdHtml(html.format(jsHtml, cssHtml))
 
 def showApp():
     mw.kyoroApp = KyroWebView()
