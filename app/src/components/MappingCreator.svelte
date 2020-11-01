@@ -23,7 +23,7 @@
   }
 </style>
 
-<Column md={2} style="padding-top:20px">
+<Column md={2} style="padding-bottom:20px">
   <Tile>
     <Row>
       <Column>

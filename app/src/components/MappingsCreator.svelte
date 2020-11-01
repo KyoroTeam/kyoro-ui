@@ -27,7 +27,6 @@
 {/if}
 
 <Button
-  style="margin-top:20px"
   hasIconOnly
   iconDescription={'Add New'}
   tooltipPosition="top"
