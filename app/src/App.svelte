@@ -60,7 +60,7 @@
   <Header />
   <AnkiConnectProvider>
     <AnkiConectGate>
-      <Content>
+      <Content style="background: none; margin-top: 1.5rem">
         <Grid>
           <Row>
             <Column noGutter>
