@@ -33,7 +33,6 @@
                 <div slot="content" class="tabbed-content">
                   <Grid as fullWidth>
                     <TabContent>
-                      Hello
                       <SeachTab />
                     </TabContent>
                     <TabContent>
