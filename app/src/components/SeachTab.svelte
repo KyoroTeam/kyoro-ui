@@ -10,27 +10,25 @@
     ButtonSet,
   } from "carbon-components-svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
+  import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import type { SelectTableRow } from "src/models/SelectTableRow";
   import DeckSelect from "./DeckSelect.svelte";
+  import SearchBar from "./SearchBar.svelte";
   import SelectTable from "./SelectTable.svelte";
 
-  let rows: SelectTableRow[] = [
-    {
-      selected: true,
-      sentece: "sentence",
-      source: "Source",
-      tags: ["A", "B"],
-    },
-  ];
-  $: console.log(rows);
+  let searchedSentences: JibikiSenteceResponse[] = [];
+
+  let rows: SelectTableRow[] = searchedSentences.map((s) => ({
+    selected: false,
+    sentece: s.translations[0]?.sentence,
+    tags: s.tags,
+    source: "Jibiki",
+  }));
 </script>
 
 <Row>
   <Column>
-    <ButtonSet>
-      <Search placeholder="Enter a phrase..." />
-      <Button>Search</Button>
-    </ButtonSet>
+    <SearchBar bind:sentences={searchedSentences} />
   </Column>
   <Column>
     <MultiSelect
