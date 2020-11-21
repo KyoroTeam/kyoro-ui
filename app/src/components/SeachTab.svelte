@@ -4,7 +4,6 @@
     Column,
     Select,
     SelectItem,
-    Search,
     Button,
     MultiSelect,
     ButtonSet,
