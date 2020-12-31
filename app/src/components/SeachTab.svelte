@@ -17,12 +17,17 @@
 
   let searchedSentences: JibikiSenteceResponse[] = [];
 
-  let rows: SelectTableRow[] = searchedSentences.map((s) => ({
-    selected: false,
-    sentece: s.translations[0]?.sentence,
-    tags: s.tags,
-    source: "Jibiki",
-  }));
+  let rows: SelectTableRow[] = [];
+  $: {
+    rows = searchedSentences.map((s) => ({
+      selected: false,
+      sentece: s.translations[0]?.sentence,
+      tags: s.tags,
+      source: "Jibiki",
+    }));
+  }
+
+  console.log(searchedSentences, rows);
 </script>
 
 <Row>
