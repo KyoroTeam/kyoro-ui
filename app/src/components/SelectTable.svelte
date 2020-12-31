@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     Column,
+    Row,
     Table,
     TableHeader,
     TableRow,
@@ -19,6 +20,13 @@
   const headers = ["Selected", "Sentence", "Source", "Tags"];
 </script>
 
+<style>
+  .box {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
 <DataTable>
   <Table>
     <TableHead>
@@ -35,7 +43,10 @@
             <Checkbox bind:checked={row.selected} />
           </TableCell>
           <TableCell>
-            <Column noGutterLeft>{row.sentece}</Column>
+            <div class="box">
+              <p>{row.sentence}</p>
+              <p>{row.english}</p>
+            </div>
           </TableCell>
           <TableCell>{row.source}</TableCell>
           <TableCell>

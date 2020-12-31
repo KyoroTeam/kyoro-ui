@@ -1,6 +1,7 @@
 export interface SelectTableRow {
   selected: boolean;
-  sentece: string;
+  sentence: string;
+  english: string;
   source: string;
   tags: string[];
 }

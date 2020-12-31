@@ -21,7 +21,8 @@
   $: {
     rows = searchedSentences.map((s) => ({
       selected: false,
-      sentece: s.translations[0]?.sentence,
+      sentence: s.translations[0]?.sentence,
+      english: s.sentence,
       tags: s.tags,
       source: "Jibiki",
     }));
