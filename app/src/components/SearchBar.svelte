@@ -9,12 +9,10 @@
 
   async function fetchSentences() {
     const searchQuery = encodeURIComponent(searchValue);
-    const url = `https://api.jibiki.app/sentences?query=${searchQuery}`;
+    const url = `http://localhost:5000/JibikiProxy/${searchQuery}`;
 
     loading = true;
-    fetch(url, {
-      credentials: "include",
-    })
+    fetch(url)
       .then((r) => r.json())
       .then((r: JibikiSenteceResponse[]) => {
         sentences = r;
