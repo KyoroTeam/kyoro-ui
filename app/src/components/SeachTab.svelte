@@ -2,21 +2,20 @@
   import {
     Row,
     Column,
-    Select,
-    SelectItem,
-    Button,
     MultiSelect,
     ButtonSet,
   } from "carbon-components-svelte";
-  import Add16 from "carbon-icons-svelte/lib/Add16";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import type { SelectTableRow } from "src/models/SelectTableRow";
-  import DeckSelect from "./DeckSelect.svelte";
+  import type { ICardMapping } from "src/stores/settingsStore";
+  import AnkiAddButton from "./AnkiAddButton.svelte";
+  import CardMappingSelect from "./CardMappingSelect.svelte";
   import SearchBar from "./SearchBar.svelte";
   import SelectTable from "./SelectTable.svelte";
 
   let searchedSentences: JibikiSenteceResponse[] = [];
   let tableRows: SelectTableRow[] = [];
+  let selectedMapping: ICardMapping;
 </script>
 
 <Row>
@@ -39,20 +38,10 @@
 <Row>
   <Column>
     <ButtonSet>
-      <DeckSelect />
-      <Select labelText="Target Note" selected="g10">
-        <SelectItem value="white" text="White" />
-        <SelectItem value="g10" text="Gray 10" />
-        <SelectItem value="g90" text="Gray 90" />
-        <SelectItem value="g100" text="Gray 100" />
-      </Select>
+      <CardMappingSelect bind:selected={selectedMapping} />
     </ButtonSet>
   </Column>
   <Column lg={{ span: 2, offset: 4 }}>
-    <Button
-      icon={Add16}
-      disabled={tableRows.filter((r) => r.selected).length == 0}>
-      Add Selected
-    </Button>
+    <AnkiAddButton targetMapping={selectedMapping} {tableRows} />
   </Column>
 </Row>
