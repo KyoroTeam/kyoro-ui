@@ -16,19 +16,7 @@
   import SelectTable from "./SelectTable.svelte";
 
   let searchedSentences: JibikiSenteceResponse[] = [];
-
-  let rows: SelectTableRow[] = [];
-  $: {
-    rows = searchedSentences.map((s) => ({
-      selected: false,
-      sentence: s.translations[0]?.sentence,
-      english: s.sentence,
-      tags: s.tags,
-      source: "Jibiki",
-    }));
-  }
-
-  console.log(searchedSentences, rows);
+  let tableRows: SelectTableRow[] = [];
 </script>
 
 <Row>
@@ -45,7 +33,7 @@
 </Row>
 <Row>
   <Column>
-    <SelectTable bind:rows />
+    <SelectTable bind:inputRows={searchedSentences} bind:tableRows />
   </Column>
 </Row>
 <Row>
@@ -61,7 +49,9 @@
     </ButtonSet>
   </Column>
   <Column lg={{ span: 2, offset: 4 }}>
-    <Button icon={Add16} disabled={rows.filter((r) => r.selected).length == 0}>
+    <Button
+      icon={Add16}
+      disabled={tableRows.filter((r) => r.selected).length == 0}>
       Add Selected
     </Button>
   </Column>
