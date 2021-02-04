@@ -36,13 +36,6 @@
   const headers = ["Selected", "Sentence", "Source", "Tags"];
 </script>
 
-<style>
-  .box {
-    display: flex;
-    flex-direction: column;
-  }
-</style>
-
 <DataTable>
   <Table>
     <TableHead>
@@ -57,7 +50,8 @@
         <TableRow
           on:click={() => {
             onSelected(i);
-          }}>
+          }}
+        >
           <TableCell>
             <Checkbox bind:checked={row.selected} />
           </TableCell>
@@ -79,3 +73,10 @@
   </Table>
   <Pagination />
 </DataTable>
+
+<style>
+  .box {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

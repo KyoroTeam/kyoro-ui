@@ -15,7 +15,7 @@
 {#await models}
   <SelectSkeleton />
 {:then modelNames}
-  <Select inline {disabled} helperText={label} size={'xl'}>
+  <Select inline {disabled} helperText={label} size={"xl"}>
     {#each modelNames as model}
       <SelectItem value={model} text={model} />
     {/each}

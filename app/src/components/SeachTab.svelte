@@ -26,8 +26,13 @@
     <MultiSelect
       size="xl"
       label="Sentence Sources"
-      items={[{ id: '0', text: 'Slack' }, { id: '1', text: 'Email' }, { id: '2', text: 'Fax' }]}
-      selectedIds={['0', '1']} />
+      items={[
+        { id: "0", text: "Slack" },
+        { id: "1", text: "Email" },
+        { id: "2", text: "Fax" },
+      ]}
+      selectedIds={["0", "1"]}
+    />
   </Column>
 </Row>
 <Row>

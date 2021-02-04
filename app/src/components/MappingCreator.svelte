@@ -15,14 +15,6 @@
   let editing: boolean = false;
 </script>
 
-<style>
-  .mapping-title {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
-</style>
-
 <Column>
   <Tile>
     <Row>
@@ -31,31 +23,34 @@
           <Row>
             <div class="mapping-title">
               <p
-                style="display:flex;align-items:center;width:100%;padding-left:10px">
+                style="display:flex;align-items:center;width:100%;padding-left:10px"
+              >
                 {mappingName}
               </p>
               <Button
-                size={'small'}
+                size={"small"}
                 hasIconOnly
-                iconDescription={editing ? 'Save Changes' : 'Edit'}
+                iconDescription={editing ? "Save Changes" : "Edit"}
                 tooltipPosition="top"
                 icon={editing ? CheckboxChecked16 : Edit16}
-                on:click={() => (editing = !editing)} />
+                on:click={() => (editing = !editing)}
+              />
               {#if editing}
                 <Button
-                  size={'small'}
+                  size={"small"}
                   hasIconOnly
                   kind="ghost"
-                  iconDescription={'Discard Changes'}
+                  iconDescription={"Discard Changes"}
                   tooltipPosition="top"
                   icon={CloseFilled16}
-                  on:click={() => (editing = false)} />
+                  on:click={() => (editing = false)}
+                />
               {/if}
               <Button
-                size={'small'}
+                size={"small"}
                 hasIconOnly
                 kind="ghost"
-                iconDescription={'Delete'}
+                iconDescription={"Delete"}
                 tooltipPosition="top"
                 icon={Delete16}
                 on:click={() => {
@@ -65,7 +60,8 @@
                       (m) => m.mappingName !== mappingName
                     ),
                   }));
-                }} />
+                }}
+              />
             </div>
           </Row>
         </Tile>
@@ -75,20 +71,32 @@
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
-          label="English" />
+          label="English"
+        />
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
-          label="Japanese" />
+          label="Japanese"
+        />
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
-          label="Source" />
+          label="Source"
+        />
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
-          label="Tags" />
+          label="Tags"
+        />
       </Column>
     </Row>
   </Tile>
 </Column>
+
+<style>
+  .mapping-title {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+</style>

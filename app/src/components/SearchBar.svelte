@@ -44,7 +44,8 @@
   <Search
     bind:value={searchValue}
     on:input={debouncedSearch}
-    placeholder="Enter a phrase..." />
+    placeholder="Enter a phrase..."
+  />
   <Button on:click={fetchSentences}>Search</Button>
 </ButtonSet>
 {#if loading}

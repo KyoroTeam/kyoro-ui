@@ -33,14 +33,16 @@
   primaryButtonText="Confirm"
   primaryButtonDisabled={!validResults[0]}
   secondaryButtonText="Cancel"
-  on:open={() => (mappingName = '')}
+  on:open={() => (mappingName = "")}
   on:click:button--secondary={() => onSubmitted(undefined)}
   on:close={() => onSubmitted(undefined)}
-  on:submit={() => onSubmitted(mappingName)}>
+  on:submit={() => onSubmitted(mappingName)}
+>
   <TextInput
     required
     invalid={!validResults[0]}
     invalidText={validResults[1]}
     placeholder="Enter mapping name"
-    bind:value={mappingName} />
+    bind:value={mappingName}
+  />
 </Modal>

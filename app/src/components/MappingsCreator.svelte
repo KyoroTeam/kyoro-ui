@@ -23,17 +23,19 @@
     kind="info"
     hideCloseButton
     title="No Mappings Defined"
-    caption="Click Add New to create a model mapping." />
+    caption="Click Add New to create a model mapping."
+  />
 {/if}
 
 <Button
   hasIconOnly
-  iconDescription={'Add New'}
+  iconDescription={"Add New"}
   tooltipPosition="top"
   icon={Add16}
   on:click={() => {
     modalOpen = true;
-  }} />
+  }}
+/>
 
 <MappingAddModal
   open={modalOpen}
@@ -46,10 +48,11 @@
           ...v.cardMappings,
           {
             mappingName: possibleName,
-            modelName: '',
+            modelName: "",
             fieldMappings: {},
           },
         ],
       }));
     }
-  }} />
+  }}
+/>

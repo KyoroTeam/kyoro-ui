@@ -33,7 +33,8 @@
         timeout={2000}
         hideCloseButton
         title="Couldn't connect to AnkiConnect"
-        subtitle="Did something go wrong?" />
+        subtitle="Did something go wrong?"
+      />
     </Row>
     <Row />
   {/await}
