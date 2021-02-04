@@ -53,7 +53,34 @@ export class AnkiConnect implements IAnkiConnect {
     modelName: string,
     fieldMapping: Record<string, string>
   ): Promise<AnkiConnectResponse> {
-    return Promise.resolve<AnkiConnectResponse>({ result: 5, error: null });
+    console.log("a");
+    const a = {
+      action: "addNote",
+      version: 6,
+      params: {
+        note: {
+          deckName: deckName,
+          modelName: modelName,
+          fields: fieldMapping,
+          options: {
+            allowDuplicate: false,
+          },
+          tags: ["kyoro"],
+        },
+      },
+    };
+
+    return new Promise((resolve) => {
+      fetch("http://localhost:8765", {
+        method: "POST",
+        body: JSON.stringify(a),
+      })
+        .then((resp) => resp.json())
+        .then((json) => resolve(json))
+        .catch(() =>
+          resolve({ result: null, error: "Error submitting to Anki" })
+        );
+    });
   }
 }
 

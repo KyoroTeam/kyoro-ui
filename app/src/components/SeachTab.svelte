@@ -15,7 +15,8 @@
 
   let searchedSentences: JibikiSenteceResponse[] = [];
   let tableRows: SelectTableRow[] = [];
-  let selectedMapping: ICardMapping;
+  let selectedMapping: ICardMapping | undefined;
+  $: console.log(selectedMapping);
 </script>
 
 <Row>
@@ -42,11 +43,7 @@
 </Row>
 <Row>
   <Column>
-    <ButtonSet>
-      <CardMappingSelect bind:selected={selectedMapping} />
-    </ButtonSet>
-  </Column>
-  <Column lg={{ span: 2, offset: 4 }}>
+    <CardMappingSelect bind:selected={selectedMapping} />
     <AnkiAddButton targetMapping={selectedMapping} {tableRows} />
   </Column>
 </Row>

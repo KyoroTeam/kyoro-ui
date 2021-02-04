@@ -3,16 +3,34 @@
   import settingsStore from "../stores/settingsStore";
   import type { IUserSettings, ICardMapping } from "../stores/settingsStore";
 
-  export let selected: ICardMapping;
+  export let selected: ICardMapping | undefined;
 
-  let mappings: IUserSettings;
-  settingsStore.subscribe((value) => (mappings = value));
+  let settings: IUserSettings;
+  settingsStore.subscribe((value) => (settings = value));
+
+  let selectedMappingName = "";
+
+  // Select first mapping if none selected
+  $: {
+    if (selectedMappingName.length === 0 && settings.cardMappings.length > 0) {
+      selectedMappingName = settings.cardMappings[0].mappingName;
+    }
+  }
+
+  // Update the prop with the mapping object with the name selected
+  $: {
+    selected = settings.cardMappings.find(
+      (m) => m.mappingName === selectedMappingName
+    );
+  }
 </script>
 
-{#if mappings.cardMappings?.length > 0}
-  <Select>
-    {#each mappings.cardMappings as mapping}
-      <SelectItem>{mapping.mappingName}</SelectItem>
+{#if settings.cardMappings?.length > 0}
+  <Select bind:selected={selectedMappingName}>
+    {#each settings.cardMappings as mapping}
+      <SelectItem value={mapping.mappingName ?? "What"} />
     {/each}
   </Select>
+{:else}
+  <p>No Mappings</p>
 {/if}
