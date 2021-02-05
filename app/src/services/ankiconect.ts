@@ -36,16 +36,55 @@ export class AnkiConnect implements IAnkiConnect {
     return Promise.resolve<AnkiConnectResponse>({ result: 5, error: null });
   }
 
-  deckNames() {
-    return Promise.resolve(["A", "B", "C"]);
+  deckNames(): Promise<string[]> {
+    const request = {
+      action: "deckNames",
+      version: 6,
+    };
+    return new Promise((resolve) => {
+      fetch("http://localhost:8765", {
+        method: "POST",
+        body: JSON.stringify(request),
+      })
+        .then((resp) => resp.json())
+        .then((json: AnkiConnectResponse) => resolve(json.result))
+        .catch(() => resolve([]));
+    });
   }
 
-  modelNames() {
-    return Promise.resolve(["A", "VCD", "C"]);
+  modelNames(): Promise<string[]> {
+    const request = {
+      action: "modelNames",
+      version: 6,
+    };
+    return new Promise((resolve) => {
+      fetch("http://localhost:8765", {
+        method: "POST",
+        body: JSON.stringify(request),
+      })
+        .then((resp) => resp.json())
+        .then((json: AnkiConnectResponse) => resolve(json.result))
+        .catch(() => resolve([]));
+    });
   }
 
-  modelFieldNames(modelName: string) {
-    return Promise.resolve([modelName, "Front", "Back", "Other"]);
+  modelFieldNames(modelName: string): Promise<string[]> {
+    const request = {
+      action: "modelFieldNames",
+      version: 6,
+      params: {
+        modelName: modelName,
+      },
+    };
+    return new Promise((resolve) => {
+      fetch("http://localhost:8765", {
+        method: "POST",
+        body: JSON.stringify(request),
+      })
+        .then((resp) => resp.json())
+        .then((json: AnkiConnectResponse) => resolve(json.result))
+        .catch(() => resolve([]));
+    });
   }
 
   addNote(

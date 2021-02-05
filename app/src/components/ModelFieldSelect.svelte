@@ -6,18 +6,23 @@
   export let disabled: boolean = false;
   export let label: string = "Target Thing";
   const ankiConnect = getContext<IAnkiConnect>("anki");
-  let models: ReturnType<IAnkiConnect["modelFieldNames"]>;
+  let modelNames: string[];
   $: {
-    models = ankiConnect.modelFieldNames(modelName);
+    console.log(modelName);
+    if (modelName?.length > 0) {
+      ankiConnect
+        .modelFieldNames(modelName)
+        .then((names) => (modelNames = names));
+    }
   }
 </script>
 
-{#await models}
-  <SelectSkeleton />
-{:then modelNames}
+{#if modelNames?.length > 0}
   <Select inline {disabled} helperText={label} size={"xl"}>
     {#each modelNames as model}
       <SelectItem value={model} text={model} />
     {/each}
   </Select>
-{/await}
+{:else}
+  <SelectSkeleton />
+{/if}
