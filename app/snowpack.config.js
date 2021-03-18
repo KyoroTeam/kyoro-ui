@@ -17,23 +17,7 @@ module.exports = {
       },
     ],
   ],
-  install: [
-    /* ... */
-  ],
-  installOptions: {
+  packageOptions: {
     packageLookupFields: ["svelte"],
-    /* ... */
-  },
-  devOptions: {
-    /* ... */
-  },
-  buildOptions: {
-    /* ... */
-  },
-  proxy: {
-    /* ... */
-  },
-  alias: {
-    /* ... */
   },
 };
