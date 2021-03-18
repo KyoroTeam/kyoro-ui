@@ -6,20 +6,15 @@
     Row,
     ToastNotification,
   } from "carbon-components-svelte";
-  import type {
-    AnkiConnectResponse,
-    IAnkiConnect,
-  } from "../services/ankiconect";
+  import type { IAnkiConnect } from "../services/ankiconect";
+  import Retrier from "./Retrier.svelte";
   const anki = getContext<IAnkiConnect>("anki");
-  const promise = anki.version();
+  let promise = anki.version();
 </script>
 
 <div>
   {#await promise}
     <Row>
-      <Column>
-        <Loading />
-      </Column>
       <Column>
         <p>Connecting to AnkiConnect...</p>
       </Column>
@@ -27,7 +22,7 @@
   {:then _}
     <slot />
   {:catch _}
-    <Row>
+    <Column>
       <ToastNotification
         kind="error"
         hideCloseButton
@@ -35,7 +30,18 @@
         subtitle="Did something go wrong?"
         caption="Try making sure AnkiConnect is running, and you have read the setup instructions."
       />
-    </Row>
+      <Row>
+        <Retrier
+          retryTime={1000}
+          maxCounts={5}
+          onTimeoutEnded={anki.version}
+          let:timeUntilNextTry={time}
+        >
+          <p>> Retrying in ({time})...</p>
+          <Loading small withOverlay={false} />
+        </Retrier>
+      </Row>
+    </Column>
     <Row />
   {/await}
 </div>

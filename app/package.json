@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@snowpack/plugin-webpack": "^2.0.17",
-    "carbon-components-svelte": "^0.26.0",
+    "carbon-components-svelte": "^0.29.0",
     "carbon-icons-svelte": "^10.21.0",
     "svelte": "3.24.1"
   },
