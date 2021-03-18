@@ -36,9 +36,12 @@
           maxCounts={5}
           onTimeoutEnded={anki.version}
           let:timeUntilNextTry={time}
+          let:loading
         >
-          <p>> Retrying in ({time})...</p>
-          <Loading small withOverlay={false} />
+          <p>> Retrying in ({time}) ...</p>
+          {#if loading}
+            <Loading small withOverlay={false} />
+          {/if}
         </Retrier>
       </Row>
     </Column>

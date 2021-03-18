@@ -32,4 +32,4 @@
     });
 </script>
 
-<slot timeUntilNextTry={maxCounts - currentCount} />
+<slot timeUntilNextTry={maxCounts - currentCount} {loading} />
