@@ -11,7 +11,7 @@
     IAnkiConnect,
   } from "../services/ankiconect";
   const anki = getContext<IAnkiConnect>("anki");
-  const promise: Promise<AnkiConnectResponse> = anki.version();
+  const promise = anki.version();
 </script>
 
 <div>
@@ -30,10 +30,10 @@
     <Row>
       <ToastNotification
         kind="error"
-        timeout={2000}
         hideCloseButton
         title="Couldn't connect to AnkiConnect"
         subtitle="Did something go wrong?"
+        caption="Try making sure AnkiConnect is running, and you have read the setup instructions."
       />
     </Row>
     <Row />

@@ -1,5 +1,5 @@
 export interface IAnkiConnect {
-  version: () => Promise<AnkiConnectResponse>;
+  version: () => Promise<number>;
   getNumCardsReviewedToday: () => Promise<AnkiConnectResponse>;
   deckNames: () => Promise<string[]>;
   modelNames: () => Promise<string[]>;
@@ -25,11 +25,19 @@ export class AnkiConnect implements IAnkiConnect {
     this.baseUrl = baseUrl ? baseUrl : "";
   }
 
-  version() {
-    return new Promise<AnkiConnectResponse>((resolve) => {
-      setTimeout(() => resolve({ result: 5, error: null }), 100);
+  version(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      fetch("http://localhost:8765", {
+        method: "POST",
+        body: JSON.stringify({
+          "action": "version",
+          "version": 6
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((json: AnkiConnectResponse) => resolve(json.result))
+        .catch(() => reject(-1));
     });
-    // return Promise.resolve<AnkiConnectResponse>({ result: 5, error: null });
   }
 
   getNumCardsReviewedToday() {
