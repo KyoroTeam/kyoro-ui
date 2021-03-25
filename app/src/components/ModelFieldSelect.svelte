@@ -1,10 +1,11 @@
 <script lang="ts">
   import { Select, SelectItem, SelectSkeleton } from "carbon-components-svelte";
-  import { getContext } from "svelte";
+  import type { KyoroFieldName } from "src/stores/settingsStore";
+  import { getContext, onMount } from "svelte";
   import type { IAnkiConnect } from "../services/ankiconect";
   export let modelName: string = "";
   export let disabled: boolean = false;
-  export let label: string = "Target Thing";
+  export let label: KyoroFieldName;
   const ankiConnect = getContext<IAnkiConnect>("anki");
   let modelNames: string[];
   $: {
@@ -15,6 +16,12 @@
         .then((names) => (modelNames = names));
     }
   }
+
+  // onMount(() => {
+  //   ankiConnect
+  //     .modelFieldNames(modelName)
+  //     .then((names) => (modelNames = names));
+  // });
 </script>
 
 {#if modelNames?.length > 0}

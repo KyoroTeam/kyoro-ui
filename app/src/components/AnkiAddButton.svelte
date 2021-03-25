@@ -16,6 +16,7 @@
 
   function onClicked() {
     const { deckName, modelName, modelFieldMappings } = targetMapping!;
+    console.log(targetMapping);
     loading = true;
     anki
       .addNote(deckName, modelName, modelFieldMappings)
@@ -39,7 +40,6 @@
     on:click={onClicked}
   >
     Add Selected
-    {targetMapping?.mappingName ?? "Wow"}
   </Button>
   {#if loading}
     <InlineLoading />

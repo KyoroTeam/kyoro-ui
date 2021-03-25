@@ -1,10 +1,5 @@
 <script lang="ts">
-  import {
-    Row,
-    Column,
-    MultiSelect,
-    ButtonSet,
-  } from "carbon-components-svelte";
+  import { Row, Column, MultiSelect } from "carbon-components-svelte";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import type { SelectTableRow } from "src/models/SelectTableRow";
   import type { ICardMapping } from "src/stores/settingsStore";

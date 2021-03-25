@@ -8,6 +8,7 @@
 
   const ankiConnect = getContext<IAnkiConnect>("anki");
   const models = ankiConnect.modelNames();
+  models.then((mods) => (selected = mods[0]));
 </script>
 
 {#await models}

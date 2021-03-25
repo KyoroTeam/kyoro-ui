@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { Row, Button, ToastNotification } from "carbon-components-svelte";
+  import {
+    Row,
+    Button,
+    ToastNotification,
+    Column,
+  } from "carbon-components-svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import settingsStore from "../stores/settingsStore";
   import type { IUserSettings } from "../stores/settingsStore";
@@ -15,7 +20,9 @@
 {#if settings.cardMappings?.length > 0}
   <Row>
     {#each settings.cardMappings as mapping}
-      <MappingCreator mappingName={mapping.mappingName} />
+      <Column padding md={4}>
+        <MappingCreator mappingName={mapping.mappingName} />
+      </Column>
     {/each}
   </Row>
 {:else}

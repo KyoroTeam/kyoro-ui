@@ -15,83 +15,81 @@
   let editing: boolean = false;
 </script>
 
-<Column>
-  <Tile>
-    <Row>
-      <Column>
-        <Tile light>
-          <Row>
-            <div class="mapping-title">
-              <p
-                style="display:flex;align-items:center;width:100%;padding-left:10px"
-              >
-                {mappingName}
-              </p>
-              <Button
-                size={"small"}
-                hasIconOnly
-                iconDescription={editing ? "Save Changes" : "Edit"}
-                tooltipPosition="top"
-                icon={editing ? CheckboxChecked16 : Edit16}
-                on:click={() => (editing = !editing)}
-              />
-              {#if editing}
-                <Button
-                  size={"small"}
-                  hasIconOnly
-                  kind="ghost"
-                  iconDescription={"Discard Changes"}
-                  tooltipPosition="top"
-                  icon={CloseFilled16}
-                  on:click={() => (editing = false)}
-                />
-              {/if}
+<Tile>
+  <Row>
+    <Column>
+      <Tile light>
+        <Row>
+          <div class="mapping-title">
+            <p
+              style="display:flex;align-items:center;width:100%;padding-left:10px"
+            >
+              {mappingName}
+            </p>
+            <Button
+              size={"small"}
+              hasIconOnly
+              iconDescription={editing ? "Save Changes" : "Edit"}
+              tooltipPosition="top"
+              icon={editing ? CheckboxChecked16 : Edit16}
+              on:click={() => (editing = !editing)}
+            />
+            {#if editing}
               <Button
                 size={"small"}
                 hasIconOnly
                 kind="ghost"
-                iconDescription={"Delete"}
+                iconDescription={"Discard Changes"}
                 tooltipPosition="top"
-                icon={Delete16}
-                on:click={() => {
-                  settingsStore.update((value) => ({
-                    ...value,
-                    cardMappings: value.cardMappings.filter(
-                      (m) => m.mappingName !== mappingName
-                    ),
-                  }));
-                }}
+                icon={CloseFilled16}
+                on:click={() => (editing = false)}
               />
-            </div>
-          </Row>
-        </Tile>
-        <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
-      </Column>
-      <Column>
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="English"
-        />
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="Japanese"
-        />
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="Source"
-        />
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="Tags"
-        />
-      </Column>
-    </Row>
-  </Tile>
-</Column>
+            {/if}
+            <Button
+              size={"small"}
+              hasIconOnly
+              kind="ghost"
+              iconDescription={"Delete"}
+              tooltipPosition="top"
+              icon={Delete16}
+              on:click={() => {
+                settingsStore.update((value) => ({
+                  ...value,
+                  cardMappings: value.cardMappings.filter(
+                    (m) => m.mappingName !== mappingName
+                  ),
+                }));
+              }}
+            />
+          </div>
+        </Row>
+      </Tile>
+      <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
+    </Column>
+    <Column>
+      <ModelFieldSelect
+        disabled={!editing}
+        modelName={selectedModelName}
+        label="English"
+      />
+      <ModelFieldSelect
+        disabled={!editing}
+        modelName={selectedModelName}
+        label="Japanese"
+      />
+      <ModelFieldSelect
+        disabled={!editing}
+        modelName={selectedModelName}
+        label="Source"
+      />
+      <ModelFieldSelect
+        disabled={!editing}
+        modelName={selectedModelName}
+        label="Tags"
+      />
+    </Column>
+  </Row>
+</Tile>
 
 <style>
   .mapping-title {
