@@ -6,8 +6,11 @@
   export let modelName: string = "";
   export let disabled: boolean = false;
   export let label: KyoroFieldName;
+  export let value: string;
+
   const ankiConnect = getContext<IAnkiConnect>("anki");
   let modelNames: string[];
+
   $: {
     console.log(modelName);
     if (modelName?.length > 0) {
@@ -16,12 +19,6 @@
         .then((names) => (modelNames = names));
     }
   }
-
-  // onMount(() => {
-  //   ankiConnect
-  //     .modelFieldNames(modelName)
-  //     .then((names) => (modelNames = names));
-  // });
 </script>
 
 {#if modelNames?.length > 0}

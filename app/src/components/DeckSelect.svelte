@@ -4,6 +4,7 @@
   import type { IAnkiConnect } from "../services/ankiconect";
 
   export let selected: string;
+  export let disabled: boolean = false;
 
   const ankiConnect = getContext<IAnkiConnect>("anki");
   const decks = ankiConnect.deckNames();
@@ -18,7 +19,7 @@
 {#await decks}
   <SelectSkeleton />
 {:then deckNames}
-  <Select labelText="Target Deck" bind:selected>
+  <Select {disabled} labelText="Target Deck" bind:selected>
     {#each deckNames as deck}
       <SelectItem value={deck} text={deck} />
     {/each}

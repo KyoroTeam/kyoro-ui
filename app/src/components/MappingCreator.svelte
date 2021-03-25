@@ -8,88 +8,128 @@
   import ModelSelect from "./ModelSelect.svelte";
 
   import settingsStore from "../stores/settingsStore";
+  import DeckSelect from "./DeckSelect.svelte";
 
   export let mappingName: string;
 
+  let englishValue: string;
+  let japaneseValue: string;
+  let tagsValue: string;
+  let sourceValue: string;
+
+  let selectedDeckName: string;
   let selectedModelName: string;
   let editing: boolean = false;
 </script>
 
-<Tile>
-  <Row>
-    <Column>
-      <Tile light>
-        <Row>
-          <div class="mapping-title">
-            <p
-              style="display:flex;align-items:center;width:100%;padding-left:10px"
-            >
-              {mappingName}
-            </p>
-            <Button
-              size={"small"}
-              hasIconOnly
-              iconDescription={editing ? "Save Changes" : "Edit"}
-              tooltipPosition="top"
-              icon={editing ? CheckboxChecked16 : Edit16}
-              on:click={() => (editing = !editing)}
-            />
-            {#if editing}
-              <Button
-                size={"small"}
-                hasIconOnly
-                kind="ghost"
-                iconDescription={"Discard Changes"}
-                tooltipPosition="top"
-                icon={CloseFilled16}
-                on:click={() => (editing = false)}
-              />
-            {/if}
-            <Button
-              size={"small"}
-              hasIconOnly
-              kind="ghost"
-              iconDescription={"Delete"}
-              tooltipPosition="top"
-              icon={Delete16}
-              on:click={() => {
-                settingsStore.update((value) => ({
-                  ...value,
-                  cardMappings: value.cardMappings.filter(
-                    (m) => m.mappingName !== mappingName
-                  ),
-                }));
-              }}
-            />
-          </div>
-        </Row>
-      </Tile>
-      <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
-    </Column>
-    <Column>
-      <ModelFieldSelect
-        disabled={!editing}
-        modelName={selectedModelName}
-        label="English"
-      />
-      <ModelFieldSelect
-        disabled={!editing}
-        modelName={selectedModelName}
-        label="Japanese"
-      />
-      <ModelFieldSelect
-        disabled={!editing}
-        modelName={selectedModelName}
-        label="Source"
-      />
-      <ModelFieldSelect
-        disabled={!editing}
-        modelName={selectedModelName}
-        label="Tags"
-      />
-    </Column>
-  </Row>
-</Tile>
+<Row>
+  <Tile>
+    <Row>
+      <div class="mapping-title">
+        <h4 style={"padding-right: 10px; padding-left: 10px"}>
+          {mappingName}
+        </h4>
+        <Button
+          size={"small"}
+          hasIconOnly
+          iconDescription={editing ? "Save Changes" : "Edit"}
+          tooltipPosition="top"
+          icon={editing ? CheckboxChecked16 : Edit16}
+          on:click={() => {
+            if (editing) {
+              settingsStore.update((value) => ({
+                ...value,
+                cardMappings: [
+                  ...value.cardMappings,
+                  {
+                    modelName: selectedModelName,
+                    mappingName: mappingName,
+                    deckName: selectedDeckName,
+                    modelFieldMappings: {
+                      English: englishValue,
+                      Japanese: japaneseValue,
+                      Source: sourceValue,
+                      Tags: tagsValue,
+                    },
+                  },
+                ],
+              }));
+            }
+            editing = !editing;
+          }}
+        />
+        {#if editing}
+          <Button
+            size={"small"}
+            hasIconOnly
+            kind="ghost"
+            iconDescription={"Discard Changes"}
+            tooltipPosition="top"
+            icon={CloseFilled16}
+            on:click={() => (editing = false)}
+          />
+        {/if}
+        <Button
+          size={"small"}
+          hasIconOnly
+          kind="ghost"
+          iconDescription={"Delete"}
+          tooltipPosition="top"
+          icon={Delete16}
+          on:click={() => {
+            settingsStore.update((value) => ({
+              ...value,
+              cardMappings: value.cardMappings.filter(
+                (m) => m.mappingName !== mappingName
+              ),
+            }));
+          }}
+        />
+      </div>
+    </Row>
+  </Tile>
+</Row>
+<Row>
+  <Tile>
+    <Row>
+      <Column style={"border-right: solid 1px"}>
+        <h5>Destination</h5>
+
+        <br />
+        <DeckSelect disabled={!editing} bind:selected={selectedDeckName} />
+        <br />
+        <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
+      </Column>
+      <Column>
+        <h5>Model Field Mappings</h5>
+        <ModelFieldSelect
+          disabled={!editing}
+          modelName={selectedModelName}
+          label="English"
+          bind:value={englishValue}
+        />
+        <ModelFieldSelect
+          disabled={!editing}
+          modelName={selectedModelName}
+          label="Japanese"
+          bind:value={japaneseValue}
+        />
+        <ModelFieldSelect
+          disabled={!editing}
+          modelName={selectedModelName}
+          label="Source"
+          bind:value={sourceValue}
+        />
+        <ModelFieldSelect
+          disabled={!editing}
+          modelName={selectedModelName}
+          label="Tags"
+          bind:value={tagsValue}
+        />
+      </Column>
+    </Row>
+  </Tile>
+</Row>
 
 <style>
   .mapping-title {
