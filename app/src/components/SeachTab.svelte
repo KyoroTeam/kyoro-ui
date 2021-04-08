@@ -9,9 +9,9 @@
   import SelectTable from "./SelectTable.svelte";
 
   let searchedSentences: JibikiSenteceResponse[] = [];
-  let tableRows: SelectTableRow[] = [];
   let selectedMapping: ICardMapping | undefined;
-  $: console.log(selectedMapping);
+  let allTableRows: SelectTableRow[] = [];
+  $: selectedTableRows = allTableRows.filter((r) => r.selected);
 </script>
 
 <Row>
@@ -33,12 +33,20 @@
 </Row>
 <Row>
   <Column>
-    <SelectTable bind:inputRows={searchedSentences} bind:tableRows />
+    <SelectTable
+      bind:inputRows={searchedSentences}
+      bind:tableRows={allTableRows}
+    />
   </Column>
 </Row>
 <Row>
   <Column>
     <CardMappingSelect bind:selected={selectedMapping} />
-    <AnkiAddButton targetMapping={selectedMapping} {tableRows} />
+    <AnkiAddButton
+      targetMapping={selectedMapping}
+      disabled={selectedTableRows.length === 0}
+      disabledHint={"No sentences are selected"}
+      tableRows={selectedTableRows}
+    />
   </Column>
 </Row>

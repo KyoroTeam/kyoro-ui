@@ -45,11 +45,7 @@
     </TableHead>
     <TableBody>
       {#each tableRows as row, i}
-        <TableRow
-          on:click={() => {
-            onSelected(i);
-          }}
-        >
+        <TableRow on:click={() => onSelected(i)}>
           <TableCell>
             <Checkbox bind:checked={row.selected} />
           </TableCell>

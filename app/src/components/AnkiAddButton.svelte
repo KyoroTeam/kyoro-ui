@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { Button, InlineLoading } from "carbon-components-svelte";
+  import {
+    Button,
+    InlineLoading,
+    Tooltip,
+    TooltipDefinition,
+  } from "carbon-components-svelte";
+  import type { ButtonProps } from "carbon-components-svelte/types/Button/Button";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import type { SelectTableRow } from "src/models/SelectTableRow";
   import type { ICardMapping } from "../stores/settingsStore";
@@ -8,6 +14,8 @@
 
   export let tableRows: SelectTableRow[] = [];
   export let targetMapping: ICardMapping | undefined;
+  export let disabled: boolean = false;
+  export let disabledHint: string | undefined = undefined;
 
   const anki = getContext<IAnkiConnect>("anki");
 
@@ -28,17 +36,40 @@
       .catch((c) => (errorMessage = "Couldn't connect to Anki"))
       .finally(() => (loading = false));
   }
+
+  $: buttonProps = {
+    iconDescription: "Add",
+    tooltipPosition: "top",
+    disabled: !targetMapping || loading || disabled,
+    icon: Add16,
+    kind: "primary",
+    onclick: onClicked,
+  };
 </script>
 
 <div>
-  <Button
-    disabled={!targetMapping || loading}
-    icon={Add16}
-    kind="primary"
-    on:click={onClicked}
-  >
-    Add Selected
-  </Button>
+  {#if disabled && disabledHint}
+    <TooltipDefinition tooltipText={disabledHint}>
+      <Button
+        disabled={!targetMapping || loading || disabled}
+        icon={Add16}
+        kind="primary"
+        on:click={onClicked}
+      >
+        Add Selected
+      </Button>
+    </TooltipDefinition>
+  {:else}
+    <Button
+      disabled={!targetMapping || loading || disabled}
+      icon={Add16}
+      kind="primary"
+      on:click={onClicked}
+    >
+      Add Selected
+    </Button>
+  {/if}
+
   {#if loading}
     <InlineLoading />
   {/if}
