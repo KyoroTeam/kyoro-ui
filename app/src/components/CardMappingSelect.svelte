@@ -6,21 +6,18 @@
   export let selected: ICardMapping | undefined;
 
   let settings: IUserSettings;
-  settingsStore.subscribe((value) => (settings = value));
+  let selectedMappingName: string;
 
-  let selectedMappingName = "";
-
-  // Select first mapping if none selected
-  $: {
-    if (selectedMappingName.length === 0 && settings.cardMappings.length > 0) {
-      selectedMappingName = settings.cardMappings[0].mappingName;
+  settingsStore.subscribe((value) => {
+    settings = value;
+    if (!selectedMappingName) {
+      selectedMappingName = value?.cardMappings?.[0]?.mappingName;
     }
-  }
+  });
 
-  // Update the prop with the mapping object with the name selected
   $: {
     selected = settings.cardMappings.find(
-      (m) => m.mappingName === selectedMappingName
+      (c) => c.mappingName == selectedMappingName
     );
   }
 </script>
@@ -28,7 +25,7 @@
 {#if settings.cardMappings?.length > 0}
   <Select bind:selected={selectedMappingName}>
     {#each settings.cardMappings as mapping}
-      <SelectItem value={mapping.mappingName ?? "What"} />
+      <SelectItem value={mapping.mappingName} />
     {/each}
   </Select>
 {:else}

@@ -25,9 +25,7 @@
           errorMessage = r.error;
         }
       })
-      .catch((c) => {
-        errorMessage = "Couldn't connect to Anki";
-      })
+      .catch((c) => (errorMessage = "Couldn't connect to Anki"))
       .finally(() => (loading = false));
   }
 </script>

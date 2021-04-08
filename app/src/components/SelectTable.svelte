@@ -1,7 +1,5 @@
 <script lang="ts">
   import {
-    Column,
-    Row,
     Table,
     TableHeader,
     TableRow,

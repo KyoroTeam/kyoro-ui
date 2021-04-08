@@ -36,25 +36,6 @@
           tooltipPosition="top"
           icon={editing ? CheckboxChecked16 : Edit16}
           on:click={() => {
-            if (editing) {
-              settingsStore.update((value) => ({
-                ...value,
-                cardMappings: [
-                  ...value.cardMappings,
-                  {
-                    modelName: selectedModelName,
-                    mappingName: mappingName,
-                    deckName: selectedDeckName,
-                    modelFieldMappings: {
-                      English: englishValue,
-                      Japanese: japaneseValue,
-                      Source: sourceValue,
-                      Tags: tagsValue,
-                    },
-                  },
-                ],
-              }));
-            }
             editing = !editing;
           }}
         />
