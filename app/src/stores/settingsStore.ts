@@ -4,7 +4,7 @@ export interface ICardMapping {
   mappingName: string;
   deckName: string;
   modelName: string;
-  modelFieldMappings: Record<KyoroFieldName, string>;
+  modelFieldMappings: Partial<Record<KyoroFieldName, string>>;
 }
 
 export interface IUserSettings {

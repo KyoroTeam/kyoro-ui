@@ -54,9 +54,10 @@
         cardMappings: [
           ...v.cardMappings,
           {
+            deckName: "",
             mappingName: possibleName,
             modelName: "",
-            fieldMappings: {},
+            modelFieldMappings: {},
           },
         ],
       }));
