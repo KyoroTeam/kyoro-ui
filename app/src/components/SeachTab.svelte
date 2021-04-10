@@ -14,7 +14,7 @@
   $: selectedTableRows = allTableRows.filter((r) => r.selected);
 </script>
 
-<Row>
+<Row padding>
   <Column>
     <SearchBar bind:sentences={searchedSentences} />
   </Column>

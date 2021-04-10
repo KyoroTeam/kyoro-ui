@@ -9,7 +9,7 @@
 
   async function fetchSentences() {
     const searchQuery = encodeURIComponent(searchValue);
-    const url = `https://cors-anywhere.herokuapp.com/https://api.jibiki.app/sentences?query=${searchQuery}`;
+    const url = `https://cors.bridged.cc/https://api.jibiki.app/sentences?query=${searchQuery}`;
 
     loading = true;
     fetch(url)
