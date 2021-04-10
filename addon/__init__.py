@@ -28,17 +28,17 @@ class KyroWebView(AnkiWebView):
       content="Web site created using create-snowpack-app"
     />
     <title>Snowpack App</title>
-    {0}
+    <script type=\"module\">{0}</script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    {1}
+    <style>{1}</style>
   </body>
 </html>
         """
         
-        js = "<script type=\"module\">{0}</script>".format(open(os.path.join(addon_path, "dist/index.js")).read());
-        css = "<style>{0}</style>".format(open(os.path.join(addon_path, "dist/index.css")).read());
+        js = open(os.path.join(addon_path, "dist/index.js")).read()
+        css = open(os.path.join(addon_path, "dist/index.css")).read())
 
         self.stdHtml(html.format(js, css))
 
