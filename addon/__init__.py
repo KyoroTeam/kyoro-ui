@@ -36,17 +36,11 @@ class KyroWebView(AnkiWebView):
   </body>
 </html>
         """
+        
+        js = "<script type=\"module\">{0}</script>".format(open(os.path.join(addon_path, "dist/index.js")).read());
+        css = "<style>{0}</style>".format(open(os.path.join(addon_path, "dist/index.css")).read());
 
-        cssTemplate = "<style>{0}</style>"
-        jsTemplate = "<script>{0}</script>"
-
-        jsFiles = glob.glob(os.path.join(addon_path, "js/*"))
-        cssFiles = glob.glob(os.path.join(addon_path, "css/*"))
-
-        jsHtml = [jsTemplate.format(open(fileName).read()) for fileName in jsFiles]
-        cssHtml = [cssTemplate.format(open(fileName).read()) for fileName in cssFiles]   
-
-        self.stdHtml(html.format(jsHtml, cssHtml))
+        self.stdHtml(html.format(js, css))
 
 def showApp():
     mw.kyoroApp = KyroWebView()

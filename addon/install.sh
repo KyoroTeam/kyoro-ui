@@ -1,1 +1,1 @@
-cp __init__.py -r ../app/build/{js,css,index.html} ~/.local/share/Anki2/addons21/kyoro
+cp __init__.py -r ../app/build/dist ~/.local/share/Anki2/addons21/kyoro
