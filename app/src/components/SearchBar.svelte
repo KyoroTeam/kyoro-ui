@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Search, Button, ButtonSet, Loading } from "carbon-components-svelte";
+  import { Search, Button, ButtonSet } from "carbon-components-svelte";
   import { MultiSelect } from "carbon-components-svelte";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
 
@@ -15,16 +15,9 @@
     loading = true;
     fetch(url)
       .then((r) => r.json())
-      .then((r: JibikiSenteceResponse[]) => {
-        sentences = r;
-      })
-      .catch((e) => {
-        // TODO: Error handling
-        console.log(e);
-      })
-      .finally(() => {
-        loading = false;
-      });
+      .then((r: JibikiSenteceResponse[]) => (sentences = r))
+      .catch((e) => console.log(e))
+      .finally(() => (loading = false));
   }
 
   function debounce<T extends any[]>(
