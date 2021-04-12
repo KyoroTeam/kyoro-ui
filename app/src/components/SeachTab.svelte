@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Row, Column } from "carbon-components-svelte";
+  import { slide, fly } from "svelte/transition";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import type { SelectTableRow } from "src/models/SelectTableRow";
   import type { ICardMapping } from "src/stores/settingsStore";
@@ -24,26 +25,28 @@
   </Column>
 </Row>
 
-{#if allTableRows?.length > 0}
-  <Row>
-    <Column>
-      <SelectTable
-        bind:inputRows={searchedSentences}
-        bind:tableRows={allTableRows}
-      />
-    </Column>
-  </Row>
-  <Row>
-    <Column>
-      <CardMappingSelect bind:selected={selectedMapping} />
-      <AnkiAddButton
-        targetMapping={selectedMapping}
-        disabled={selectedTableRows.length === 0}
-        disabledHint={"No sentences are selected"}
-        tableRows={selectedTableRows}
-      />
-    </Column>
-  </Row>
+{#if searchedSentences?.length > 0}
+  <div in:fly out:slide>
+    <Row>
+      <Column>
+        <SelectTable
+          bind:inputRows={searchedSentences}
+          bind:tableRows={allTableRows}
+        />
+      </Column>
+    </Row>
+    <Row>
+      <Column>
+        <CardMappingSelect bind:selected={selectedMapping} />
+        <AnkiAddButton
+          targetMapping={selectedMapping}
+          disabled={selectedTableRows.length === 0}
+          disabledHint={"No sentences are selected"}
+          tableRows={selectedTableRows}
+        />
+      </Column>
+    </Row>
+  </div>
 {:else}
   <div class="box">
     <Search32 />
