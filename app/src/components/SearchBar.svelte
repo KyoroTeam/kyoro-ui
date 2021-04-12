@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Search, Button, ButtonSet, Loading } from "carbon-components-svelte";
+  import { MultiSelect } from "carbon-components-svelte";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
 
   export let sentences: JibikiSenteceResponse[];
@@ -46,8 +47,15 @@
     on:input={debouncedSearch}
     placeholder="Enter a phrase..."
   />
-  <Button on:click={fetchSentences}>Search</Button>
+  <MultiSelect
+    size="xl"
+    label="Sentence Sources"
+    items={[
+      { id: "0", text: "Slack" },
+      { id: "1", text: "Email" },
+      { id: "2", text: "Fax" },
+    ]}
+    selectedIds={["0", "1"]}
+  />
+  <Button skeleton={loading} on:click={fetchSentences}>Search</Button>
 </ButtonSet>
-{#if loading}
-  <Loading withOverlay={false} />
-{/if}
