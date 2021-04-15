@@ -19,7 +19,7 @@
   }
 </script>
 
-<Row padding>
+<Row>
   <Column>
     <SearchBar bind:sentences={searchedSentences} />
   </Column>

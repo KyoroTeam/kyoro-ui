@@ -37,9 +37,8 @@
       .finally(() => (loading = false));
   }
 
+  let buttonProps: ButtonProps;
   $: buttonProps = {
-    iconDescription: "Add",
-    tooltipPosition: "top",
     disabled: !targetMapping || loading || disabled,
     icon: Add16,
     kind: "primary",
@@ -50,24 +49,10 @@
 <div>
   {#if disabled && disabledHint}
     <TooltipDefinition tooltipText={disabledHint}>
-      <Button
-        disabled={!targetMapping || loading || disabled}
-        icon={Add16}
-        kind="primary"
-        on:click={onClicked}
-      >
-        Add Selected
-      </Button>
+      <Button {...buttonProps}>Add Selected</Button>
     </TooltipDefinition>
   {:else}
-    <Button
-      disabled={!targetMapping || loading || disabled}
-      icon={Add16}
-      kind="primary"
-      on:click={onClicked}
-    >
-      Add Selected
-    </Button>
+    <Button {...buttonProps}>Add Selected</Button>
   {/if}
 
   {#if loading}

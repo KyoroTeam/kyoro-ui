@@ -27,7 +27,8 @@
   </Row>
 {:else}
   <ToastNotification
-    kind="info"
+    lowContrast
+    kind="info-square"
     hideCloseButton
     title="No Mappings Defined"
     caption="Click Add New to create a model mapping."
