@@ -1,18 +1,22 @@
 <script lang="ts">
   import { Select, SelectItem, SelectSkeleton } from "carbon-components-svelte";
   import type { KyoroFieldName } from "src/stores/settingsStore";
-  import { getContext, onMount } from "svelte";
+  import { getContext } from "svelte";
   import type { IAnkiConnect } from "../services/ankiconect";
+
   export let modelName: string = "";
   export let disabled: boolean = false;
   export let label: KyoroFieldName;
-  export let value: string;
+  export let selected: string;
 
   const ankiConnect = getContext<IAnkiConnect>("anki");
   let modelNames: string[];
 
   $: {
-    console.log(modelName);
+    console.log(selected);
+  }
+
+  $: {
     if (modelName?.length > 0) {
       ankiConnect
         .modelFieldNames(modelName)
@@ -22,7 +26,7 @@
 </script>
 
 {#if modelNames?.length > 0}
-  <Select inline {disabled} helperText={label} size={"xl"}>
+  <Select bind:selected inline {disabled} helperText={label} size={"xl"}>
     {#each modelNames as model}
       <SelectItem value={model} text={model} />
     {/each}

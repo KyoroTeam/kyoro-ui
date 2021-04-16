@@ -2,7 +2,6 @@
   import {
     Button,
     InlineLoading,
-    Tooltip,
     TooltipDefinition,
   } from "carbon-components-svelte";
   import type { ButtonProps } from "carbon-components-svelte/types/Button/Button";
@@ -26,33 +25,40 @@
     const { deckName, modelName, modelFieldMappings } = targetMapping!;
     console.log(targetMapping);
     loading = true;
+    // TODO: Warn or something if the primary fiels is empoty, otherwise
+    // "cannot create note because it is empty" will occur
+    const resolvedValues = {
+      [modelFieldMappings["English"]!]: tableRows[0].english,
+      [modelFieldMappings["Japanese"]!]: tableRows[0].sentence,
+      [modelFieldMappings["Source"]!]: tableRows[0].source,
+      [modelFieldMappings["Tags"]!]: tableRows[0].tags.join(","),
+    };
     anki
-      .addNote(deckName, modelName, modelFieldMappings)
+      .addNote(deckName, modelName, resolvedValues)
       .then((r) => {
-        if (r.error) {
-          errorMessage = r.error;
-        }
+        if (r.error) errorMessage = r.error;
       })
-      .catch((c) => (errorMessage = "Couldn't connect to Anki"))
+      .catch(() => (errorMessage = "Couldn't connect to Anki"))
       .finally(() => (loading = false));
   }
 
-  let buttonProps: ButtonProps;
-  $: buttonProps = {
-    disabled: !targetMapping || loading || disabled,
-    icon: Add16,
-    kind: "primary",
-    onclick: onClicked,
-  };
+  let buttonBaseProps: ButtonProps;
+  $: {
+    buttonBaseProps = {
+      disabled: !targetMapping || loading || disabled,
+      icon: Add16,
+      kind: "primary",
+    };
+  }
 </script>
 
 <div>
   {#if disabled && disabledHint}
     <TooltipDefinition tooltipText={disabledHint}>
-      <Button {...buttonProps}>Add Selected</Button>
+      <Button {...buttonBaseProps}>Add Selected</Button>
     </TooltipDefinition>
   {:else}
-    <Button {...buttonProps}>Add Selected</Button>
+    <Button on:click={onClicked} {...buttonBaseProps}>Add Selected</Button>
   {/if}
 
   {#if loading}

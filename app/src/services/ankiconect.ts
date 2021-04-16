@@ -1,3 +1,5 @@
+import type { KyoroFieldName } from "src/stores/settingsStore";
+
 export interface IAnkiConnect {
   version: () => Promise<number>;
   getNumCardsReviewedToday: () => Promise<AnkiConnectResponse>;
@@ -7,7 +9,7 @@ export interface IAnkiConnect {
   addNote: (
     deckName: string,
     modelName: string,
-    fieldMapping: Record<string, string>
+    resolvedValues: Record<string, string>
   ) => Promise<AnkiConnectResponse>;
 }
 
@@ -98,17 +100,16 @@ export class AnkiConnect implements IAnkiConnect {
   addNote(
     deckName: string,
     modelName: string,
-    fieldMapping: Record<string, string>
+    resolvedValues: Record<string, string>
   ): Promise<AnkiConnectResponse> {
-    console.log("a");
-    const a = {
+    const request = {
       action: "addNote",
       version: 6,
       params: {
         note: {
           deckName: deckName,
           modelName: modelName,
-          fields: fieldMapping,
+          fields: resolvedValues,
           options: {
             allowDuplicate: false,
           },
@@ -120,7 +121,7 @@ export class AnkiConnect implements IAnkiConnect {
     return new Promise((resolve) => {
       fetch("http://localhost:8765", {
         method: "POST",
-        body: JSON.stringify(a),
+        body: JSON.stringify(request),
       })
         .then((resp) => resp.json())
         .then((json) => resolve(json))

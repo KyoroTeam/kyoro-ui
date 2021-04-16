@@ -1,30 +1,28 @@
 <script lang="ts">
   import { Select, SelectItem } from "carbon-components-svelte";
-  import settingsStore from "../stores/settingsStore";
-  import type { IUserSettings, ICardMapping } from "../stores/settingsStore";
+  import { cardMappingStore } from "../stores/settingsStore";
+  import type { ICardMapping } from "../stores/settingsStore";
 
   export let selected: ICardMapping | undefined;
 
-  let settings: IUserSettings;
+  let cardMappings: ICardMapping[];
   let selectedMappingName: string;
 
-  settingsStore.subscribe((value) => {
-    settings = value;
+  cardMappingStore.subscribe((value) => {
+    cardMappings = value;
     if (!selectedMappingName) {
-      selectedMappingName = value?.cardMappings?.[0]?.mappingName;
+      selectedMappingName = value?.[0]?.mappingName;
     }
   });
 
   $: {
-    selected = settings.cardMappings.find(
-      (c) => c.mappingName == selectedMappingName
-    );
+    selected = cardMappings.find((c) => c.mappingName == selectedMappingName);
   }
 </script>
 
-{#if settings.cardMappings?.length > 0}
+{#if cardMappings?.length > 0}
   <Select bind:selected={selectedMappingName}>
-    {#each settings.cardMappings as mapping}
+    {#each cardMappings as mapping}
       <SelectItem value={mapping.mappingName} />
     {/each}
   </Select>

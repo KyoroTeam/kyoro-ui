@@ -13,4 +13,4 @@ export interface IUserSettings {
 
 export type KyoroFieldName = "English" | "Japanese" | "Source" | "Tags"
 
-export default writable<IUserSettings>({ cardMappings: [] });
+export const cardMappingStore = writable<ICardMapping[]>([]);

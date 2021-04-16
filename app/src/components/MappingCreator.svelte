@@ -7,18 +7,45 @@
   import ModelFieldSelect from "./ModelFieldSelect.svelte";
   import ModelSelect from "./ModelSelect.svelte";
 
-  import settingsStore from "../stores/settingsStore";
+  import { cardMappingStore } from "../stores/settingsStore";
+  import type { ICardMapping } from "../stores/settingsStore";
   import DeckSelect from "./DeckSelect.svelte";
 
   export let mappingName: string;
 
+  let selectedDeckName: string;
+  let selectedModelName: string;
   let englishValue: string;
   let japaneseValue: string;
   let tagsValue: string;
   let sourceValue: string;
 
-  let selectedDeckName: string;
-  let selectedModelName: string;
+  let newMapping: ICardMapping;
+  $: newMapping = {
+    mappingName: mappingName,
+    modelName: selectedModelName,
+    deckName: selectedDeckName,
+    modelFieldMappings: {
+      English: englishValue,
+      Japanese: japaneseValue,
+      Tags: tagsValue,
+      Source: sourceValue,
+    },
+  };
+
+  function updateThisCardMapping() {
+    cardMappingStore.update((value) => {
+      const thisIndex = value.findIndex((m) => (m.mappingName = mappingName));
+      if (thisIndex != -1) {
+        value[thisIndex] = newMapping;
+      } else {
+        value.push(newMapping);
+      }
+      console.log(value);
+      return value;
+    });
+  }
+
   let editing: boolean = false;
 </script>
 
@@ -36,6 +63,9 @@
           tooltipPosition="top"
           icon={editing ? CheckboxChecked16 : Edit16}
           on:click={() => {
+            if (editing) {
+              updateThisCardMapping();
+            }
             editing = !editing;
           }}
         />
@@ -58,12 +88,9 @@
           tooltipPosition="top"
           icon={Delete16}
           on:click={() => {
-            settingsStore.update((value) => ({
-              ...value,
-              cardMappings: value.cardMappings.filter(
-                (m) => m.mappingName !== mappingName
-              ),
-            }));
+            cardMappingStore.update((value) =>
+              value.filter((m) => m.mappingName !== mappingName)
+            );
           }}
         />
       </div>
@@ -75,7 +102,6 @@
     <Row>
       <Column style={"border-right: solid 1px"}>
         <h5>Destination</h5>
-
         <br />
         <DeckSelect disabled={!editing} bind:selected={selectedDeckName} />
         <br />
@@ -87,25 +113,25 @@
           disabled={!editing}
           modelName={selectedModelName}
           label="English"
-          bind:value={englishValue}
+          bind:selected={englishValue}
         />
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
           label="Japanese"
-          bind:value={japaneseValue}
+          bind:selected={japaneseValue}
         />
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
           label="Source"
-          bind:value={sourceValue}
+          bind:selected={sourceValue}
         />
         <ModelFieldSelect
           disabled={!editing}
           modelName={selectedModelName}
           label="Tags"
-          bind:value={tagsValue}
+          bind:selected={tagsValue}
         />
       </Column>
     </Row>
