@@ -17,24 +17,22 @@
   export let inputRows: JibikiSenteceResponse[];
   export let tableRows: SelectTableRow[];
 
-  $: {
-    tableRows = inputRows.map((row, i) => ({
-      selected: false,
-      sentence: row.translations[0]?.sentence,
-      english: row.sentence,
-      tags: row.tags,
-      source: "Jibiki",
-    }));
-  }
+  $: tableRows = inputRows.map((row) => ({
+    selected: false,
+    sentence: row.translations[0]?.sentence,
+    english: row.sentence,
+    tags: row.tags,
+    source: "Jibiki",
+  }));
 
   function onSelected(index: number) {
     tableRows[index].selected = !tableRows[index].selected;
   }
 
-  const headers = ["Selected", "Sentence", "Source", "Tags"];
+  const headers = ["", "Sentence", "Source", "Tags"];
 </script>
 
-<DataTable>
+<DataTable style={"width:100%"}>
   <Table>
     <TableHead>
       <TableRow>

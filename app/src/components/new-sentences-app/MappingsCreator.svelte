@@ -20,7 +20,7 @@
 {#if cardMappings?.length > 0}
   <Row>
     {#each cardMappings as mapping}
-      <Column padding md={4}>
+      <Column md={6}>
         <MappingCreator mappingName={mapping.mappingName} />
       </Column>
     {/each}

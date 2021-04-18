@@ -16,30 +16,31 @@
   $: selectedTableRows = allTableRows.filter((r) => r.selected);
 </script>
 
-<SearchBar bind:sentences={searchedSentences} />
+<Row style={"margin-bottom: 20px"}>
+  <SearchBar bind:sentences={searchedSentences} />
+</Row>
 
 {#if searchedSentences?.length > 0}
-  <div in:fly out:slide>
-    <Row>
-      <Column>
-        <SelectTable
-          bind:inputRows={searchedSentences}
-          bind:tableRows={allTableRows}
-        />
-      </Column>
-    </Row>
-    <Row>
-      <Column>
-        <CardMappingSelect bind:selected={selectedMapping} />
-        <AnkiAddButton
-          targetMapping={selectedMapping}
-          disabled={selectedTableRows.length === 0}
-          disabledHint={"No sentences are selected"}
-          tableRows={selectedTableRows}
-        />
-      </Column>
-    </Row>
-  </div>
+  <Row padding>
+    <SelectTable
+      bind:inputRows={searchedSentences}
+      bind:tableRows={allTableRows}
+    />
+  </Row>
+  <Row padding>
+    <Column>&nbsp;</Column>
+  </Row>
+  <Row>
+    <Column>
+      <CardMappingSelect bind:selected={selectedMapping} />
+      <AnkiAddButton
+        targetMapping={selectedMapping}
+        disabled={selectedTableRows.length === 0}
+        disabledHint={"No sentences are selected"}
+        tableRows={selectedTableRows}
+      />
+    </Column>
+  </Row>
 {:else}
   <div class="box">
     <Search32 />

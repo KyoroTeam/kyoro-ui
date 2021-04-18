@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Search, Button, ButtonSet } from "carbon-components-svelte";
+  import { Search, Button, ButtonSet, Row } from "carbon-components-svelte";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import SentenceSourceSelect from "../SentenceSourceSelect.svelte";
 
@@ -34,7 +34,7 @@
   const debouncedSearch = debounce(fetchSentences, 1000);
 </script>
 
-<ButtonSet>
+<ButtonSet style={"width:100%"}>
   <Search
     bind:value={searchValue}
     on:input={debouncedSearch}

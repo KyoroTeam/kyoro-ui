@@ -32,7 +32,7 @@
 
 <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
-    <SideNavLink text="New Cards" />
+    <SideNavLink isSelected text="New Cards" />
     <SideNavLink text="Modify Cards" />
     <SideNavDivider />
     <SideNavLink text="Sentence Sources" />

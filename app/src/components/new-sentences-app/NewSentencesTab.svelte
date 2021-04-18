@@ -6,14 +6,10 @@
 
 <Tabs aria-label="Tab navigation">
   <Tab label="Search" />
-  <Tab label="Sources" />
-  <Tab label="Settings" />
+  <Tab label="Field Mappings" />
   <div slot="content" class="tabbed-content">
     <TabContent>
       <SeachTab />
-    </TabContent>
-    <TabContent>
-      <Row />
     </TabContent>
     <TabContent>
       <MappingsCreator />
