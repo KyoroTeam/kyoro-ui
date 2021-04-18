@@ -30,8 +30,8 @@ export class AnkiConnect implements IAnkiConnect {
       fetch("http://localhost:8765", {
         method: "POST",
         body: JSON.stringify({
-          "action": "version",
-          "version": 6
+          action: "version",
+          version: 6,
         }),
       })
         .then((resp) => resp.json())
