@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Modal, TextInput } from "carbon-components-svelte";
-  import { cardMappingStore } from "../stores/settingsStore";
-  import type { ICardMapping } from "../stores/settingsStore";
+  import { cardMappingStore } from "../../stores/settingsStore";
+  import type { ICardMapping } from "../../stores/settingsStore";
 
   export let open: boolean = false;
   export let onSubmitted: (name: string | undefined) => void;

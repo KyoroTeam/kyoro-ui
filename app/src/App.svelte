@@ -1,11 +1,7 @@
 <script lang="ts">
   import {
     Content,
-    Row,
-    Tabs,
-    TabContent,
     Header,
-    Tab,
     SideNav,
     SideNavItems,
     SideNavLink,
@@ -17,8 +13,6 @@
   import AnkiConectGate from "./components/AnkiConectGate.svelte";
 
   import AnkiConnectProvider from "./services/AnkiConnectProvider.svelte";
-  import MappingsCreator from "./components/MappingsCreator.svelte";
-  import SeachTab from "./components/SeachTab.svelte";
   import NewSentencesTab from "./components/new-sentences-app/NewSentencesTab.svelte";
 
   let isSideNavOpen = false;

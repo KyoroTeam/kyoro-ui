@@ -9,7 +9,7 @@
   import type { SelectTableRow } from "src/models/SelectTableRow";
   import type { ICardMapping } from "../../stores/settingsStore";
   import { getContext } from "svelte";
-  import type { IAnkiConnect } from "../../services/ankiconect";
+  import type { IAnkiConnect } from "src/services/ankiconect";
 
   export let tableRows: SelectTableRow[] = [];
   export let targetMapping: ICardMapping | undefined;

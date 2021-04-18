@@ -6,7 +6,7 @@
     Row,
     ToastNotification,
   } from "carbon-components-svelte";
-  import type { IAnkiConnect } from "../services/ankiconect";
+  import type { IAnkiConnect } from "src/services/ankiconect";
   import Retrier from "./Retrier.svelte";
   const anki = getContext<IAnkiConnect>("anki");
   let promise = anki.version();

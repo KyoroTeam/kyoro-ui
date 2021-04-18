@@ -7,8 +7,8 @@
   import ModelFieldSelect from "./ModelFieldSelect.svelte";
   import ModelSelect from "./ModelSelect.svelte";
 
-  import { cardMappingStore } from "../stores/settingsStore";
-  import type { ICardMapping } from "../stores/settingsStore";
+  import { cardMappingStore } from "../../stores/settingsStore";
+  import type { ICardMapping } from "../../stores/settingsStore";
   import DeckSelect from "./DeckSelect.svelte";
 
   export let mappingName: string;

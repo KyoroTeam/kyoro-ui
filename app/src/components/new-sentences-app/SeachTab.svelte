@@ -3,7 +3,7 @@
   import { slide, fly } from "svelte/transition";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import type { SelectTableRow } from "src/models/SelectTableRow";
-  import type { ICardMapping } from "src/stores/settingsStore";
+  import type { ICardMapping } from "../../stores/settingsStore";
   import AnkiAddButton from "./AnkiAddButton.svelte";
   import CardMappingSelect from "./CardMappingSelect.svelte";
   import SearchBar from "./SearchBar.svelte";

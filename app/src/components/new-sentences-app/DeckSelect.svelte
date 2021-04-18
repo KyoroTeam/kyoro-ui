@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Select, SelectItem, SelectSkeleton } from "carbon-components-svelte";
   import { getContext } from "svelte";
-  import type { IAnkiConnect } from "../services/ankiconect";
+  import type { IAnkiConnect } from "src/services/ankiconect";
 
   export let selected: string;
   export let disabled: boolean = false;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Select, SelectItem } from "carbon-components-svelte";
-  import { cardMappingStore } from "../stores/settingsStore";
-  import type { ICardMapping } from "../stores/settingsStore";
+  import { cardMappingStore } from "../../stores/settingsStore";
+  import type { ICardMapping } from "../../stores/settingsStore";
 
   export let selected: ICardMapping | undefined;
 

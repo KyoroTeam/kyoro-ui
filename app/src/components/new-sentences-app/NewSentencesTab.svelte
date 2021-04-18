@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Row, Tabs, TabContent, Tab } from "carbon-components-svelte";
-  import MappingsCreator from "./components/MappingsCreator.svelte";
-  import SeachTab from "./components/SeachTab.svelte";
+  import MappingsCreator from "./MappingsCreator.svelte";
+  import SeachTab from "./SeachTab.svelte";
 </script>
 
 <Tabs aria-label="Tab navigation">

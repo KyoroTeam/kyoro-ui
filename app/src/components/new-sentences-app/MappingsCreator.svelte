@@ -6,8 +6,8 @@
     Column,
   } from "carbon-components-svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
-  import { cardMappingStore } from "../stores/settingsStore";
-  import type { ICardMapping } from "../stores/settingsStore";
+  import { cardMappingStore } from "../../stores/settingsStore";
+  import type { ICardMapping } from "../../stores/settingsStore";
   import MappingCreator from "./MappingCreator.svelte";
   import MappingAddModal from "./MappingAddModal.svelte";
 
