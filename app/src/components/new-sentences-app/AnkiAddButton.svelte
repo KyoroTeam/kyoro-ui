@@ -7,9 +7,9 @@
   import type { ButtonProps } from "carbon-components-svelte/types/Button/Button";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import type { SelectTableRow } from "src/models/SelectTableRow";
-  import type { ICardMapping } from "../stores/settingsStore";
+  import type { ICardMapping } from "../../stores/settingsStore";
   import { getContext } from "svelte";
-  import type { IAnkiConnect } from "../services/ankiconect";
+  import type { IAnkiConnect } from "../../services/ankiconect";
 
   export let tableRows: SelectTableRow[] = [];
   export let targetMapping: ICardMapping | undefined;

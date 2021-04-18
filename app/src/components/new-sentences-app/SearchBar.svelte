@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Search, Button, ButtonSet } from "carbon-components-svelte";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
-  import SentenceSourceSelect from "./SentenceSourceSelect.svelte";
+  import SentenceSourceSelect from "../SentenceSourceSelect.svelte";
 
   export let sentences: JibikiSenteceResponse[];
 

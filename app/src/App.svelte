@@ -19,6 +19,7 @@
   import AnkiConnectProvider from "./services/AnkiConnectProvider.svelte";
   import MappingsCreator from "./components/MappingsCreator.svelte";
   import SeachTab from "./components/SeachTab.svelte";
+  import NewSentencesTab from "./components/new-sentences-app/NewSentencesTab.svelte";
 
   let isSideNavOpen = false;
 </script>
@@ -47,22 +48,7 @@
 <Content>
   <AnkiConnectProvider>
     <AnkiConectGate>
-      <Tabs aria-label="Tab navigation">
-        <Tab label="Search" />
-        <Tab label="Sources" />
-        <Tab label="Settings" />
-        <div slot="content" class="tabbed-content">
-          <TabContent>
-            <SeachTab />
-          </TabContent>
-          <TabContent>
-            <Row />
-          </TabContent>
-          <TabContent>
-            <MappingsCreator />
-          </TabContent>
-        </div>
-      </Tabs>
+      <NewSentencesTab />
     </AnkiConectGate>
   </AnkiConnectProvider>
 </Content>
