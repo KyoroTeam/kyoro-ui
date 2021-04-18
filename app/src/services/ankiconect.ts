@@ -1,5 +1,3 @@
-import type { KyoroFieldName } from "src/stores/settingsStore";
-
 export interface IAnkiConnect {
   version: () => Promise<number>;
   getNumCardsReviewedToday: () => Promise<AnkiConnectResponse>;
