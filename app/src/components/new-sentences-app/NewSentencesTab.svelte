@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Row, Tabs, TabContent, Tab } from "carbon-components-svelte";
+  import { Tabs, TabContent, Tab } from "carbon-components-svelte";
   import MappingsCreator from "./MappingsCreator.svelte";
   import SeachTab from "./SeachTab.svelte";
 </script>

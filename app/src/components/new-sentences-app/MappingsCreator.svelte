@@ -26,24 +26,28 @@
     {/each}
   </Row>
 {:else}
-  <ToastNotification
-    lowContrast
-    kind="info-square"
-    hideCloseButton
-    title="No Mappings Defined"
-    caption="Click Add New to create a model mapping."
-  />
+  <Row>
+    <ToastNotification
+      lowContrast
+      kind="info-square"
+      hideCloseButton
+      title="No Mappings Defined"
+      caption="Click Add New to create a model mapping."
+    />
+  </Row>
 {/if}
 
-<Button
-  hasIconOnly
-  iconDescription={"Add New"}
-  tooltipPosition="top"
-  icon={Add16}
-  on:click={() => {
-    modalOpen = true;
-  }}
-/>
+<Row style="margin-top: 15px">
+  <Button
+    hasIconOnly
+    iconDescription={"Add New"}
+    tooltipPosition="top"
+    icon={Add16}
+    on:click={() => {
+      modalOpen = true;
+    }}
+  />
+</Row>
 
 <MappingAddModal
   open={modalOpen}
