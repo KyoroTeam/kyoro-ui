@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Search, Button, ButtonSet } from "carbon-components-svelte";
-  import { MultiSelect } from "carbon-components-svelte";
   import type { JibikiSenteceResponse } from "src/models/Jibiki";
   import SentenceSourceSelect from "./SentenceSourceSelect.svelte";
 

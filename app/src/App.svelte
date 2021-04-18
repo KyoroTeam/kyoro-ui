@@ -1,9 +1,7 @@
 <script lang="ts">
   import {
     Content,
-    Grid,
     Row,
-    Column,
     Tabs,
     TabContent,
     Header,
@@ -47,38 +45,24 @@
 </SideNav>
 
 <Content>
-  <Grid>
-    <Row>
-      <Column>
-        <AnkiConnectProvider>
-          <AnkiConectGate>
-            <Grid>
-              <Row>
-                <Column noGutter>
-                  <Tabs aria-label="Tab navigation">
-                    <Tab label="Search" />
-                    <Tab label="Sources" />
-                    <Tab label="Settings" />
-                    <div slot="content" class="tabbed-content">
-                      <Grid as fullWidth>
-                        <TabContent>
-                          <SeachTab />
-                        </TabContent>
-                        <TabContent>
-                          <Row />
-                        </TabContent>
-                        <TabContent>
-                          <MappingsCreator />
-                        </TabContent>
-                      </Grid>
-                    </div>
-                  </Tabs>
-                </Column>
-              </Row>
-            </Grid>
-          </AnkiConectGate>
-        </AnkiConnectProvider>
-      </Column>
-    </Row>
-  </Grid>
+  <AnkiConnectProvider>
+    <AnkiConectGate>
+      <Tabs aria-label="Tab navigation">
+        <Tab label="Search" />
+        <Tab label="Sources" />
+        <Tab label="Settings" />
+        <div slot="content" class="tabbed-content">
+          <TabContent>
+            <SeachTab />
+          </TabContent>
+          <TabContent>
+            <Row />
+          </TabContent>
+          <TabContent>
+            <MappingsCreator />
+          </TabContent>
+        </div>
+      </Tabs>
+    </AnkiConectGate>
+  </AnkiConnectProvider>
 </Content>

@@ -14,16 +14,9 @@
   let selectedMapping: ICardMapping | undefined;
   let allTableRows: SelectTableRow[] = [];
   $: selectedTableRows = allTableRows.filter((r) => r.selected);
-  $: {
-    console.log(allTableRows);
-  }
 </script>
 
-<Row>
-  <Column>
-    <SearchBar bind:sentences={searchedSentences} />
-  </Column>
-</Row>
+<SearchBar bind:sentences={searchedSentences} />
 
 {#if searchedSentences?.length > 0}
   <div in:fly out:slide>
