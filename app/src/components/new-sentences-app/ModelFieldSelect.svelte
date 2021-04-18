@@ -12,16 +12,10 @@
   const ankiConnect = getContext<IAnkiConnect>("anki");
   let modelNames: string[];
 
-  $: {
-    console.log(selected);
-  }
-
-  $: {
-    if (modelName?.length > 0) {
-      ankiConnect
-        .modelFieldNames(modelName)
-        .then((names) => (modelNames = names));
-    }
+  $: if (modelName?.length > 0) {
+    ankiConnect
+      .modelFieldNames(modelName)
+      .then((names) => (modelNames = names));
   }
 </script>
 

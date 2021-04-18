@@ -43,13 +43,11 @@
   }
 
   let buttonBaseProps: ButtonProps;
-  $: {
-    buttonBaseProps = {
-      disabled: !targetMapping || loading || disabled,
-      icon: Add16,
-      kind: "primary",
-    };
-  }
+  $: buttonBaseProps = {
+    disabled: !targetMapping || loading || disabled,
+    icon: Add16,
+    kind: "primary",
+  };
 </script>
 
 <div>

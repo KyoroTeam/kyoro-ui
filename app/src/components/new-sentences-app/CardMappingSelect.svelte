@@ -15,9 +15,7 @@
     }
   });
 
-  $: {
-    selected = cardMappings.find((c) => c.mappingName == selectedMappingName);
-  }
+  $: selected = cardMappings.find((c) => c.mappingName == selectedMappingName);
 </script>
 
 {#if cardMappings?.length > 0}
