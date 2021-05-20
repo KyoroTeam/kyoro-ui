@@ -7,7 +7,6 @@
     TableHead,
     TableBody,
     DataTable,
-    Tag,
     Checkbox,
     Pagination,
   } from "carbon-components-svelte";
@@ -29,7 +28,7 @@
     tableRows[index].selected = !tableRows[index].selected;
   }
 
-  const headers = ["", "Sentence", "Source", "Tags"];
+  const headers = ["", "Sentence", "Source", ""];
 </script>
 
 <DataTable style={"width:100%"}>
@@ -54,11 +53,7 @@
             </div>
           </TableCell>
           <TableCell>{row.source}</TableCell>
-          <TableCell>
-            {#each row.tags as tag}
-              <Tag>{tag}</Tag>
-            {/each}
-          </TableCell>
+          <TableCell />
         </TableRow>
       {/each}
     </TableBody>

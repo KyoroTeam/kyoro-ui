@@ -28,9 +28,6 @@
         bind:tableRows={allTableRows}
       />
     </Row>
-    <Row padding>
-      <Column>&nbsp;</Column>
-    </Row>
     <Row>
       <Column>
         <CardMappingSelect bind:selected={selectedMapping} />
