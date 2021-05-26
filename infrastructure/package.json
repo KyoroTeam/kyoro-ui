@@ -23,7 +23,7 @@
   "dependencies": {
     "@aws-cdk/aws-ec2": "^1.105.0",
     "@aws-cdk/aws-efs": "^1.105.0",
-    "@aws-cdk/aws-elasticbeanstalk": "^1.105.0",
+    "@aws-cdk/aws-elasticbeanstalk": "^1.106.0",
     "@aws-cdk/aws-rds": "^1.105.0",
     "@aws-cdk/aws-s3": "^1.105.0",
     "@aws-cdk/core": "1.105.0",
