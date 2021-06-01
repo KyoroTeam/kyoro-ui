@@ -5,19 +5,13 @@ import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
+import java.util.stream.*;
 
-/**
- * Hello world!
- *
- */
-public class Handler implements RequestHandler<Map<String, String>, ArrayList<String[]>> {
+public class Handler implements RequestHandler<Map<String, String>, List<Result>> {
     @Override
-    public ArrayList<String[]> handleRequest(Map<String, String> event, Context context) {
+    public List<Result> handleRequest(Map<String, String> event, Context context) {
         // Gson gson = new GsonBuilder().setPrettyPrinting().create();
         LambdaLogger logger = context.getLogger();
 
@@ -26,12 +20,16 @@ public class Handler implements RequestHandler<Map<String, String>, ArrayList<St
         Tokenizer tokenizer = new Tokenizer();
         List<Token> tokens = tokenizer.tokenize(event.get("request"));
 
-        var results = new ArrayList<String[]>();
         for (Token token : tokens) {
-            results.add(token.getAllFeaturesArray());
             logger.log(token.getBaseForm() + "\t" + token.getAllFeatures());
         }
 
-        return results;
+        var resultList = tokens.stream()
+                .filter(r -> r.getPartOfSpeechLevel1() == "動詞" || r.getPartOfSpeechLevel1() == "名詞")
+                .map(token -> new Result(token.getPartOfSpeechLevel1() == "動詞" ? PartOfSpeach.VERB : PartOfSpeach.NOUN,
+                        token.getBaseForm(), token.getConjugationForm(), token.getPronunciation()))
+                .collect(Collectors.toList());
+
+        return resultList;
     }
 }
