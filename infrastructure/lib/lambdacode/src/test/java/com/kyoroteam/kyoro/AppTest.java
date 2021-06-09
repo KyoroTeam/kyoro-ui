@@ -23,7 +23,7 @@ public class AppTest
         var handler = new Handler();
         var request = new HashMap<String, String>();
         var context = Mockito.mock(Context.class);
-        request.put("request", "この言語はばかげているように見える");
+        request.put("request", "この言語は少しばかげているように見える");
         var results = handler.handleRequest(request, context);
         System.out.print(results);
         assertTrue( true );
