@@ -1,0 +1,2 @@
+aws lambda update-function-code --function-name Kuromoji --zip-file fileb://target/kuromoji-tokenizer-1.0-SNAPSHOT.jar
+aws --cli-binary-format raw-in-base64-out lambda invoke --function-name Kuromoji --payload '{ "request": "この言語はばかげているように見える" }' response.json
