@@ -1,6 +1,6 @@
 package ve;
 
-import org.atilika.kuromoji.Token;
+import com.atilika.kuromoji.TokenBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.List;
   * A Java port of Kim Ahlström's Ruby code for Ve's Parse (which identifies word boundaries).
   **/
 public class Parse {
-    private final Token[] tokenArray;
+    private final TokenBase[] tokenArray;
     private static final String NO_DATA = "*";
 
     private static final int POS1 = 0;
@@ -25,7 +25,7 @@ public class Parse {
     private static final int READING = 7;
     private static final int PRONUNCIATION = 8;
 
-    public Parse(Token[] tokenArray) {
+    public Parse(TokenBase[] tokenArray) {
         if(tokenArray.length == 0) throw new UnsupportedOperationException("Cannot parse an empty array of tokens.");
 
         this.tokenArray = tokenArray;
@@ -37,7 +37,7 @@ public class Parse {
      *  */
     public List<Word> words(){
         List<Word> wordList = new ArrayList<>();
-        Token current = null, previous = null, following = null;
+        TokenBase current = null, previous = null, following = null;
 
         for(int i = 0; i < tokenArray.length; i++){
             int finalSlot = wordList.size() - 1;
@@ -93,7 +93,7 @@ public class Parse {
                                     break;
                                 default:
                                     if(Arrays.copyOfRange(following.getAllFeaturesArray(), POS1, POS4 +1)[POS1].equals(JOSHI)
-                                            && following.getSurfaceForm().equals(NI))
+                                            && following.getSurface().equals(NI))
                                         pos = Pos.Adverb; // Ve script redundantly (I think) also has eat_next = false here.
                                     break;
                             }
@@ -109,7 +109,7 @@ public class Parse {
                             switch(currentPOSArray[POS3]){
                                 case FUKUSHIKANOU:
                                     if(Arrays.copyOfRange(following.getAllFeaturesArray(), POS1, POS4 +1)[POS1].equals(JOSHI)
-                                        && following.getSurfaceForm().equals(NI)){
+                                        && following.getSurface().equals(NI)){
                                         pos = Pos.Adverb;
                                         eat_next = false; // Changed this to false because 'case JOSHI' has 'attach_to_previous = true'.
                                     }
@@ -183,7 +183,7 @@ public class Parse {
                     else if (current.getAllFeaturesArray()[CTYPE].equals(FUHENKAGATA) && current.getAllFeaturesArray()[BASIC].equals(NN))
                         attach_to_previous = true;
                     else if (current.getAllFeaturesArray()[CTYPE].equals(TOKUSHU_DA) || current.getAllFeaturesArray()[CTYPE].equals(TOKUSHU_DESU)
-                            && !current.getSurfaceForm().equals(NA))
+                            && !current.getSurface().equals(NA))
                         pos = Pos.Verb;
                     break;
                 case DOUSHI:
@@ -206,8 +206,8 @@ public class Parse {
                     // Refers to line 309.
                     pos = Pos.Postposition;
                     final List<String> qualifyingList2 = Arrays.asList(TE, DE, BA); // added NI
-                    if(currentPOSArray[POS2].equals(SETSUZOKUJOSHI) && qualifyingList2.contains(current.getSurfaceForm())
-                            || current.getSurfaceForm().equals(NI))
+                    if(currentPOSArray[POS2].equals(SETSUZOKUJOSHI) && qualifyingList2.contains(current.getSurface())
+                            || current.getSurface().equals(NI))
                         attach_to_previous = true;
                     break;
                 case RENTAISHI:
@@ -237,7 +237,7 @@ public class Parse {
             if(attach_to_previous && wordList.size() > 0){
                 // these sometimes try to add to null readings.
                 wordList.get(finalSlot).getTokens().add(current);
-                wordList.get(finalSlot).appendToWord(current.getSurfaceForm());
+                wordList.get(finalSlot).appendToWord(current.getSurface());
                 wordList.get(finalSlot).appendToReading(getFeatureSafely(current, READING));
                 wordList.get(finalSlot).appendToTranscription(getFeatureSafely(current, PRONUNCIATION));
                 if(also_attach_to_lemma) wordList.get(finalSlot).appendToLemma(current.getAllFeaturesArray()[BASIC]); // lemma == basic.
@@ -249,13 +249,13 @@ public class Parse {
                         grammar,
                         current.getAllFeaturesArray()[BASIC],
                         pos,
-                        current.getSurfaceForm(),
+                        current.getSurface(),
                         current);
                 if(eat_next){
                     if(i == tokenArray.length -1) throw new IllegalStateException("There's a path that allows array overshooting.");
                     following = tokenArray[i+1];
                     word.getTokens().add(following);
-                    word.appendToWord(following.getSurfaceForm());
+                    word.appendToWord(following.getSurface());
                     word.appendToReading(following.getReading());
                     word.appendToTranscription(getFeatureSafely(following, PRONUNCIATION));
                     if (eat_lemma) word.appendToLemma(following.getAllFeaturesArray()[BASIC]);
@@ -271,7 +271,7 @@ public class Parse {
 
     /** Return an asterisk if pronunciation field isn't in array (READING and PRONUNCIATION fields are left undefined,
       * rather than as "*" by MeCab). Other feature fields are guaranteed to be safe, however. */
-    private String getFeatureSafely(Token token, int feature) {
+    private String getFeatureSafely(TokenBase token, int feature) {
         if(feature > PRONUNCIATION) throw new IllegalStateException("Asked for a feature out of bounds.");
         return token.getAllFeaturesArray().length >= feature + 1 ? token.getAllFeaturesArray()[feature] : "*";
     }

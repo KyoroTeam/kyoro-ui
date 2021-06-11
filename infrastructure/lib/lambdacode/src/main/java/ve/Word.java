@@ -1,6 +1,6 @@
 package ve;
 
-import org.atilika.kuromoji.Token;
+import com.atilika.kuromoji.TokenBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Word {
 //    private String transcription_script;
     private String lemma; // "聞く"
     private Pos part_of_speech; // eg. Pos.Noun
-    private List<Token> tokens = new ArrayList<>(); // those which were eaten up by this one word: {聞か, せ, られ}
+    private List<TokenBase> tokens = new ArrayList<>(); // those which were eaten up by this one word: {聞か, せ, られ}
     private String word; // "聞かせられ"
 
     /**
@@ -44,7 +44,7 @@ public class Word {
                 String basic,
                 Pos part_of_speech,
                 String nodeStr,
-                Token token) {
+                TokenBase token) {
         this.reading = read;
         this.transcription = pronunciation;
         this.grammar = grammar;
@@ -68,7 +68,7 @@ public class Word {
         return part_of_speech;
     }
 
-    public List<Token> getTokens() {
+    public List<TokenBase> getTokens() {
         return tokens;
     }
 
