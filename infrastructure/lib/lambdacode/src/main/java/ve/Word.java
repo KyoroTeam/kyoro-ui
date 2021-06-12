@@ -64,6 +64,10 @@ public class Word {
         return lemma;
     }
 
+    public String getReading() {
+        return reading;
+    }    
+
     public Pos getPart_of_speech() {
         return part_of_speech;
     }

@@ -1,17 +1,15 @@
 package com.kyoroteam.kyoro;
+import ve.Pos;
 
 public class Result {
-    public Result(PartOfSpeach partOfSpeeach, String dictionaryForm, String conjugatedForm, String pronounciation, String all) {
+    public Result(Pos partOfSpeeach, String word, String lemma, String reading) {
         PartOfSpeeach = partOfSpeeach;
-        DictionaryForm = dictionaryForm;
-        ConjugatedForm = conjugatedForm;
-        Pronounciation = pronounciation;
-        All = all;
+        Word = word;
+        Lemma = lemma;
+        Reading = reading;
     }
-
-    public PartOfSpeach PartOfSpeeach;
-    public String DictionaryForm;
-    public String ConjugatedForm;
-    public String Pronounciation;
-    public String All;
+    public Pos PartOfSpeeach;
+    public String Word;
+    public String Lemma;
+    public String Reading;
 }

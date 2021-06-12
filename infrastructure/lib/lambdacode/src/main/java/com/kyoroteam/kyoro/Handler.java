@@ -10,22 +10,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.*;
 
+import ve.Pos;
+
 public class Handler implements RequestHandler<Map<String, String>, List<Result>> {
     @Override
     public List<Result> handleRequest(Map<String, String> event, Context context) {
         var builder = new Tokenizer.Builder();
         Tokenizer tokenizer = builder.mode(Mode.SEARCH).build();
-        // Tokenizer tokenizer = new Tokenizer();
         List<Token> tokens = tokenizer.tokenize(event.get("request"));
 
-        // 助動詞: (ex: tai in tabetai) should be grouped with the previous verb
-        // 副詞: Add support for adjectives
-        // 非自立 nouns should be filtered (e.g, you)
+        var parser = new ve.Parse(tokens.toArray(new Token[0]));  
+        var words = parser.words();
 
-        var resultList = tokens.stream()
-            .filter(r -> r.getPartOfSpeechLevel1().equals("動詞") || r.getPartOfSpeechLevel1().equals("名詞"))
-            .map(token -> new Result(token.getPartOfSpeechLevel1().equals("動詞") ? PartOfSpeach.VERB : PartOfSpeach.NOUN,
-                    token.getBaseForm(), token.getSurface(), token.getPronunciation(), token.getAllFeatures()))
+        var resultList = words.stream()
+            .filter(r -> !r.getPart_of_speech().equals(Pos.Postposition) && !r.getPart_of_speech().equals(Pos.Symbol))
+            .filter(r -> !r.getLemma().equals("*"))
+            .map(r -> new Result(r.getPart_of_speech(), r.toString(), r.getLemma(), r.getReading()))
             .collect(Collectors.toList());
 
         return resultList;

@@ -1,6 +1,6 @@
 package ve;
 
-import com.atilika.kuromoji.TokenBase;
+import com.atilika.kuromoji.ipadic.Token;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.List;
   * A Java port of Kim Ahlström's Ruby code for Ve's Parse (which identifies word boundaries).
   **/
 public class Parse {
-    private final TokenBase[] tokenArray;
+    private final Token[] tokenArray;
     private static final String NO_DATA = "*";
 
     private static final int POS1 = 0;
@@ -25,7 +25,7 @@ public class Parse {
     private static final int READING = 7;
     private static final int PRONUNCIATION = 8;
 
-    public Parse(TokenBase[] tokenArray) {
+    public Parse(Token[] tokenArray) {
         if(tokenArray.length == 0) throw new UnsupportedOperationException("Cannot parse an empty array of tokens.");
 
         this.tokenArray = tokenArray;
@@ -37,7 +37,7 @@ public class Parse {
      *  */
     public List<Word> words(){
         List<Word> wordList = new ArrayList<>();
-        TokenBase current = null, previous = null, following = null;
+        Token current = null, previous = null, following = null;
 
         for(int i = 0; i < tokenArray.length; i++){
             int finalSlot = wordList.size() - 1;
@@ -271,7 +271,7 @@ public class Parse {
 
     /** Return an asterisk if pronunciation field isn't in array (READING and PRONUNCIATION fields are left undefined,
       * rather than as "*" by MeCab). Other feature fields are guaranteed to be safe, however. */
-    private String getFeatureSafely(TokenBase token, int feature) {
+    private String getFeatureSafely(Token token, int feature) {
         if(feature > PRONUNCIATION) throw new IllegalStateException("Asked for a feature out of bounds.");
         return token.getAllFeaturesArray().length >= feature + 1 ? token.getAllFeaturesArray()[feature] : "*";
     }
