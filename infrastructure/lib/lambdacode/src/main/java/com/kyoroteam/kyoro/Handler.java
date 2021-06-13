@@ -23,7 +23,9 @@ public class Handler implements RequestHandler<Map<String, String>, List<Result>
         var words = parser.words();
 
         var resultList = words.stream()
-            .filter(r -> !r.getPart_of_speech().equals(Pos.Postposition) && !r.getPart_of_speech().equals(Pos.Symbol))
+            .filter(r -> !r.getPart_of_speech().equals(Pos.Postposition) 
+                      && !r.getPart_of_speech().equals(Pos.Symbol) 
+                      && !r.getPart_of_speech().equals(Pos.Prefix))
             .filter(r -> !r.getLemma().equals("*"))
             .map(r -> new Result(r.getPart_of_speech(), r.toString(), r.getLemma(), r.getReading()))
             .collect(Collectors.toList());
