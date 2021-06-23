@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  solr:
+    image: solr
+    ports:
+      - "8983:8983"
+    networks:
+      main:
+        aliases:
+          - solr
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "7070:80"
+    links:
+      - solr:solr
+    depends_on:
+      - solr
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+    networks:
+      main:
+        aliases:
+          - nginx
+
+networks:
+  main:
