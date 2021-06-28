@@ -7,18 +7,27 @@ import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.*;
+import com.worksap.nlp.sudachi.sentdetect.*;
 
 import ve.Pos;
 
-public class Handler implements RequestHandler<Map<String, String>, Result> {
+public class Handler implements RequestHandler<Map<String, String>, List<KyoroTokenizeResult>> {
     @Override
-    public Result handleRequest(Map<String, String> event, Context context) {
+    public List<KyoroTokenizeResult> handleRequest(Map<String, String> event, Context context) {
         var builder = new Tokenizer.Builder();
-        Tokenizer tokenizer = builder.mode(Mode.SEARCH).build();
-        List<Token> tokens = tokenizer.tokenize(event.get("request"));
+        var tokenizer = builder.mode(Mode.SEARCH).build();
+        var sentences = SplitSentences(event.get("request"));
+        var results = sentences.stream().map(s -> TokenizeSentence(tokenizer, s)).collect(Collectors.toList());
+        return results;
+    }
+
+    private KyoroTokenizeResult TokenizeSentence(Tokenizer tokenizer, String niceSentence) {
+        List<Token> tokens = tokenizer.tokenize(niceSentence);
 
         var parser = new ve.Parse(tokens.toArray(new Token[0]));
         var words = parser.words();
@@ -32,8 +41,18 @@ public class Handler implements RequestHandler<Map<String, String>, Result> {
         var lemmas = resultList.stream().map(r -> r.getLemma()).collect(Collectors.toList());
         var readings = resultList.stream().map(r -> r.getReading()).collect(Collectors.toList());
 
-        var result = new Result(words2, lemmas, readings);
+        return new KyoroTokenizeResult(niceSentence, words2, lemmas, readings);
+    }
 
-        return result;
+    private List<String> SplitSentences(String crazyText) {
+        var x = new SentenceDetector();
+        int end = 0;
+        var list = new ArrayList<String>();
+        while ((end = x.getEos(crazyText, null)) != 0) {
+            String sentence = crazyText.substring(0, end);
+            crazyText = crazyText.substring(end);
+            list.add(sentence);
+        }
+        return list;
     }
 }
