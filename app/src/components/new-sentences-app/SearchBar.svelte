@@ -12,7 +12,7 @@
     const searchQuery = encodeURIComponent(
       `Words:${searchValue} OR Lemmas:${searchValue}`
     );
-    const url = `http://localhost:8983/solr/kanji/select?q=${searchQuery}`;
+    const url = `http://localhost:7070/search/kanji/select?q=${searchQuery}`;
 
     loading = true;
     fetch(url)
@@ -23,7 +23,7 @@
             return {
               id: i,
               language: "JA",
-              sentence: "TODO",
+              sentence: s.Sentence,
               tags: ["A", "B"],
               translations: [
                 {

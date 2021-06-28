@@ -10,6 +10,7 @@ declare module Solr {
   }
 
   export interface Doc {
+    Sentence: string;
     Words: string[];
     Lemmas: string[];
     Readings: string[];
