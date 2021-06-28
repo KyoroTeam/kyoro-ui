@@ -19,38 +19,23 @@
       .then((r) => r.json())
       .then(
         (r: Solr.SolrSearchResponse) =>
-          (sentences = r.response.docs.map((s, i) => {
-            return {
-              id: i,
-              language: "JA",
-              sentence: s.Sentence,
-              tags: ["A", "B"],
-              translations: [
-                {
-                  id: 13,
-                  language: "ENG",
-                  sentence: "This is a Translation",
-                },
-              ],
-            } as JibikiSenteceResponse;
-          }))
+          (sentences = r.response.docs.map((s, i) => ({
+            id: i,
+            language: "a",
+            sentence: s.Sentence,
+            tags: ["A", "B"],
+            translations: [
+              {
+                id: 13,
+                language: "ENG",
+                sentence: "This is a Translation",
+              },
+            ],
+          })))
       )
       .catch((e) => console.log(e))
       .finally(() => (loading = false));
   }
-
-  function debounce<T extends any[]>(
-    fn: (...args: T) => void,
-    timeout: number
-  ) {
-    let timeout_id: NodeJS.Timeout;
-    return (...args: Parameters<typeof fn>) => {
-      clearTimeout(timeout_id);
-      timeout_id = setTimeout(() => fn(...args), timeout);
-    };
-  }
-
-  // const debouncedSearch = debounce(fetchSentences, 1000);
 </script>
 
 <ButtonSet style={"width:100%"}>
