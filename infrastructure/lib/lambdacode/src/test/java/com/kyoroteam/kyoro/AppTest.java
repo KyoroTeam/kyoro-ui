@@ -2,6 +2,9 @@ package com.kyoroteam.kyoro;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.stream.*;
 import java.util.*;
@@ -11,6 +14,10 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.TokenizerBase.Mode;
 import com.atilika.kuromoji.ipadic.Tokenizer;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.reflect.*;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -27,37 +34,37 @@ public class AppTest {
 
     /**
      * Rigorous Test :-)
+     * 
+     * @throws IOException
+     * @throws JsonIOException
      */
     @Test
-    public void shouldAnswerWithTrue() {
+    public void shouldAnswerWithTrue() throws JsonIOException, IOException {
+        // var handler = new Handler();
+        // var request = new HashMap<String, String>();
+        // var context = Mockito.mock(Context.class);
+        // request.put("request", LONG_TEXT);
+        // var results = handler.handleRequest(request, context);
+        // System.out.print(results);
+        // assertTrue(true);
+
+        Gson gson = new Gson();
+        JsonReader r = new JsonReader(new FileReader("/home/james/Desktop/all_v11.json"));
+        var type = new TypeToken<ArrayList<Request>>() {
+        }.getType();
+        ArrayList<Request> request = gson.fromJson(r, type);
+
         var handler = new Handler();
-        var request = new HashMap<String, String>();
         var context = Mockito.mock(Context.class);
-        request.put("request", LONG_TEXT);
+
         var results = handler.handleRequest(request, context);
-        System.out.print(results);
-        assertTrue(true);
+
+        gson.toJson(results, new FileWriter("/home/james/Desktop/all_v11_out.json"));
     }
 
     @Test
     public void Test() {
-        var builder = new Tokenizer.Builder();
-        Tokenizer tokenizer = builder.mode(Mode.SEARCH).build();
 
-        var tokens = tokenizer.tokenize(LONG_TEXT);
-
-        var parser = new ve.Parse(tokens.toArray(new Token[0]));
-        var words = parser.words();
-        var resultList = words.stream()
-                .filter(r -> !r.getPart_of_speech().equals(Pos.Postposition)
-                        && !r.getPart_of_speech().equals(Pos.Symbol) && !r.getPart_of_speech().equals(Pos.Prefix))
-                .filter(r -> !r.getLemma().equals("*")).collect(Collectors.toList());
-
-        var words2 = resultList.stream().map(r -> r.getWord()).collect(Collectors.toList());
-        var lemmas = resultList.stream().map(r -> r.getLemma()).collect(Collectors.toList());
-        var readings = resultList.stream().map(r -> r.getReading()).collect(Collectors.toList());
-
-        var result = new KyoroTokenizeResult(LONG_TEXT, words2, lemmas, readings);
     }
 
     @Test
