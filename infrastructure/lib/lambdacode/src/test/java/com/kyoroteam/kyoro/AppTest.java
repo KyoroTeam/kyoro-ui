@@ -59,7 +59,10 @@ public class AppTest {
 
         var results = handler.handleRequest(request, context);
 
-        gson.toJson(results, new FileWriter("/home/james/Desktop/all_v11_out.json"));
+        var writer = new FileWriter("/home/james/Desktop/all_v11_out.json");
+        gson.toJson(results, writer);
+        writer.flush();
+        writer.close();
     }
 
     @Test

@@ -59,6 +59,12 @@ public class Handler implements RequestHandler<List<Request>, List<List<KyoroTok
             crazyText = crazyText.substring(end);
             list.add(sentence);
         }
+
+        // No senteces found, the whole thing is one sentence.
+        if (end < 0 && list.size() == 0) {
+            list.add(crazyText);
+        }
+
         return list;
     }
 }
