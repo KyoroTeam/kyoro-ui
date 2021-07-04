@@ -1,6 +1,8 @@
+import type { SentecePart } from "./Jibiki";
+
 export interface SelectTableRow {
   selected: boolean;
-  sentence: string;
+  sentenceParts: SentecePart[];
   english: string;
   source: string;
   tags: string[];

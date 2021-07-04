@@ -18,8 +18,8 @@
 
   $: tableRows = inputRows.map((row) => ({
     selected: false,
-    sentence: row.translations[0]?.sentence,
-    english: row.sentence,
+    sentenceParts: row.sentenceParts,
+    english: row.translations[0]?.sentence,
     tags: row.tags,
     source: "Jibiki",
   }));
@@ -31,6 +31,7 @@
   const headers = ["", "Sentence", "Source", ""];
 </script>
 
+<div class="highlight" />
 <DataTable style={"width:100%"}>
   <Table>
     <TableHead>
@@ -47,10 +48,9 @@
             <Checkbox bind:checked={row.selected} />
           </TableCell>
           <TableCell>
-            <div class="box">
-              <p>{row.sentence}</p>
-              <p>{row.english}</p>
-            </div>
+            {#each row.sentenceParts as part}
+              <span class={part.highlight ? "highlight" : ""}>{part.part}</span>
+            {/each}
           </TableCell>
           <TableCell>{row.source}</TableCell>
           <TableCell />
@@ -65,5 +65,9 @@
   .box {
     display: flex;
     flex-direction: column;
+  }
+  .highlight {
+    border-radius: 4px;
+    background-color: aquamarine;
   }
 </style>
