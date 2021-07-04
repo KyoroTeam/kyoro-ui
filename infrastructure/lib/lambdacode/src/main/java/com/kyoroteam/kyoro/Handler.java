@@ -13,6 +13,7 @@ import java.util.stream.*;
 import com.worksap.nlp.sudachi.sentdetect.*;
 
 import ve.Pos;
+import ve.Word;
 
 public class Handler implements RequestHandler<List<Request>, List<List<KyoroTokenizeResult>>> {
     @Override
@@ -46,8 +47,16 @@ public class Handler implements RequestHandler<List<Request>, List<List<KyoroTok
         var words2 = resultList.stream().map(r -> r.getWord()).collect(Collectors.toList());
         var lemmas = resultList.stream().map(r -> r.getLemma()).collect(Collectors.toList());
         var readings = resultList.stream().map(r -> r.getReading()).collect(Collectors.toList());
+        var wordPositions = resultList.stream().map(word -> GetPositionsOfWord(word)).collect(Collectors.toList());
 
-        return new KyoroTokenizeResult(source, niceSentence, translation, words2, lemmas, readings);
+        return new KyoroTokenizeResult(source, niceSentence, translation, words2, wordPositions, lemmas, readings);
+    }
+
+    private WordPosition GetPositionsOfWord(Word word) {
+        var min = word.getTokens().stream().min((a, b) -> Integer.compare(a.getPosition(), b.getPosition())).get();
+        var max = word.getTokens().stream().max((a, b) -> Integer.compare(a.getPosition(), b.getPosition())).get();
+        var maxSurface = max.getSurface();
+        return new WordPosition(min.getPosition(), max.getPosition() + maxSurface.length());
     }
 
     private List<String> SplitSentences(String crazyText) {
