@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { Search, Button, ButtonSet } from "carbon-components-svelte";
+  import { Search, ButtonSet } from "carbon-components-svelte";
   import type { JibikiSenteceResponse, SentecePart } from "src/models/Jibiki";
   import SentenceSourceSelect from "../SentenceSourceSelect.svelte";
-  import { Index, Document } from "flexsearch";
+  import { Document } from "flexsearch";
   import { onMount } from "svelte";
 
   export let sentences: JibikiSenteceResponse[];
 
-  let loading = false;
   let searchValue = "";
 
   const docs = [
@@ -794,10 +793,6 @@
     docs.forEach((doc, i) => index.add({ id: i, ...doc }));
   });
 
-  function insertAtIndex(s: string, insertString: string, index: number) {
-    return s.substring(0, index) + insertString + s.substring(index);
-  }
-
   function getHighloteSentenceParts(
     s: Solr.Doc,
     searchWord: string
@@ -834,12 +829,12 @@
     return sentenceParts;
   }
 
-  async function fetchSentences() {
+  $: {
     const result = index.search(searchValue, {
       enrich: true,
     }) as FlexSearch.RootObject[];
 
-    console.log(JSON.stringify(result));
+    console.log(searchValue, JSON.stringify(result));
 
     const b = new Set<Solr.Doc>(
       result.flatMap((a) => a.result.map((r) => r.doc))
@@ -854,42 +849,10 @@
       language: "JA",
       translations: [],
     }));
-
-    // const searchQuery = encodeURIComponent(
-    //   `Words:${searchValue} OR Lemmas:${searchValue}`
-    // );
-    // const url = `http://localhost:7070/search/kanji/select?q=${searchQuery}`;
-
-    // loading = true;
-    // fetch(url)
-    //   .then((r) => r.json())
-    //   .then(
-    //     (r: Solr.SolrSearchResponse) =>
-    //       (sentences = r.response.docs.map((s, i) => ({
-    //         id: i,
-    //         language: "a",
-    //         sentence: s.Sentence,
-    //         tags: ["A", "B"],
-    //         translations: [
-    //           {
-    //             id: 13,
-    //             language: "ENG",
-    //             sentence: "This is a Translation",
-    //           },
-    //         ],
-    //       })))
-    //   )
-    //   .catch((e) => console.log(e))
-    //   .finally(() => (loading = false));
   }
 </script>
 
 <ButtonSet style={"width:100%"}>
-  <Search
-    bind:value={searchValue}
-    on:input={fetchSentences}
-    placeholder="Enter a phrase..."
-  />
+  <Search bind:value={searchValue} placeholder="Enter a phrase..." />
   <SentenceSourceSelect />
-  <Button skeleton={loading} on:click={fetchSentences}>Search</Button>
 </ButtonSet>
