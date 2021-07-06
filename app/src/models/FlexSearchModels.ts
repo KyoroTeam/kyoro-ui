@@ -1,7 +1,7 @@
 declare module FlexSearch {
   export interface Result {
     id: number;
-    doc: Solr.Doc;
+    doc: Solr.KyoTokenResult;
   }
 
   export interface RootObject {

@@ -9,6 +9,8 @@
     HeaderNavItem,
     HeaderNavMenu,
     SideNavDivider,
+    SideNavMenu,
+    SideNavMenuItem,
   } from "carbon-components-svelte";
   import AnkiConectGate from "./components/AnkiConectGate.svelte";
 
@@ -35,7 +37,11 @@
     <SideNavLink isSelected text="New Cards" />
     <SideNavLink text="Modify Cards" />
     <SideNavDivider />
-    <SideNavLink text="Sentence Sources" />
+    <SideNavMenu expanded text="Sentence Sources">
+      <SideNavMenuItem href="/" text="Link 1" />
+      <SideNavMenuItem href="/" text="Link 2" />
+      <SideNavMenuItem href="/" text="Link 3" />
+    </SideNavMenu>
   </SideNavItems>
 </SideNav>
 

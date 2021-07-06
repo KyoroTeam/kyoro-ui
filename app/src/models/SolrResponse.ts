@@ -9,12 +9,17 @@ declare module Solr {
     params: Params;
   }
 
-  export interface Doc {
+  export interface KyoTokenResult {
+    Source: string;
     Sentence: string;
+    Translation?: string;
     Words: string[];
     WordPositions: { Start: number; End: number }[];
     Lemmas: string[];
     Readings: string[];
+  }
+
+  export interface Doc extends KyoTokenResult {
     id: string;
     _version_: any;
   }

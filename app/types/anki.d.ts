@@ -1,1 +1,1 @@
-declare function pycmd<T>(command: string, callback?: (T: value) => void);
+declare function pycmd<T>(command: string, callback?: (value: T) => void);

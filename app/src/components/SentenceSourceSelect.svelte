@@ -1,13 +1,15 @@
 <script lang="ts">
   import { MultiSelect } from "carbon-components-svelte";
+  import type { SentenceSource } from "../stores/sentenceSourcesStore";
+  import { SentenceSourceStore } from "../stores/sentenceSourcesStore";
+
+  let sentenceSources: SentenceSource[];
+  SentenceSourceStore.subscribe((s) => (sentenceSources = s));
 </script>
 
 <MultiSelect
   size="xl"
   label="Sentence Sources"
-  items={[
-    { id: "0", text: "Jibiki" },
-    { id: "1", text: "Custom" },
-  ]}
+  items={sentenceSources.map((item, i) => ({ id: `${i}`, text: item.name }))}
   selectedIds={["0"]}
 />
