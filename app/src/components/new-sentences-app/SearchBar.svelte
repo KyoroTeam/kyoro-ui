@@ -2,19 +2,11 @@
   import { Search, ButtonSet } from 'carbon-components-svelte';
   import type { JibikiSenteceResponse, SentecePart } from 'src/models/Jibiki';
   import SentenceSourceSelect from '../SentenceSourceSelect.svelte';
-  import { Document } from 'flexsearch';
-  import { onMount } from 'svelte';
-  // import { getLocalContentList } from "src/services/anki";
   import { OfflineIndex } from '../../stores/offlineIndexStore';
 
   export let sentences: JibikiSenteceResponse[];
 
   let searchValue = '';
-
-  onMount(() => {
-    // Docs.forEach((doc, i) => index.add({ id: i, ...doc }));
-    // getLocalContentList().then((content) => console.log(content));
-  });
 
   function getHighloteSentenceParts(s: Solr.KyoTokenResult, searchWord: string): SentecePart[] {
     let foundIndex = s.Words.indexOf(searchWord);
@@ -66,7 +58,13 @@
       tags: ['A', 'B'],
       language: 'JA',
       source: s.Source,
-      translations: [],
+      translations: [
+        {
+          id: 0,
+          language: 'EN',
+          sentence: s.Translation,
+        },
+      ],
     }));
   }
 </script>

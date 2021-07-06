@@ -1,7 +1,7 @@
 export interface Translation {
   id: number;
   language: string;
-  sentence: string;
+  sentence?: string;
 }
 
 export type SentecePart = { part: string; highlight: boolean };

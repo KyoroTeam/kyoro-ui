@@ -51,6 +51,7 @@
             {#each row.sentenceParts as part}
               <span class={part.highlight ? 'highlight' : ''}>{part.part}</span>
             {/each}
+            {row.english ?? ''}
           </TableCell>
           <TableCell>{row.source}</TableCell>
           <TableCell />
