@@ -10,6 +10,7 @@ export interface JibikiSenteceResponse {
   id: number;
   language: string;
   sentence: string;
+  source: string;
   sentenceParts: SentecePart[];
   tags: string[];
   translations: Translation[];

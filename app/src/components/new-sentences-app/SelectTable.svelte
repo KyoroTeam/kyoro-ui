@@ -9,30 +9,30 @@
     DataTable,
     Checkbox,
     Pagination,
-  } from "carbon-components-svelte";
-  import type { JibikiSenteceResponse } from "src/models/Jibiki";
-  import type { SelectTableRow } from "src/models/SelectTableRow";
+  } from 'carbon-components-svelte';
+  import type { JibikiSenteceResponse } from 'src/models/Jibiki';
+  import type { SelectTableRow } from 'src/models/SelectTableRow';
 
   export let inputRows: JibikiSenteceResponse[];
   export let tableRows: SelectTableRow[];
 
-  $: tableRows = inputRows.map((row) => ({
+  $: tableRows = inputRows.map(row => ({
     selected: false,
     sentenceParts: row.sentenceParts,
     english: row.translations[0]?.sentence,
     tags: row.tags,
-    source: "Jibiki",
+    source: row.source,
   }));
 
   function onSelected(index: number) {
     tableRows[index].selected = !tableRows[index].selected;
   }
 
-  const headers = ["", "Sentence", "Source", ""];
+  const headers = ['', 'Sentence', 'Source', ''];
 </script>
 
 <div class="highlight" />
-<DataTable style={"width:100%"}>
+<DataTable style={'width:100%'}>
   <Table>
     <TableHead>
       <TableRow>
@@ -49,7 +49,7 @@
           </TableCell>
           <TableCell>
             {#each row.sentenceParts as part}
-              <span class={part.highlight ? "highlight" : ""}>{part.part}</span>
+              <span class={part.highlight ? 'highlight' : ''}>{part.part}</span>
             {/each}
           </TableCell>
           <TableCell>{row.source}</TableCell>

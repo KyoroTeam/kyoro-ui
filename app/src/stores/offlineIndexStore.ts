@@ -8,7 +8,7 @@ import greenlet from 'greenlet';
 function createIndex(data?: Solr.KyoTokenResult[]) {
   const index = new Document({
     index: ['Words', 'Lemmas', 'Readings'],
-    store: ['Sentence', 'Words', 'Lemmas', 'WordPositions'],
+    store: ['Sentence', 'Words', 'Lemmas', 'WordPositions', 'Source'],
     worker: true,
   });
   data?.forEach((doc, i) => index.add({ id: i, ...doc }));
