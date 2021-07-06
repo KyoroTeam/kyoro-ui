@@ -39,7 +39,7 @@ export const SentenceSourceStore = readable<SentenceSource[]>([], (set) => {
         set([...onlineSources, ...offlineSources]);
       });
     });
-  }, 1000);
+  }, 3000);
 
   return () => clearInterval(interval);
 });

@@ -62,10 +62,6 @@
 </DataTable>
 
 <style>
-  .box {
-    display: flex;
-    flex-direction: column;
-  }
   .highlight {
     border-radius: 4px;
     background-color: aquamarine;
