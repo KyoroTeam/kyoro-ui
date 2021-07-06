@@ -15,18 +15,17 @@ import com.worksap.nlp.sudachi.sentdetect.*;
 import ve.Pos;
 import ve.Word;
 
-public class Handler implements RequestHandler<List<Request>, List<List<KyoroTokenizeResult>>> {
+public class Handler implements RequestHandler<List<Request>, List<KyoroTokenizeResult>> {
     @Override
-    public List<List<KyoroTokenizeResult>> handleRequest(List<Request> event, Context context) {
+    public List<KyoroTokenizeResult> handleRequest(List<Request> event, Context context) {
         var builder = new Tokenizer.Builder();
         var tokenizer = builder.mode(Mode.SEARCH).build();
 
-        var results = new ArrayList<List<KyoroTokenizeResult>>();
+        var results = new ArrayList<KyoroTokenizeResult>();
         for (Request request : event) {
             var sentences = SplitSentences(request.jap);
-            var kyoResults = sentences.stream().map(s -> TokenizeSentence(tokenizer, request.source, request.eng, s))
-                    .collect(Collectors.toList());
-            results.add(kyoResults);
+            sentences.stream().map(s -> TokenizeSentence(tokenizer, request.source, request.eng, s))
+                    .forEach(s -> results.add(s));
         }
 
         return results;

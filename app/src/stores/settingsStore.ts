@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 export interface ICardMapping {
   mappingName: string;
@@ -11,6 +11,6 @@ export interface IUserSettings {
   cardMappings: ICardMapping[];
 }
 
-export type KyoroFieldName = "English" | "Japanese" | "Source" | "Tags"
+export type KyoroFieldName = 'English' | 'Japanese' | 'Source' | 'Tags';
 
 export const cardMappingStore = writable<ICardMapping[]>([]);

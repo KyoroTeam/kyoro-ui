@@ -16,8 +16,17 @@
 
   import AnkiConnectProvider from "./services/AnkiConnectProvider.svelte";
   import NewSentencesTab from "./components/new-sentences-app/NewSentencesTab.svelte";
+  import { SentenceSourceStore } from "./stores/sentenceSourcesStore";
 
   let isSideNavOpen = false;
+
+  let offlineSources: string[] = [];
+  SentenceSourceStore.subscribe(
+    (items) =>
+      (offlineSources = items
+        .filter((i) => i.offline === true)
+        .map((s) => s.name))
+  );
 </script>
 
 <Header company="Kyoro" platformName="Anki UI" bind:isSideNavOpen>
@@ -38,9 +47,9 @@
     <SideNavLink text="Modify Cards" />
     <SideNavDivider />
     <SideNavMenu expanded text="Sentence Sources">
-      <SideNavMenuItem href="/" text="Link 1" />
-      <SideNavMenuItem href="/" text="Link 2" />
-      <SideNavMenuItem href="/" text="Link 3" />
+      {#each offlineSources as source}
+        <SideNavMenuItem href="/" text={source} />
+      {/each}
     </SideNavMenu>
   </SideNavItems>
 </SideNav>

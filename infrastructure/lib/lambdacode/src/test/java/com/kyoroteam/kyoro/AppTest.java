@@ -49,7 +49,7 @@ public class AppTest {
         // assertTrue(true);
 
         Gson gson = new Gson();
-        JsonReader r = new JsonReader(new FileReader("/home/james/Desktop/test.json"));
+        JsonReader r = new JsonReader(new FileReader("/home/james/Desktop/data/all_v11.json"));
         var type = new TypeToken<ArrayList<Request>>() {
         }.getType();
         ArrayList<Request> request = gson.fromJson(r, type);
@@ -59,7 +59,7 @@ public class AppTest {
 
         var results = handler.handleRequest(request, context);
 
-        var writer = new FileWriter("/home/james/Desktop/test_out.json");
+        var writer = new FileWriter("/home/james/Desktop/data/all_v11_out.json");
         gson.toJson(results, writer);
         writer.flush();
         writer.close();

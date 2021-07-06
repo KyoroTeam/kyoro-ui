@@ -7,7 +7,9 @@
   "dependencies": {
     "@snowpack/plugin-webpack": "^2.3.1",
     "carbon-components-svelte": "^0.32.1",
+    "fast-myers-diff": "^3.0.1",
     "flexsearch": "^0.7.2",
+    "greenlet": "^1.1.0",
     "svelte": "^3.24.0"
   },
   "devDependencies": {

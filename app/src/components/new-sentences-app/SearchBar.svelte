@@ -5,21 +5,14 @@
   import { Document } from "flexsearch";
   import { onMount } from "svelte";
   // import { getLocalContentList } from "src/services/anki";
-  import { Docs } from "../../services/SenteceData";
+  import { OfflineIndex } from "../../stores/offlineIndexStore";
 
   export let sentences: JibikiSenteceResponse[];
 
   let searchValue = "";
 
-  const index = new Document({
-    document: {
-      index: ["Words", "Lemmas", "Readings"],
-      store: ["Sentence", "Words", "Lemmas", "WordPositions"],
-    },
-  });
-
   onMount(() => {
-    Docs.forEach((doc, i) => index.add({ id: i, ...doc }));
+    // Docs.forEach((doc, i) => index.add({ id: i, ...doc }));
     // getLocalContentList().then((content) => console.log(content));
   });
 
@@ -60,7 +53,7 @@
   }
 
   $: {
-    const result = index.search(searchValue, {
+    const result = OfflineIndex.search(searchValue, {
       enrich: true,
     }) as FlexSearch.RootObject[];
 
