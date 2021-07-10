@@ -1,4 +1,4 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "/home/james/Desktop/Git/kyoro-ui/addon/kyoro-env/bin/python3.8"
+    "python.defaultInterpreterPath": "/home/james/Desktop/Git/kyoro-ui/addon/kyoro-env/bin/python3.8"
 }

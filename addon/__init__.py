@@ -12,6 +12,7 @@ import glob
 
 addon_path = os.path.dirname(__file__)
 
+
 class KyroWebView(AnkiWebView):
     def __init__(self):
         AnkiWebView.__init__(self, title="Kyoro")
@@ -36,11 +37,12 @@ class KyroWebView(AnkiWebView):
   </body>
 </html>
         """
-        
+
         js = open(os.path.join(addon_path, "dist/index.js")).read()
-        css = open(os.path.join(addon_path, "dist/index.css")).read())
+        css = open(os.path.join(addon_path, "dist/index.css")).read()
 
         self.stdHtml(html.format(js, css))
+
 
 def showApp():
     mw.kyoroApp = KyroWebView()
