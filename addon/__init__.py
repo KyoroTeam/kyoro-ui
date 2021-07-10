@@ -1,7 +1,11 @@
+from typing import Any, Tuple
 from anki import hooks
+from anki import gui_hooks
+import aqt
 from aqt.webview import AnkiWebView
 # import the main window object (mw) from aqt
 from aqt import mw
+from aqt import gui_hooks
 # import the "show info" tool from utils.py
 from aqt.utils import showInfo
 # import all of the Qt GUI library
@@ -50,6 +54,22 @@ def showApp():
     mw.kyoroApp.setFocus()
     mw.kyoroApp.activateWindow()
 
+
+KYORO_COMMAND_PREFIX = "Kyoro."
+
+
+def myPyCmdHandler(handled: Tuple[bool, Any], message: str, context: Any):
+    if not isinstance(context, KyroWebView):
+        return handled
+    if not message.startswith(KYORO_COMMAND_PREFIX):
+        return handled
+    cmd = message[len(KYORO_COMMAND_PREFIX):].strip()
+    if cmd == "getLocalContentList":
+        return (True, ["a", "b", "c"])
+    return handled
+
+
+gui_hooks.webview_did_receive_js_message.append(myPyCmdHandler)
 
 # create a new menu item, "test"
 action = QAction("Kyoro", mw)
