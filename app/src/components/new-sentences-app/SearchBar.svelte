@@ -70,6 +70,6 @@
 </script>
 
 <ButtonSet style={'width:100%'}>
-  <Search bind:value={searchValue} placeholder="Enter a phrase..." />
+  <Search bind:value={searchValue} placeholder="Enter a verb, noun, adjective..." />
   <SentenceSourceSelect />
 </ButtonSet>

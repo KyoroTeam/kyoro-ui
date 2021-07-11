@@ -80,8 +80,8 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
         results = set(map(lambda s: s["Source"], items))
         return (True, results)
     elif cmd == "Kyoro.getTokenizedSentences":
-        arg = cmds[1].strip()
-        results = filter(lambda s: s["Source"] == arg, items)
+        contentName = cmds[1].strip()
+        results = filter(lambda s: s["Source"] == contentName, items)
         return (True, results)
     return handled
 

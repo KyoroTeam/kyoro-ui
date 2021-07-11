@@ -2,8 +2,8 @@ import { SentenceData } from './all_v11_out';
 
 export function getLocalContentList(): Promise<string[]> {
   return new Promise(resolve => {
-    if (pycmd !== undefined) {
-      pycmd<string[]>('Kyoro.getLocalContentList', files => resolve(files));
+    if (window.pycmd !== undefined) {
+      window.pycmd<string[]>('Kyoro.getLocalContentList', files => resolve(files));
     } else {
       const sources = SentenceData.map(d => d.Source);
       const uniqueSources = new Set(sources);
@@ -14,8 +14,8 @@ export function getLocalContentList(): Promise<string[]> {
 
 export function getTokenizedSentences(source: string): Promise<Solr.KyoTokenResult[]> {
   return new Promise(resolve => {
-    if (pycmd !== undefined) {
-      pycmd<Solr.KyoTokenResult[]>(`Kyoro.getLocalContentList:${source}`, sentences =>
+    if (window.pycmd !== undefined) {
+      window.pycmd<Solr.KyoTokenResult[]>(`Kyoro.getLocalContentList:${source}`, sentences =>
         resolve(sentences),
       );
     } else {
