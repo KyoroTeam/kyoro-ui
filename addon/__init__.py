@@ -1,4 +1,4 @@
-from typing import Any, Tuple
+from typing import *
 from anki import hooks
 from anki import gui_hooks
 import aqt
@@ -13,6 +13,7 @@ from aqt.qt import *
 import io
 import os
 import glob
+import json
 
 addon_path = os.path.dirname(__file__)
 
@@ -57,19 +58,35 @@ def showApp():
 
 KYORO_COMMAND_PREFIX = "Kyoro."
 
+# Kyoro.getTokenizedSentences:a
 
-def myPyCmdHandler(handled: Tuple[bool, Any], message: str, context: Any):
+
+def loadJson() -> List[Any]:
+    with open(os.path.join(addon_path, "all_v11_out.json"), "r") as f:
+        return json.loads(f.read())
+
+
+items = loadJson()
+
+
+def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
     if not isinstance(context, KyroWebView):
         return handled
     if not message.startswith(KYORO_COMMAND_PREFIX):
         return handled
-    cmd = message[len(KYORO_COMMAND_PREFIX):].strip()
-    if cmd == "getLocalContentList":
-        return (True, ["a", "b", "c"])
+    cmds = message.split(":")
+    cmd = cmds[0].strip()
+    if cmd == "Kyoro.getLocalContentList":
+        results = set(map(lambda s: s["Source"], items))
+        return (True, results)
+    elif cmd == "Kyoro.getTokenizedSentences":
+        arg = cmds[1].strip()
+        results = filter(lambda s: s["Source"] == arg, items)
+        return (True, results)
     return handled
 
 
-gui_hooks.webview_did_receive_js_message.append(myPyCmdHandler)
+gui_hooks.webview_did_receive_js_message.append(kyoro_pycmd_handler)
 
 # create a new menu item, "test"
 action = QAction("Kyoro", mw)
