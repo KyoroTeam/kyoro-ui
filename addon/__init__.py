@@ -1,7 +1,5 @@
 from typing import *
 from anki import hooks
-from anki import gui_hooks
-import aqt
 from aqt.webview import AnkiWebView
 # import the main window object (mw) from aqt
 from aqt import mw
@@ -70,19 +68,26 @@ items = loadJson()
 
 
 def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
-    if not isinstance(context, KyroWebView):
+    print("OK...", handled, message, context)
+    if context is not None and context is not isinstance(context, KyroWebView):
+        print("1 OK...")
         return handled
     if not message.startswith(KYORO_COMMAND_PREFIX):
+        print("2 OK...")
         return handled
     cmds = message.split(":")
     cmd = cmds[0].strip()
+    print("3 OK...", cmds)
     if cmd == "Kyoro.getLocalContentList":
-        results = set(map(lambda s: s["Source"], items))
-        return (True, results)
+        results = list(set(map(lambda s: s["Source"], items)))
+        print("4 OK...", results)
+        return (True, 1)
     elif cmd == "Kyoro.getTokenizedSentences":
         contentName = cmds[1].strip()
         results = filter(lambda s: s["Source"] == contentName, items)
+        print("5 OK...", results)
         return (True, results)
+    print("6 OK...")
     return handled
 
 
