@@ -24,6 +24,14 @@ class KyroWebView(QDialog):
         self.web = mw.web
         self.show()
 
+        w = AnkiWebView(title="browser card info")
+
+        l = QVBoxLayout()
+        l.setContentsMargins(0, 0, 0, 0)
+        l.addWidget(w)
+
+        self.setLayout(l)
+
         html = """
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +56,7 @@ class KyroWebView(QDialog):
         js = open(os.path.join(addon_path, "dist/index.js")).read()
         css = open(os.path.join(addon_path, "dist/index.css")).read()
 
-        # self.web.stdHtml(html.format(js, css))
+        w.stdHtml(html.format(js, css))
 
     # def kyoro_pycmd_handler(message: str, context: Any):
     #     pass
@@ -79,9 +87,9 @@ items = loadJson()
 
 def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
     print("OK...", handled, message, context)
-    if not isinstance(context, KyroWebView):
-        print("1 Not OK...")
-        return handled
+    # if not isinstance(context, KyroWebView):
+    #     print("1 Not OK...")
+    #     return handled
     if not message.startswith(KYORO_COMMAND_PREFIX):
         print("2 OK...")
         return handled
