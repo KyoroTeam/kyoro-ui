@@ -1,24 +1,28 @@
 from typing import *
-from anki import hooks
 from aqt.webview import AnkiWebView
 # import the main window object (mw) from aqt
 from aqt import mw
 from aqt import gui_hooks
-# import the "show info" tool from utils.py
-from aqt.utils import showInfo
 # import all of the Qt GUI library
 from aqt.qt import *
+import aqt
 import io
 import os
-import glob
 import json
 
 addon_path = os.path.dirname(__file__)
 
 
-class KyroWebView(AnkiWebView):
-    def __init__(self):
-        AnkiWebView.__init__(self, title="Kyoro")
+class KyroWebView(QDialog):
+    # Set for registering dialogs
+    silentlyClose = True
+
+    def __init__(self, mw: aqt.AnkiQt) -> None:
+        QDialog.__init__(self)
+        print("init")
+        self.mw = mw
+        self.web = mw.web
+        self.show()
 
         html = """
 <!DOCTYPE html>
@@ -44,14 +48,20 @@ class KyroWebView(AnkiWebView):
         js = open(os.path.join(addon_path, "dist/index.js")).read()
         css = open(os.path.join(addon_path, "dist/index.css")).read()
 
-        self.stdHtml(html.format(js, css))
+        # self.web.stdHtml(html.format(js, css))
+
+    # def kyoro_pycmd_handler(message: str, context: Any):
+    #     pass
+
+    # def show(self):
+    #     self.web.set_bridge_command(self.kyoro_pycmd_handler, self)
+    #     self.web.show()
+    #     self.web.setFocus()
+    #     self.web.activateWindow()
 
 
 def showApp():
-    mw.kyoroApp = KyroWebView()
-    mw.kyoroApp.show()
-    mw.kyoroApp.setFocus()
-    mw.kyoroApp.activateWindow()
+    aqt.dialogs.open("Kyoro", mw)
 
 
 KYORO_COMMAND_PREFIX = "Kyoro."
@@ -69,8 +79,8 @@ items = loadJson()
 
 def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
     print("OK...", handled, message, context)
-    if context is not None and context is not isinstance(context, KyroWebView):
-        print("1 OK...")
+    if not isinstance(context, KyroWebView):
+        print("1 Not OK...")
         return handled
     if not message.startswith(KYORO_COMMAND_PREFIX):
         print("2 OK...")
@@ -81,7 +91,7 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
     if cmd == "Kyoro.getLocalContentList":
         results = list(set(map(lambda s: s["Source"], items)))
         print("4 OK...", results)
-        return (True, 1)
+        return (True, results)
     elif cmd == "Kyoro.getTokenizedSentences":
         contentName = cmds[1].strip()
         results = filter(lambda s: s["Source"] == contentName, items)
@@ -92,6 +102,9 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
 
 
 gui_hooks.webview_did_receive_js_message.append(kyoro_pycmd_handler)
+
+# Register a new dialog for us
+aqt.dialogs.register_dialog("Kyoro", KyroWebView)
 
 # create a new menu item, "test"
 action = QAction("Kyoro", mw)
