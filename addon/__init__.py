@@ -12,6 +12,8 @@ import json
 
 addon_path = os.path.dirname(__file__)
 
+# Migaku doing something with ogAnkiWebBridge ? Blocking commands?
+
 
 class KyroWebView(QDialog):
     # Set for registering dialogs
@@ -25,6 +27,7 @@ class KyroWebView(QDialog):
         self.show()
 
         w = AnkiWebView(title="browser card info")
+        w.set_bridge_command(self.kyoro_pycmd_handler, self)
 
         l = QVBoxLayout()
         l.setContentsMargins(0, 0, 0, 0)
@@ -58,8 +61,8 @@ class KyroWebView(QDialog):
 
         w.stdHtml(html.format(js, css))
 
-    # def kyoro_pycmd_handler(message: str, context: Any):
-    #     pass
+    def kyoro_pycmd_handler(message: str, context: Any):
+        pass
 
     # def show(self):
     #     self.web.set_bridge_command(self.kyoro_pycmd_handler, self)
