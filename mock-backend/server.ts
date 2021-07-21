@@ -15,8 +15,8 @@ router
     const uniqueSources = new Set(sources);
     context.response.body = Array.from(uniqueSources.values());
   })
-  .get("/getTokenizedSentences/:sourceId", (context) => {
-    const source = context.params.sourceId;
+  .get("/getTokenizedSentences/(.*)", (context) => {
+    const source = context.params["0"];
     console.log("getTokenizedSentences", source);
     const sources = SentenceData.filter((d) => d.Source === source);
     context.response.body = sources;
