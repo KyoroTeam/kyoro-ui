@@ -5,9 +5,9 @@ export function getLocalContentList(): Promise<string[]> {
     if (window.pycmd !== undefined) {
       window.pycmd<string[]>('Kyoro.getLocalContentList', files => resolve(files));
     } else {
-      // const sources = SentenceData.map(d => d.Source);
-      // const uniqueSources = new Set(sources);
-      // resolve(Array.from(uniqueSources.values()));
+      fetch('http://localhost:8006/getLocalContentList')
+        .then(r => r.json())
+        .then(json => resolve(json));
     }
   });
 }
@@ -19,8 +19,9 @@ export function getTokenizedSentences(source: string): Promise<Solr.KyoTokenResu
         resolve(sentences),
       );
     } else {
-      // const sources = SentenceData.filter(d => d.Source === source);
-      // resolve(sources);
+      fetch(`http://localhost:8006/getTokenizedSentences/${encodeURIComponent(source)}`)
+        .then(r => r.json())
+        .then(json => resolve(json));
     }
   });
 }
