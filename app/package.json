@@ -10,7 +10,8 @@
     "fast-myers-diff": "^3.0.1",
     "flexsearch": "^0.7.2",
     "greenlet": "^1.1.0",
-    "svelte": "^3.24.0"
+    "svelte": "^3.24.0",
+    "wanakana": "^4.0.2"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.5",
@@ -21,6 +22,7 @@
     "@types/chai": "^4.2.13",
     "@types/mocha": "^8.2.0",
     "@types/snowpack-env": "^2.3.2",
+    "@types/wanakana": "^4.0.3",
     "@web/test-runner": "^0.12.0",
     "chai": "^4.2.0",
     "snowpack": "^3.0.1",

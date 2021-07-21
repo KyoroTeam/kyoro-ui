@@ -3,6 +3,7 @@
   import type { JibikiSenteceResponse, SentecePart } from 'src/models/Jibiki';
   import SentenceSourceSelect from '../SentenceSourceSelect.svelte';
   import { OfflineIndex } from '../../stores/offlineIndexStore';
+  import { toKatakana } from 'wanakana';
 
   export let sentences: JibikiSenteceResponse[];
 
@@ -12,6 +13,11 @@
     let foundIndex = s.Words.indexOf(searchWord);
     if (foundIndex === -1) {
       foundIndex = s.Lemmas.indexOf(searchWord);
+    }
+    if (foundIndex === -1) {
+      const katakanaWord = toKatakana(searchWord);
+      console.log('aaaa', katakanaWord);
+      foundIndex = s.Readings.indexOf(katakanaWord);
     }
     if (foundIndex === -1) {
       return [
