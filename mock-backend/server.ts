@@ -23,12 +23,8 @@ router
   });
 
 const app = new Application();
+app.use(oakCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
-app.use(
-  oakCors({
-    origin: true,
-  })
-);
 
 await app.listen({ port: 8006 });
