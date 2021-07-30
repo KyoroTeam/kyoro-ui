@@ -19,15 +19,11 @@ class KyroWebView(QDialog):
     # Set for registering dialogs
     silentlyClose = True
 
-    def __init__(self, mw: aqt.AnkiQt) -> None:
+    def __init__(self) -> None:
         QDialog.__init__(self)
-        print("init")
-        self.mw = mw
-        self.web = mw.web
-        self.show()
 
         w = AnkiWebView(title="browser card info")
-        w.set_bridge_command(self.kyoro_pycmd_handler, self)
+        # w.set_bridge_command(self.kyoro_pycmd_handler, self)
 
         l = QVBoxLayout()
         l.setContentsMargins(0, 0, 0, 0)
@@ -61,6 +57,8 @@ class KyroWebView(QDialog):
 
         w.stdHtml(html.format(js, css))
 
+        self.show()
+
     def kyoro_pycmd_handler(message: str, context: Any):
         pass
 
@@ -72,7 +70,7 @@ class KyroWebView(QDialog):
 
 
 def showApp():
-    aqt.dialogs.open("Kyoro", mw)
+    aqt.dialogs.open("Kyoro")
 
 
 KYORO_COMMAND_PREFIX = "Kyoro."
