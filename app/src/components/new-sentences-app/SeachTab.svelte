@@ -9,6 +9,7 @@
   import SearchBar from './SearchBar.svelte';
   import SelectTable from './SelectTable.svelte';
   import Search32 from 'carbon-icons-svelte/lib/Search32';
+  import SelectTable2 from './SelectTable2.svelte';
 
   let searchedSentences: JibikiSenteceResponse[] = [];
   let selectedMapping: ICardMapping | undefined;
@@ -16,38 +17,28 @@
   $: selectedTableRows = allTableRows.filter(r => r.selected);
 </script>
 
-<Row style={'margin-bottom: 20px'}>
+<Row style={'margin-bottom: 10px'}>
   <SearchBar bind:sentences={searchedSentences} />
 </Row>
 
-{#if searchedSentences?.length > 0}
-  <div class="table" in:fade out:slide>
-    <Row padding>
-      <SelectTable bind:inputRows={searchedSentences} bind:tableRows={allTableRows} />
-    </Row>
-    <Row>
-      <Column>
-        <CardMappingSelect bind:selected={selectedMapping} />
-        <AnkiAddButton
-          targetMapping={selectedMapping}
-          disabled={selectedTableRows.length === 0}
-          disabledHint={'No sentences are selected'}
-          tableRows={selectedTableRows}
-        />
-      </Column>
-    </Row>
-  </div>
-{:else}
-  <div class="box">
-    <Search32 />
-    <h4>Sentence results will appear here</h4>
-  </div>
-{/if}
+<div in:fade out:slide>
+  <Row>
+    <Column noGutter>
+      <SelectTable2 />
+    </Column>
+    <!-- <SelectTable bind:inputRows={searchedSentences} bind:tableRows={allTableRows} /> -->
+  </Row>
+  <Row>
+    <Column />
+  </Row>
+</div>
+
+<div class="box">
+  <Search32 />
+  <h4>Sentence results will appear here</h4>
+</div>
 
 <style>
-  .table {
-    max-height: 100px;
-  }
   .box {
     margin-top: 30px;
     display: flex;

@@ -11,21 +11,18 @@
     SideNavDivider,
     SideNavMenu,
     SideNavMenuItem,
-  } from "carbon-components-svelte";
-  import AnkiConectGate from "./components/AnkiConectGate.svelte";
+  } from 'carbon-components-svelte';
+  import AnkiConectGate from './components/AnkiConectGate.svelte';
 
-  import AnkiConnectProvider from "./services/AnkiConnectProvider.svelte";
-  import NewSentencesTab from "./components/new-sentences-app/NewSentencesTab.svelte";
-  import { SentenceSourceStore } from "./stores/sentenceSourcesStore";
+  import AnkiConnectProvider from './services/AnkiConnectProvider.svelte';
+  import NewSentencesTab from './components/new-sentences-app/NewSentencesTab.svelte';
+  import { SentenceSourceStore } from './stores/sentenceSourcesStore';
 
   let isSideNavOpen = false;
 
   let offlineSources: string[] = [];
   SentenceSourceStore.subscribe(
-    (items) =>
-      (offlineSources = items
-        .filter((i) => i.offline === true)
-        .map((s) => s.name))
+    items => (offlineSources = items.filter(i => i.offline === true).map(s => s.name)),
   );
 </script>
 

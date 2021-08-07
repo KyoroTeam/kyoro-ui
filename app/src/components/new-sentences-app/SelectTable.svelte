@@ -41,29 +41,37 @@
       </TableRow>
     </TableHead>
     <TableBody>
-      {#each tableRows as row, i}
-        <TableRow on:click={() => onSelected(i)}>
-          <TableCell>
-            <Checkbox bind:checked={row.selected} />
-          </TableCell>
-          <TableCell>
-            {#each row.sentenceParts as part}
-              <span class={part.highlight ? 'highlight' : ''}>{part.part}</span>
-            {/each}
-            {row.english ?? ''}
-          </TableCell>
-          <TableCell>{row.source}</TableCell>
-          <TableCell />
-        </TableRow>
-      {/each}
+      <div class="test">
+        {#each tableRows as row, i}
+          <TableRow on:click={() => onSelected(i)}>
+            <TableCell>
+              <Checkbox bind:checked={row.selected} />
+            </TableCell>
+            <TableCell>
+              {#each row.sentenceParts as part}
+                <span class={part.highlight ? 'highlight' : ''}>{part.part}</span>
+              {/each}
+              {row.english ?? ''}
+            </TableCell>
+            <TableCell>{row.source}</TableCell>
+            <TableCell />
+          </TableRow>
+        {/each}
+      </div>
+      <div>Hey</div>
     </TableBody>
   </Table>
-  <Pagination />
 </DataTable>
+
+<Pagination />
 
 <style>
   .highlight {
     border-radius: 5px;
     background-color: aquamarine;
+  }
+  .test {
+    max-height: 90vh;
+    overflow-y: scroll;
   }
 </style>
