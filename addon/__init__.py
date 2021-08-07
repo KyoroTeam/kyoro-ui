@@ -5,22 +5,15 @@ from aqt import mw
 from aqt import gui_hooks
 # import all of the Qt GUI library
 from aqt.qt import *
-import aqt
-import io
 import os
 import json
 
 addon_path = os.path.dirname(__file__)
 
-# Migaku doing something with ogAnkiWebBridge ? Blocking commands?
 
-
-class KyroWebView(QDialog):
-    # Set for registering dialogs
-    silentlyClose = True
-
+class KyroWebView(QScrollArea):
     def __init__(self) -> None:
-        QDialog.__init__(self)
+        QScrollArea.__init__(self)
 
         w = AnkiWebView(title="browser card info")
         # w.set_bridge_command(self.kyoro_pycmd_handler, self)
@@ -59,23 +52,22 @@ class KyroWebView(QDialog):
 
         self.show()
 
-    def kyoro_pycmd_handler(message: str, context: Any):
-        pass
 
-    # def show(self):
-    #     self.web.set_bridge_command(self.kyoro_pycmd_handler, self)
-    #     self.web.show()
-    #     self.web.setFocus()
-    #     self.web.activateWindow()
+mw.kyoro = None
 
 
 def showApp():
-    aqt.dialogs.open("Kyoro")
+    if not mw.kyoro:
+        mw.kyoro = KyroWebView()
+    mw.kyoro.show()
+    if mw.kyoro.windowState() == Qt.WindowMinimized:
+        # Window is minimised. Restore it.
+        mw.kyoro.setWindowState(Qt.WindowNoState)
+    mw.kyoro.setFocus()
+    mw.kyoro.activateWindow()
 
 
 KYORO_COMMAND_PREFIX = "Kyoro."
-
-# Kyoro.getTokenizedSentences:a
 
 
 def loadJson() -> List[Any]:
@@ -111,9 +103,6 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
 
 
 gui_hooks.webview_did_receive_js_message.append(kyoro_pycmd_handler)
-
-# Register a new dialog for us
-aqt.dialogs.register_dialog("Kyoro", KyroWebView)
 
 # create a new menu item, "test"
 action = QAction("Kyoro", mw)
