@@ -31,8 +31,7 @@
   const headers = ['', 'Sentence', 'Source', ''];
 </script>
 
-<div class="highlight" />
-<DataTable style={'width:100%'}>
+<DataTable size="tall">
   <Table>
     <TableHead>
       <TableRow>
@@ -64,7 +63,7 @@
 
 <style>
   .highlight {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: aquamarine;
   }
 </style>
