@@ -4,80 +4,66 @@
     Toolbar,
     ToolbarContent,
     ToolbarSearch,
-    ToolbarMenu,
-    ToolbarMenuItem,
     ToolbarBatchActions,
     Button,
     Pagination,
   } from 'carbon-components-svelte';
   import Save16 from 'carbon-icons-svelte/lib/Save16';
-  import type { JibikiSenteceResponse } from 'src/models/Jibiki';
+  import type { SentecePart, JibikiSenteceResponse } from 'src/models/Jibiki';
   import type { SelectTableRow } from 'src/models/SelectTableRow';
+  import { clear_loops } from 'svelte/internal';
 
-  // export let inputRows: JibikiSenteceResponse[];
+  export let inputRows: JibikiSenteceResponse[];
   // export let tableRows: SelectTableRow[];
 
   const headers = [
-    { key: 'name', value: 'Name' },
-    { key: 'port', value: 'Port' },
-    { key: 'rule', value: 'Rule' },
+    { key: 'sentence', value: 'Sentence' },
+    { key: 'source', value: 'Source' },
   ];
 
   interface row {
     id: string;
-    name: string;
-    port: number;
-    rule: string;
+    english: string | undefined;
+    sentenceParts: SentecePart[];
+    source: string;
   }
 
-  const rows: row[] = [
-    { id: 'a', name: 'Load Balancer 3', port: 3000, rule: 'Round robin' },
-    { id: 'b', name: 'Load Balancer 1', port: 443, rule: 'Round robin' },
-    { id: 'c', name: 'Load Balancer 2', port: 80, rule: 'DNS delegation' },
-    { id: 'd', name: 'Load Balancer 6', port: 3000, rule: 'Round robin' },
-    { id: 'e', name: 'Load Balancer 4', port: 443, rule: 'Round robin' },
-    { id: 'f', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-    { id: 'a2', name: 'Load Balancer 3', port: 3000, rule: 'Round robin' },
-    { id: 'b2', name: 'Load Balancer 1', port: 443, rule: 'Round robin' },
-    { id: 'c2', name: 'Load Balancer 2', port: 80, rule: 'DNS delegation' },
-    { id: 'd2', name: 'Load Balancer 6', port: 3000, rule: 'Round robin' },
-    { id: 'e2', name: 'Load Balancer 4', port: 443, rule: 'Round robin' },
-    { id: 'f2', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-    { id: 'a3', name: 'Load Balancer 3', port: 3000, rule: 'Round robin' },
-    { id: 'b3', name: 'Load Balancer 1', port: 443, rule: 'Round robin' },
-    { id: 'c3', name: 'Load Balancer 2', port: 80, rule: 'DNS delegation' },
-    { id: 'd3', name: 'Load Balancer 6', port: 3000, rule: 'Round robin' },
-    { id: 'e3', name: 'Load Balancer 4', port: 443, rule: 'Round robin' },
-    { id: 'f3', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-    { id: 'd4', name: 'Load Balancer 6', port: 3000, rule: 'Round robin' },
-    { id: 'e4', name: 'Load Balancer 4', port: 443, rule: 'Round robin' },
-    { id: 'f4', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-    { id: '1f3', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-    { id: '1d4', name: 'Load Balancer 6', port: 3000, rule: 'Round robin' },
-    { id: '1e4', name: 'Load Balancer 4', port: 443, rule: 'Round robin' },
-    { id: 'f14', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-  ];
+  let rows: row[];
+  $: rows = inputRows.map((r, i) => ({
+    id: `${i}`,
+    english: r.translations[0].sentence,
+    sentenceParts: r.sentenceParts,
+    source: r.source,
+  }));
+
+  let displayedRows: row[];
+  function paginationUpdate(event: CustomEvent<{ pageSize: number; page: number }>) {
+    console.log(event.detail.pageSize, event.detail.page);
+    const start = event.detail.pageSize * event.detail.page;
+    displayedRows = rows.slice(start, start + event.detail.pageSize);
+  }
+  $: console.log(displayedRows);
 
   let selectedRowIds: string[] = [];
 
   let value: string = '';
 
+  $: console.log(inputRows);
   $: console.log('selectedRowIds', selectedRowIds);
 </script>
 
-<Pagination />
+<Pagination pageSizes={[10, 25, 50, 100]} on:update={paginationUpdate} totalItems={rows.length} />
 <DataTable
+  sortable
   on:click:row={a => {
     // TODO: Select/unselect row
     console.log(a);
   }}
   size="short"
-  expandable
-  stickyHeader
   batchSelection
   bind:selectedRowIds
   {headers}
-  {rows}
+  rows={displayedRows}
 >
   <Toolbar>
     <ToolbarBatchActions>
@@ -92,4 +78,41 @@
       {JSON.stringify(row, null, 2)}
     </pre>
   </div>
+  <span slot="cell-header" let:header>
+    {#if header.key === 'source'}
+      <div class="sourceCell">
+        {header.value}
+      </div>
+    {:else}
+      {header.value}
+    {/if}
+  </span>
+  <span slot="cell" let:row let:cell>
+    {#if cell.key === 'sentence'}
+      <div class="sentenceCell">
+        {#each row.sentenceParts as part}
+          <span class={part.highlight ? 'highlight' : ''}>{part.part}</span>
+        {/each}
+        <br />
+        {row.english}
+      </div>
+    {:else if cell.key === 'source'}
+      <div class="sourceCell">
+        {row.source} !
+      </div>
+    {:else}{cell.value}{/if}
+  </span>
 </DataTable>
+
+<style>
+  .sourceCell {
+    /* padding-left: 250px; */
+  }
+  .highlight {
+    border-radius: 5px;
+    background-color: aquamarine;
+  }
+  :global(tr > td:nth-of-type(3)) {
+    width: 20% !important;
+  }
+</style>

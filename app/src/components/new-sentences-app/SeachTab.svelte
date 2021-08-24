@@ -24,7 +24,8 @@
 <div in:fade out:slide>
   <Row>
     <Column noGutter>
-      <SelectTable2 />
+      <!-- <SelectTable inputRows={searchedSentences} tableRows={allTableRows} /> -->
+      <SelectTable2 inputRows={searchedSentences} />
     </Column>
     <!-- <SelectTable bind:inputRows={searchedSentences} bind:tableRows={allTableRows} /> -->
   </Row>
