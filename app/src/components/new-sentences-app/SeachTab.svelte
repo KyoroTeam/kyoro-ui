@@ -21,23 +21,25 @@
   <SearchBar bind:sentences={searchedSentences} />
 </Row>
 
-<div in:fade out:slide>
-  <Row>
-    <Column noGutter>
-      <!-- <SelectTable inputRows={searchedSentences} tableRows={allTableRows} /> -->
-      <SelectTable2 inputRows={searchedSentences} />
-    </Column>
-    <!-- <SelectTable bind:inputRows={searchedSentences} bind:tableRows={allTableRows} /> -->
-  </Row>
-  <Row>
-    <Column />
-  </Row>
-</div>
-
-<div class="box">
-  <Search32 />
-  <h4>Sentence results will appear here</h4>
-</div>
+{#if searchedSentences?.length > 0}
+  <div in:fade out:slide>
+    <Row>
+      <Column noGutter>
+        <!-- <SelectTable inputRows={searchedSentences} tableRows={allTableRows} /> -->
+        <SelectTable2 inputRows={searchedSentences} />
+      </Column>
+      <!-- <SelectTable bind:inputRows={searchedSentences} bind:tableRows={allTableRows} /> -->
+    </Row>
+    <Row>
+      <Column />
+    </Row>
+  </div>
+{:else}
+  <div class="box">
+    <Search32 />
+    <h4>Sentence results will appear here</h4>
+  </div>
+{/if}
 
 <style>
   .box {
