@@ -60,6 +60,7 @@
     console.log(a);
   }}
   size="short"
+  stickyHeader
   batchSelection
   bind:selectedRowIds
   {headers}
@@ -78,27 +79,17 @@
       {JSON.stringify(row, null, 2)}
     </pre>
   </div>
-  <span slot="cell-header" let:header>
-    {#if header.key === 'source'}
-      <div class="sourceCell">
-        {header.value}
-      </div>
-    {:else}
-      {header.value}
-    {/if}
-  </span>
   <span slot="cell" let:row let:cell>
     {#if cell.key === 'sentence'}
       <div class="sentenceCell">
         {#each row.sentenceParts as part}
           <span class={part.highlight ? 'highlight' : ''}>{part.part}</span>
         {/each}
-        <br />
         {row.english}
       </div>
     {:else if cell.key === 'source'}
       <div class="sourceCell">
-        {row.source} !
+        {row.source}
       </div>
     {:else}{cell.value}{/if}
   </span>
@@ -106,13 +97,17 @@
 
 <style>
   .sourceCell {
-    /* padding-left: 250px; */
+    padding-left: 5px;
   }
   .highlight {
     border-radius: 5px;
     background-color: aquamarine;
   }
+  :global(tr > th:nth-of-type(3)) {
+    padding-left: 2px;
+    width: 33% !important;
+  }
   :global(tr > td:nth-of-type(3)) {
-    width: 20% !important;
+    width: 33% !important;
   }
 </style>
