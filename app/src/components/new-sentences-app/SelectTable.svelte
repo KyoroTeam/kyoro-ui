@@ -8,7 +8,6 @@
     TableBody,
     DataTable,
     Checkbox,
-    Pagination,
   } from 'carbon-components-svelte';
   import type { JibikiSenteceResponse } from 'src/models/Jibiki';
   import type { SelectTableRow } from 'src/models/SelectTableRow';
@@ -28,7 +27,7 @@
     tableRows[index].selected = !tableRows[index].selected;
   }
 
-  const headers = ['', 'Sentence', 'Source', ''];
+  const headers = ['Sentence', 'Source'];
 </script>
 
 <DataTable size="tall">
@@ -58,12 +57,9 @@
           </TableRow>
         {/each}
       </div>
-      <div>Hey</div>
     </TableBody>
   </Table>
 </DataTable>
-
-<Pagination />
 
 <style>
   .highlight {

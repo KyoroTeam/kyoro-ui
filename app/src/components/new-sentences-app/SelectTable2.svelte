@@ -6,15 +6,11 @@
     ToolbarSearch,
     ToolbarBatchActions,
     Button,
-    Pagination,
   } from 'carbon-components-svelte';
   import Save16 from 'carbon-icons-svelte/lib/Save16';
   import type { SentecePart, JibikiSenteceResponse } from 'src/models/Jibiki';
-  import type { SelectTableRow } from 'src/models/SelectTableRow';
-  import { clear_loops } from 'svelte/internal';
 
   export let inputRows: JibikiSenteceResponse[];
-  // export let tableRows: SelectTableRow[];
 
   const headers = [
     { key: 'sentence', value: 'Sentence' },
@@ -36,23 +32,10 @@
     source: r.source,
   }));
 
-  let displayedRows: row[];
-  function paginationUpdate(event: CustomEvent<{ pageSize: number; page: number }>) {
-    console.log(event.detail.pageSize, event.detail.page);
-    const start = event.detail.pageSize * event.detail.page;
-    displayedRows = rows.slice(start, start + event.detail.pageSize);
-  }
-  $: console.log(displayedRows);
-
   let selectedRowIds: string[] = [];
-
-  let value: string = '';
-
-  $: console.log(inputRows);
-  $: console.log('selectedRowIds', selectedRowIds);
+  let searchValue: string = '';
 </script>
 
-<Pagination pageSizes={[10, 25, 50, 100]} on:update={paginationUpdate} totalItems={rows.length} />
 <DataTable
   sortable
   on:click:row={a => {
@@ -64,14 +47,14 @@
   batchSelection
   bind:selectedRowIds
   {headers}
-  rows={displayedRows}
+  {rows}
 >
   <Toolbar>
     <ToolbarBatchActions>
       <Button icon={Save16}>Add To Anki</Button>
     </ToolbarBatchActions>
     <ToolbarContent>
-      <ToolbarSearch bind:value persistent placeholder="Narrow the results..." />
+      <ToolbarSearch bind:value={searchValue} persistent placeholder="Narrow the results..." />
     </ToolbarContent>
   </Toolbar>
   <div slot="expanded-row" let:row>
