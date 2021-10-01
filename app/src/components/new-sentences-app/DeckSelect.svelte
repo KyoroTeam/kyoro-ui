@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Select, SelectItem, SelectSkeleton } from "carbon-components-svelte";
-  import { getContext } from "svelte";
-  import type { IAnkiConnect } from "src/services/ankiconect";
+  import { Select, SelectItem, SelectSkeleton } from 'carbon-components-svelte';
+  import { getContext } from 'svelte';
+  import type { IAnkiConnect } from 'src/services/ankiconect';
 
   export let selected: string;
   export let disabled: boolean = false;
 
-  const ankiConnect = getContext<IAnkiConnect>("anki");
+  const ankiConnect = getContext<IAnkiConnect>('anki');
   const decks = ankiConnect.deckNames();
 
   decks.then((names) => {

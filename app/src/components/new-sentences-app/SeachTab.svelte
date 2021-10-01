@@ -14,7 +14,7 @@
   let searchedSentences: JibikiSenteceResponse[] = [];
   let selectedMapping: ICardMapping | undefined;
   let allTableRows: SelectTableRow[] = [];
-  $: selectedTableRows = allTableRows.filter(r => r.selected);
+  $: selectedTableRows = allTableRows.filter((r) => r.selected);
 </script>
 
 <Row style={'margin-bottom: 10px'}>
@@ -28,7 +28,6 @@
         <!-- <SelectTable inputRows={searchedSentences} tableRows={allTableRows} /> -->
         <SelectTable2 inputRows={searchedSentences} />
       </Column>
-      <!-- <SelectTable bind:inputRows={searchedSentences} bind:tableRows={allTableRows} /> -->
     </Row>
     <Row>
       <Column />
@@ -40,6 +39,8 @@
     <h4>Sentence results will appear here</h4>
   </div>
 {/if}
+
+<AnkiAddButton />
 
 <style>
   .box {

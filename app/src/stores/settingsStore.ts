@@ -2,7 +2,6 @@ import { writable } from 'svelte/store';
 
 export interface ICardMapping {
   mappingName: string;
-  deckName: string;
   modelName: string;
   modelFieldMappings: Partial<Record<KyoroFieldName, string>>;
 }

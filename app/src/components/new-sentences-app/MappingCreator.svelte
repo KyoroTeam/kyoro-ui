@@ -1,19 +1,17 @@
 <script lang="ts">
-  import { Button, Column, Row, Tile } from "carbon-components-svelte";
-  import Edit16 from "carbon-icons-svelte/lib/Edit16";
-  import CheckboxChecked16 from "carbon-icons-svelte/lib/CheckboxChecked16";
-  import CloseFilled16 from "carbon-icons-svelte/lib/CloseFilled16";
-  import Delete16 from "carbon-icons-svelte/lib/Delete16";
-  import ModelFieldSelect from "./ModelFieldSelect.svelte";
-  import ModelSelect from "./ModelSelect.svelte";
+  import { Button, Column, Row, Tile } from 'carbon-components-svelte';
+  import Edit16 from 'carbon-icons-svelte/lib/Edit16';
+  import CheckboxChecked16 from 'carbon-icons-svelte/lib/CheckboxChecked16';
+  import CloseFilled16 from 'carbon-icons-svelte/lib/CloseFilled16';
+  import Delete16 from 'carbon-icons-svelte/lib/Delete16';
+  import ModelFieldSelect from './ModelFieldSelect.svelte';
+  import ModelSelect from './ModelSelect.svelte';
 
-  import { cardMappingStore } from "../../stores/settingsStore";
-  import type { ICardMapping } from "../../stores/settingsStore";
-  import DeckSelect from "./DeckSelect.svelte";
+  import { cardMappingStore } from '../../stores/settingsStore';
+  import type { ICardMapping } from '../../stores/settingsStore';
 
   export let mappingName: string;
 
-  let selectedDeckName: string;
   let selectedModelName: string;
   let englishValue: string;
   let japaneseValue: string;
@@ -24,7 +22,6 @@
   $: newMapping = {
     mappingName: mappingName,
     modelName: selectedModelName,
-    deckName: selectedDeckName,
     modelFieldMappings: {
       English: englishValue,
       Japanese: japaneseValue,
@@ -53,13 +50,13 @@
   <Tile>
     <Row>
       <div class="mapping-title">
-        <h4 style={"padding-right: 10px; padding-left: 10px"}>
+        <h4 style={'padding-right: 10px; padding-left: 10px'}>
           {mappingName}
         </h4>
         <Button
-          size={"small"}
+          size={'small'}
           hasIconOnly
-          iconDescription={editing ? "Save Changes" : "Edit"}
+          iconDescription={editing ? 'Save Changes' : 'Edit'}
           tooltipPosition="top"
           icon={editing ? CheckboxChecked16 : Edit16}
           on:click={() => {
@@ -71,26 +68,24 @@
         />
         {#if editing}
           <Button
-            size={"small"}
+            size={'small'}
             hasIconOnly
             kind="ghost"
-            iconDescription={"Discard Changes"}
+            iconDescription={'Discard Changes'}
             tooltipPosition="top"
             icon={CloseFilled16}
             on:click={() => (editing = false)}
           />
         {/if}
         <Button
-          size={"small"}
+          size={'small'}
           hasIconOnly
           kind="ghost"
-          iconDescription={"Delete"}
+          iconDescription={'Delete'}
           tooltipPosition="top"
           icon={Delete16}
           on:click={() => {
-            cardMappingStore.update((value) =>
-              value.filter((m) => m.mappingName !== mappingName)
-            );
+            cardMappingStore.update((value) => value.filter((m) => m.mappingName !== mappingName));
           }}
         />
       </div>
@@ -100,10 +95,8 @@
 <Row>
   <Tile>
     <Row>
-      <Column style={"border-right: solid 1px"}>
-        <h5>Destination</h5>
-        <br />
-        <DeckSelect disabled={!editing} bind:selected={selectedDeckName} />
+      <Column style={'border-right: solid 1px'}>
+        <h5>Model To Map</h5>
         <br />
         <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
       </Column>

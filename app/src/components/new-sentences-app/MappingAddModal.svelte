@@ -7,20 +7,20 @@
   export let onSubmitted: (name: string | undefined) => void;
 
   let settings: ICardMapping[];
-  cardMappingStore.subscribe(value => (settings = value));
+  cardMappingStore.subscribe((value) => (settings = value));
 
   let mappingName: string;
 
-  function validateMappingName(): [boolean, string] {
-    if (!mappingName || mappingName?.length === 0) {
+  function validateMappingName(theMappingName: string): [boolean, string] {
+    if (!theMappingName || theMappingName?.length === 0) {
       return [false, 'Please enter a name'];
-    } else if (settings?.find(m => m.mappingName === mappingName)) {
+    } else if (settings?.find((m) => m.mappingName === theMappingName)) {
       return [false, 'A mapping already exists with that name.'];
     }
     return [true, ''];
   }
 
-  $: validResults = validateMappingName();
+  $: validResults = validateMappingName(mappingName);
 </script>
 
 <Modal

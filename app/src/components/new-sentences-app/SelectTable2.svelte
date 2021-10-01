@@ -6,6 +6,9 @@
     ToolbarSearch,
     ToolbarBatchActions,
     Button,
+    Dropdown,
+    ToolbarMenu,
+    ToolbarMenuItem,
   } from 'carbon-components-svelte';
   import Save16 from 'carbon-icons-svelte/lib/Save16';
   import type { SentecePart, JibikiSenteceResponse } from 'src/models/Jibiki';
@@ -16,6 +19,8 @@
     { key: 'sentence', value: 'Sentence' },
     { key: 'source', value: 'Source' },
   ];
+
+  function addSelectedToAnki() {}
 
   interface row {
     id: string;
@@ -38,25 +43,16 @@
 
 <DataTable
   sortable
-  on:click:row={a => {
+  on:click:row={(a) => {
     // TODO: Select/unselect row
     console.log(a);
   }}
   size="short"
-  stickyHeader
   batchSelection
   bind:selectedRowIds
   {headers}
   {rows}
 >
-  <Toolbar>
-    <ToolbarBatchActions>
-      <Button icon={Save16}>Add To Anki</Button>
-    </ToolbarBatchActions>
-    <ToolbarContent>
-      <ToolbarSearch bind:value={searchValue} persistent placeholder="Narrow the results..." />
-    </ToolbarContent>
-  </Toolbar>
   <div slot="expanded-row" let:row>
     <pre>
       {JSON.stringify(row, null, 2)}
