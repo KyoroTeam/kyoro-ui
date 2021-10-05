@@ -9,6 +9,7 @@ import os
 import json
 
 addon_path = os.path.dirname(__file__)
+files_path = os.path.join(addon_path, "content")
 
 
 class KyroWebView(QScrollArea):
