@@ -1,4 +1,4 @@
-package com.kyoroteam.kyoro;
+package com.kyoroteam.kyoro.tokenizer;
 
 import java.util.List;
 

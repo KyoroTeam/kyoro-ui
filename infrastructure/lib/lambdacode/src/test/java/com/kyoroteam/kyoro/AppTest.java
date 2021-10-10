@@ -1,30 +1,21 @@
 package com.kyoroteam.kyoro;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.stream.*;
+
 import java.util.*;
 
-import com.amazonaws.services.lambda.runtime.Context;
-
-import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.TokenizerBase.Mode;
-import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonReader;
+import com.kyoroteam.kyoro.tokenizer.KyoroTokenizer;
+import com.kyoroteam.kyoro.tokenizer.Request;
 import com.google.gson.reflect.*;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import com.worksap.nlp.sudachi.sentdetect.*;
-
-import ve.Pos;
 
 /**
  * Unit test for simple App.
@@ -54,10 +45,9 @@ public class AppTest {
         }.getType();
         ArrayList<Request> request = gson.fromJson(r, type);
 
-        var handler = new Handler();
-        var context = Mockito.mock(Context.class);
+        var handler = new KyoroTokenizer();
 
-        var results = handler.handleRequest(request, context);
+        var results = handler.tokenize(request);
 
         var writer = new FileWriter("/home/james/Desktop/data/all_v11_out.json");
         gson.toJson(results, writer);

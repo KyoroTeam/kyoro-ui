@@ -1,11 +1,8 @@
-package com.kyoroteam.kyoro;
+package com.kyoroteam.kyoro.tokenizer;
 
 import com.atilika.kuromoji.TokenizerBase.Mode;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
-
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +12,8 @@ import com.worksap.nlp.sudachi.sentdetect.*;
 import ve.Pos;
 import ve.Word;
 
-public class Handler implements RequestHandler<List<Request>, List<KyoroTokenizeResult>> {
-    @Override
-    public List<KyoroTokenizeResult> handleRequest(List<Request> event, Context context) {
+public class KyoroTokenizer {
+    public List<KyoroTokenizeResult> tokenize(List<Request> event) {
         var builder = new Tokenizer.Builder();
         var tokenizer = builder.mode(Mode.SEARCH).build();
 

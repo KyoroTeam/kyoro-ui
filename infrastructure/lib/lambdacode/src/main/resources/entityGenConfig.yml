@@ -1,0 +1,5 @@
+jdbcSettings:
+  url: "jdbc:sqlite:/home/james/Desktop/content2.db"
+  driverClassName: "org.sqlite.JDBC"
+
+packageName: "com.kyoroteam.kyoro.database.model"
