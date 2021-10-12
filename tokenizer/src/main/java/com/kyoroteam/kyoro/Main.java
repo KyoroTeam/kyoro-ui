@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             var manager = new Manager();
-            var results = manager.tokenizeContent(args[0]);
+            var results = manager.tokenizeContent("/home/james/Desktop/data.txt");
             var gson = new Gson();
             String json = gson.toJson(results);
             System.out.print(json);

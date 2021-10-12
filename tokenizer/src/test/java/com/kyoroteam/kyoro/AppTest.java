@@ -29,16 +29,8 @@ public class AppTest {
      * @throws IOException
      * @throws JsonIOException
      */
-    @Test
-    public void shouldAnswerWithTrue() throws JsonIOException, IOException {
-        // var handler = new Handler();
-        // var request = new HashMap<String, String>();
-        // var context = Mockito.mock(Context.class);
-        // request.put("request", LONG_TEXT);
-        // var results = handler.handleRequest(request, context);
-        // System.out.print(results);
-        // assertTrue(true);
-
+    // @Test
+    private void shouldAnswerWithTrue() throws JsonIOException, IOException {
         Gson gson = new Gson();
         JsonReader r = new JsonReader(new FileReader("/home/james/Desktop/data/all_v11.json"));
         var type = new TypeToken<ArrayList<Request>>() {
@@ -53,23 +45,5 @@ public class AppTest {
         gson.toJson(results, writer);
         writer.flush();
         writer.close();
-    }
-
-    @Test
-    public void Test() {
-
-    }
-
-    @Test
-    public void Sudachi() throws IOException {
-        var text = LONG_TEXT;
-        var x = new SentenceDetector();
-        int end = 0;
-        var list = new ArrayList<String>();
-        while ((end = x.getEos(text, null)) != 0) {
-            String sentence = text.substring(0, end);
-            text = text.substring(end);
-            list.add(sentence);
-        }
     }
 }

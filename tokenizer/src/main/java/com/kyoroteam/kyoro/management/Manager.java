@@ -16,17 +16,25 @@ public class Manager {
 
     }
 
-    public List<KyoroTokenizeResult> tokenizeContent(String filename) throws IOException {
-        var content = Files.readString(Path.of(filename));
+    public List<KyoroTokenizeResult> tokenizeContent(String filePath) throws IOException {
+        var content = Files.readString(Path.of(filePath));
 
         var japaneseText = filterJapaneseText(content);
 
-        var request = Arrays.asList(new Request(japaneseText, "", filename));
+        var request = Arrays.asList(new Request(japaneseText, "", filePath));
 
         return new KyoroTokenizer().tokenize(request);
     }
 
     private String filterJapaneseText(String anyPossibleText) {
         return anyPossibleText;
+    }
+
+    private void removeSentencesWithoutVerbs() {
+
+    }
+
+    private void SplitByNewlines() {
+
     }
 }
