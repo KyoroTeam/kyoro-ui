@@ -31,10 +31,6 @@ public class KyoroTokenizer {
             String niceSentence) {
         List<Token> tokens = tokenizer.tokenize(niceSentence);
 
-        if (niceSentence.contains("2021年3月28日閲覧")) {
-            int x = 9;
-        }
-
         var parser = new ve.Parse(tokens.toArray(new Token[0]));
         var words = parser.words();
 
@@ -64,9 +60,6 @@ public class KyoroTokenizer {
         var list = new ArrayList<String>();
         while ((end = x.getEos(crazyText, null)) > 0) {
             String sentence = crazyText.substring(0, end);
-            if (sentence.contains("Programme")) {
-                int xasd = 9;
-            }
             crazyText = crazyText.substring(end);
             list.add(sentence);
         }
