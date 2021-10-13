@@ -13,16 +13,14 @@ import ve.Pos;
 import ve.Word;
 
 public class KyoroTokenizer {
-    public List<KyoroTokenizeResult> tokenize(List<Request> event) {
+    public List<KyoroTokenizeResult> tokenize(Request request) {
         var builder = new Tokenizer.Builder();
         var tokenizer = builder.mode(Mode.SEARCH).build();
 
-        var results = new ArrayList<KyoroTokenizeResult>();
-        for (Request request : event) {
-            var sentences = SplitSentences(request.jap);
-            sentences.stream().map(s -> TokenizeSentence(tokenizer, request.source, request.eng, s))
-                    .forEach(s -> results.add(s));
-        }
+        var sentences = SplitSentences(request.jap);
+
+        var results = sentences.stream().map(s -> TokenizeSentence(tokenizer, request.source, request.eng, s))
+                .collect(Collectors.toList());
 
         return results;
     }
@@ -44,7 +42,8 @@ public class KyoroTokenizer {
         var readings = resultList.stream().map(r -> r.getReading()).collect(Collectors.toList());
         var wordPositions = resultList.stream().map(word -> GetPositionsOfWord(word)).collect(Collectors.toList());
 
-        return new KyoroTokenizeResult(source, niceSentence, translation, words2, wordPositions, lemmas, readings);
+        return new KyoroTokenizeResult(source, niceSentence, translation, words2, wordPositions, lemmas, readings,
+                resultList);
     }
 
     private WordPosition GetPositionsOfWord(Word word) {

@@ -2,9 +2,11 @@ package com.kyoroteam.kyoro.tokenizer;
 
 import java.util.List;
 
+import ve.Word;
+
 public class KyoroTokenizeResult {
     public KyoroTokenizeResult(String source, String sentence, String translation, List<String> words,
-            List<WordPosition> wordPositions, List<String> lemmas, List<String> readings) {
+            List<WordPosition> wordPositions, List<String> lemmas, List<String> readings, List<Word> veWords) {
         Source = source;
         Sentence = sentence;
         Translation = translation;
@@ -12,6 +14,7 @@ public class KyoroTokenizeResult {
         WordPositions = wordPositions;
         Lemmas = lemmas;
         Readings = readings;
+        VeWords = veWords;
     }
 
     public String Source;
@@ -21,4 +24,5 @@ public class KyoroTokenizeResult {
     public List<WordPosition> WordPositions;
     public List<String> Lemmas;
     public List<String> Readings;
+    public List<Word> VeWords;
 }

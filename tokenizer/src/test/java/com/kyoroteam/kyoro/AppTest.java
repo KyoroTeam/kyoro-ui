@@ -31,19 +31,20 @@ public class AppTest {
      */
     // @Test
     private void shouldAnswerWithTrue() throws JsonIOException, IOException {
-        Gson gson = new Gson();
-        JsonReader r = new JsonReader(new FileReader("/home/james/Desktop/data/all_v11.json"));
-        var type = new TypeToken<ArrayList<Request>>() {
-        }.getType();
-        ArrayList<Request> request = gson.fromJson(r, type);
+        // Gson gson = new Gson();
+        // JsonReader r = new JsonReader(new
+        // FileReader("/home/james/Desktop/data/all_v11.json"));
+        // var type = new TypeToken<ArrayList<Request>>() {
+        // }.getType();
+        // ArrayList<Request> request = gson.fromJson(r, type);
 
-        var handler = new KyoroTokenizer();
+        // var handler = new KyoroTokenizer();
 
-        var results = handler.tokenize(request);
+        // var results = handler.tokenize(request);
 
-        var writer = new FileWriter("/home/james/Desktop/data/all_v11_out.json");
-        gson.toJson(results, writer);
-        writer.flush();
-        writer.close();
+        // var writer = new FileWriter("/home/james/Desktop/data/all_v11_out.json");
+        // gson.toJson(results, writer);
+        // writer.flush();
+        // writer.close();
     }
 }
