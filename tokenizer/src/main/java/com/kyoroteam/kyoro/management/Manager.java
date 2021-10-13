@@ -31,7 +31,7 @@ public class Manager {
 
         var cleanLines = preFilterContent(lines);
         for (String line : cleanLines) {
-            var rawTokens = tokenizer.tokenize(new Request(line, "", "memory"));
+            var rawTokens = tokenizer.tokenize(new Request(line, "", source));
             var tokens = postFilterContent(rawTokens);
             result.addAll(tokens);
         }
