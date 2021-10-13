@@ -24,5 +24,5 @@ public class KyoroTokenizeResult {
     public List<WordPosition> WordPositions;
     public List<String> Lemmas;
     public List<String> Readings;
-    public List<Word> VeWords;
+    public transient List<Word> VeWords;
 }
