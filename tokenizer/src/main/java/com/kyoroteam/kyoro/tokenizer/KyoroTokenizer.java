@@ -13,21 +13,24 @@ import ve.Pos;
 import ve.Word;
 
 public class KyoroTokenizer {
-    public List<KyoroTokenizeResult> tokenize(Request request) {
-        var builder = new Tokenizer.Builder();
-        var tokenizer = builder.mode(Mode.SEARCH).build();
+    private Tokenizer Tokenizer;
 
+    public KyoroTokenizer() {
+        var builder = new Tokenizer.Builder();
+        Tokenizer = builder.mode(Mode.SEARCH).build();
+    }
+
+    public List<KyoroTokenizeResult> tokenize(Request request) {
         var sentences = SplitSentences(request.jap);
 
-        var results = sentences.stream().map(s -> TokenizeSentence(tokenizer, request.source, request.eng, s))
+        var results = sentences.stream().map(s -> TokenizeSentence(request.source, request.eng, s))
                 .collect(Collectors.toList());
 
         return results;
     }
 
-    private KyoroTokenizeResult TokenizeSentence(Tokenizer tokenizer, String source, String translation,
-            String niceSentence) {
-        List<Token> tokens = tokenizer.tokenize(niceSentence);
+    private KyoroTokenizeResult TokenizeSentence(String source, String translation, String niceSentence) {
+        List<Token> tokens = Tokenizer.tokenize(niceSentence);
 
         var parser = new ve.Parse(tokens.toArray(new Token[0]));
         var words = parser.words();
