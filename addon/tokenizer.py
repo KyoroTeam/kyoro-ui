@@ -24,7 +24,7 @@ class KyTokenizeResult:
 
 class IKyoroTokenizer:
     @abstractmethod
-    def tokenize_file() -> List[KyTokenizeResult]:
+    def tokenize_file(self, filename: str) -> List[KyTokenizeResult]:
         pass
 
 
