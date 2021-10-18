@@ -7,6 +7,10 @@ from aqt import gui_hooks
 from aqt.qt import *
 import os
 import json
+import sqlite3
+from content import KyoroContentManager
+
+from database import KyoroDatabase
 
 addon_path = os.path.dirname(__file__)
 files_path = os.path.join(addon_path, "content")
@@ -76,30 +80,34 @@ def loadJson() -> List[Any]:
         return json.loads(f.read())
 
 
-items = loadJson()
+# items = loadJson()
+
+conn = sqlite3.connect(os.path.join(addon_path, "content.db"))
 
 
 def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
-    print("OK...", handled, message, context)
-    # if not isinstance(context, KyroWebView):
-    #     print("1 Not OK...")
-    #     return handled
+    print("Kyoro Command -->", handled, message, context)
+
     if not message.startswith(KYORO_COMMAND_PREFIX):
-        print("2 OK...")
         return handled
+
     cmds = message.split(":")
     cmd = cmds[0].strip()
-    print("3 OK...", cmds)
-    if cmd == "Kyoro.getLocalContentList":
-        results = list(set(map(lambda s: s["Source"], items)))
-        print("4 OK...", results)
+
+    if cmd == "Kyoro.getIndexedSources":
+        db = KyoroDatabase(conn)
+        results = db.get_indexed_source_names()
         return (True, results)
     elif cmd == "Kyoro.getTokenizedSentences":
         contentName = cmds[1].strip()
-        results = filter(lambda s: s["Source"] == contentName, items)
-        print("5 OK...", results)
+        db = KyoroDatabase(conn)
+        results = db.get_sentences_for_source(contentName)
         return (True, results)
-    print("6 OK...")
+    elif cmd == "Kyoro.getLocalSources":
+        content = KyoroContentManager()
+        results = content.get_current_content_info()
+        return (True, results)
+
     return handled
 
 

@@ -1,8 +1,6 @@
 from typing import *
 import os
 
-from database import IKyoroDatabase
-
 addon_path = os.path.dirname(__file__)
 files_path = os.path.join(addon_path, "content")
 
@@ -16,10 +14,6 @@ class KyContentInfo:
 
 class KyoroContentManager:
     SUPPORTED_FILE_EXTENSIONS = ["pdf", "docx", "txt", "json"]
-
-    def __init__(self, db: IKyoroDatabase) -> None:
-        self.db = db
-        pass
 
     # Return some information about all the current existing files
     # in the content directory
