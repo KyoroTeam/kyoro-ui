@@ -1,4 +1,4 @@
-package com.kyoroteam.kyoro.tokenizer;
+package com.kyoroteam.kyoro.tokenizer.result;
 
 public class WordPosition {
     public WordPosition(int start, int end) {

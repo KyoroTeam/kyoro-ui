@@ -33,7 +33,7 @@ public class ContentFilterTests {
         var results = new Manager().tokenizeTextContent(jap, "tests");
 
         // Then
-        assertEquals(1, results.size());
-        assertEquals("日本語を通用する", results.get(0).Sentence);
+        assertEquals(1, results.Sentences.size());
+        assertEquals("日本語を通用する", results.Sentences.get(0).Sentence);
     }
 }

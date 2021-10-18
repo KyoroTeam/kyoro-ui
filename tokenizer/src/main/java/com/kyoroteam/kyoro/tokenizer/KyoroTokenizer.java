@@ -3,6 +3,9 @@ package com.kyoroteam.kyoro.tokenizer;
 import com.atilika.kuromoji.TokenizerBase.Mode;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
+import com.kyoroteam.kyoro.tokenizer.result.KyoroJapaneseFeature;
+import com.kyoroteam.kyoro.tokenizer.result.KyoroJapaneseSentence;
+import com.kyoroteam.kyoro.tokenizer.result.WordPosition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +23,16 @@ public class KyoroTokenizer {
         Tokenizer = builder.mode(Mode.SEARCH).build();
     }
 
-    public List<KyoroTokenizeResult> tokenize(Request request) {
+    public List<KyoroJapaneseSentence> tokenize(Request request) {
         var sentences = SplitSentences(request.jap);
 
-        var results = sentences.stream().map(s -> TokenizeSentence(request.source, request.eng, s))
+        var tokens = sentences.stream().map(s -> new KyoroJapaneseSentence(s, request.eng, TokenizeSentence(s)))
                 .collect(Collectors.toList());
 
-        return results;
+        return tokens;
     }
 
-    private KyoroTokenizeResult TokenizeSentence(String source, String translation, String niceSentence) {
+    private KyoroJapaneseFeature TokenizeSentence(String niceSentence) {
         List<Token> tokens = Tokenizer.tokenize(niceSentence);
 
         var parser = new ve.Parse(tokens.toArray(new Token[0]));
@@ -45,8 +48,7 @@ public class KyoroTokenizer {
         var readings = resultList.stream().map(r -> r.getReading()).collect(Collectors.toList());
         var wordPositions = resultList.stream().map(word -> GetPositionsOfWord(word)).collect(Collectors.toList());
 
-        return new KyoroTokenizeResult(source, niceSentence, translation, words2, wordPositions, lemmas, readings,
-                resultList);
+        return new KyoroJapaneseFeature(words2, wordPositions, lemmas, readings, resultList);
     }
 
     private WordPosition GetPositionsOfWord(Word word) {
