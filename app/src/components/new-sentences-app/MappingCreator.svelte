@@ -117,7 +117,7 @@
       />
     </div>
   </div>
-  <div class="row" style="justify-content: space-between">
+  <div class="row" style="justify-content: space-between; padding-top: 5px">
     <div class="col" style="justify-content: center; padding-right: 20px">
       <Checkbox disabled={!editing}  labelText="Japanese" style="flex-grow: 0" />
     </div>
@@ -131,7 +131,7 @@
         bind:selected={japaneseValue}
       />
     </div>
-  </div>  
+  </div>
 </div>
 </Tile>
 </Row>
