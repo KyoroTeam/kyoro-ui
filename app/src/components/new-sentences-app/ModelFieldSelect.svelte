@@ -6,7 +6,6 @@
 
   export let modelName: string = '';
   export let disabled: boolean = false;
-  export let label: KyoroFieldName;
   export let selected: string;
 
   const ankiConnect = getContext<IAnkiConnect>('anki');
@@ -18,7 +17,7 @@
 </script>
 
 {#if modelNames?.length > 0}
-  <Select bind:selected inline {disabled} helperText={label} size={'xl'}>
+  <Select bind:selected inline {disabled} size={'xl'} >
     {#each modelNames as model}
       <SelectItem value={model} text={model} />
     {/each}

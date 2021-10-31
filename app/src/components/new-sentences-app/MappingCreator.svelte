@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Column, Row, Tile } from 'carbon-components-svelte';
+  import { Button, Checkbox, Column, Row, Tile } from 'carbon-components-svelte';
   import Edit16 from 'carbon-icons-svelte/lib/Edit16';
   import CheckboxChecked16 from 'carbon-icons-svelte/lib/CheckboxChecked16';
   import CloseFilled16 from 'carbon-icons-svelte/lib/CloseFilled16';
@@ -93,45 +93,56 @@
   </Tile>
 </Row>
 <Row>
-  <Tile>
-    <Row>
-      <Column style={'border-right: solid 1px'}>
-        <h5>Model To Map</h5>
-        <br />
-        <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
-      </Column>
-      <Column>
-        <h5>Model Field Mappings</h5>
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="English"
-          bind:selected={englishValue}
-        />
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="Japanese"
-          bind:selected={japaneseValue}
-        />
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="Source"
-          bind:selected={sourceValue}
-        />
-        <ModelFieldSelect
-          disabled={!editing}
-          modelName={selectedModelName}
-          label="Tags"
-          bind:selected={tagsValue}
-        />
-      </Column>
-    </Row>
-  </Tile>
+<Tile>
+<div class="col">
+  <h5>Target Model</h5>
+  <ModelSelect disabled={!editing} bind:selected={selectedModelName} />
+  <div class="row" style="padding-top: 30px; padding-bottom: 10px; justify-content: space-between">
+    <h5>Kyoro Field</h5>
+    <h5>Target Model Field</h5>
+  </div>
+  <div class="row" style="justify-content: space-between">
+    <div class="col" style="justify-content: center; padding-right: 40px">
+      <Checkbox disabled={!editing}  labelText="Japanese" style="flex-grow: 0" />
+    </div>
+    <div class="row select-wrapper">
+      <ModelFieldSelect
+        disabled={!editing}
+        modelName={selectedModelName}
+        bind:selected={japaneseValue}
+      />
+    </div>
+  </div>
+  <div class="row" style="justify-content: space-between">
+    <div class="col" style="justify-content: center">
+      <Checkbox disabled={!editing} labelText="Japanese" style="flex-grow: 0" />
+    </div>
+    <div class="row select-wrapper">
+      <ModelFieldSelect
+        disabled={!editing}
+        modelName={selectedModelName}
+        bind:selected={japaneseValue}
+      />
+    </div>
+  </div>  
+</div>
+</Tile>
 </Row>
 
 <style>
+  .select-wrapper {
+    background-color: #f4f4f4;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+
   .mapping-title {
     display: flex;
     flex-direction: row;

@@ -14,7 +14,7 @@
 {#await models}
   <SelectSkeleton />
 {:then modelNames}
-  <Select {disabled} labelText="Target Model" size={'xl'} bind:selected>
+  <Select {disabled}   size={'xl'} bind:selected>
     {#each modelNames as model}
       <SelectItem value={model} text={model} />
     {/each}
