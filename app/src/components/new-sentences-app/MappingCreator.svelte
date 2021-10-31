@@ -2,6 +2,7 @@
   import { Button, Checkbox, Column, Row, Tile } from 'carbon-components-svelte';
   import Edit16 from 'carbon-icons-svelte/lib/Edit16';
   import CheckboxChecked16 from 'carbon-icons-svelte/lib/CheckboxChecked16';
+  import ArrowRight16 from "carbon-icons-svelte/lib/ArrowRight16";
   import CloseFilled16 from 'carbon-icons-svelte/lib/CloseFilled16';
   import Delete16 from 'carbon-icons-svelte/lib/Delete16';
   import ModelFieldSelect from './ModelFieldSelect.svelte';
@@ -102,8 +103,11 @@
     <h5>Target Model Field</h5>
   </div>
   <div class="row" style="justify-content: space-between">
-    <div class="col" style="justify-content: center; padding-right: 40px">
+    <div class="col" style="justify-content: center; padding-right: 20px">
       <Checkbox disabled={!editing}  labelText="Japanese" style="flex-grow: 0" />
+    </div>
+    <div class="col" style="justify-content: center; padding-right: 20px">
+      <ArrowRight16/>
     </div>
     <div class="row select-wrapper">
       <ModelFieldSelect
@@ -114,8 +118,11 @@
     </div>
   </div>
   <div class="row" style="justify-content: space-between">
-    <div class="col" style="justify-content: center">
-      <Checkbox disabled={!editing} labelText="Japanese" style="flex-grow: 0" />
+    <div class="col" style="justify-content: center; padding-right: 20px">
+      <Checkbox disabled={!editing}  labelText="Japanese" style="flex-grow: 0" />
+    </div>
+    <div class="col" style="justify-content: center; padding-right: 20px">
+      <ArrowRight16/>
     </div>
     <div class="row select-wrapper">
       <ModelFieldSelect
