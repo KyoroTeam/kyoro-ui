@@ -54,5 +54,5 @@ class KyoroDatabase(IKyoroDatabase):
         )
         pass
 
-    def update_source_sentences(self, source_name: str, content: List[KyTokenizeResult]):
+    def update_source_sentences(self, source_name: str, content: KyTokenizeResult):
         pass
