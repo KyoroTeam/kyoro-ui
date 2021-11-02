@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from types import SimpleNamespace
 import subprocess
 import json
@@ -23,19 +22,13 @@ class KyJapaneseSentence:
     def __init__(self) -> None:
         self.Sentence = ""
         self.Translation = ""
-        self.Features = List[KyJapaneseFeatures]([])
+        self.Features = KyJapaneseFeatures()
 
 
 class KyTokenizeResult:
     def __init__(self) -> None:
         self.Source = ""
         self.Sentences = List[KyJapaneseSentence]([])
-
-
-class IKyoroTokenizer:
-    @abstractmethod
-    def tokenize_file(self, filename: str) -> KyTokenizeResult:
-        pass
 
 
 class KuromojiJavaTokenizer:
