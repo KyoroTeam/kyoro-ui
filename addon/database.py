@@ -20,15 +20,15 @@ class KyoroDatabase:
         cursor.execute(
             """
             select
-                s.sentence,
+                s.sentence_text,
                 f.feature,
                 f.feature_order_index
             from ky_sentence_feature f
             inner join ky_sentence s on s.ky_sentence_tid = f.ky_sentence_tid
-            inner join ky_source src on src.ky_souce_tid = s.ky_souce_tid
+            inner join ky_source src on src.ky_source_tid = s.ky_source_tid
             where src.ky_source_tid = ?
             """,
-            source_tid
+            (source_tid,)
         )
         pass
 
