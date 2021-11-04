@@ -34,7 +34,7 @@ class KyTokenizeResult:
 class KuromojiJavaTokenizer:
     def tokenize_file(self, filename: str) -> KyTokenizeResult:
         result = subprocess.run(
-            ["java", "-jar", "kuromoji-tokenizer-1.0-SNAPSHOT.jar", filename], capture_output=True)
+            ["java", "-jar", "/home/james/Desktop/Git/kyoro-ui/tokenizer/target/kuromoji-tokenizer-1.0-SNAPSHOT.jar", filename], capture_output=True)
         if result.returncode == 0:
             json_results = result.stdout
             x = json.loads(

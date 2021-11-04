@@ -1,7 +1,8 @@
-from tokenizer import KyTokenizeResult
+from tokenizer import KyTokenizeResult, KuromojiJavaTokenizer
 import sqlite3
 from typing import List, Tuple
 import time
+import os
 
 
 class KyoroDatabase:
@@ -37,11 +38,12 @@ class KyoroDatabase:
 
         # Ensure existence of source
         source_tid = None
-        result = cursor.execute(
-            "select ky_source_tid from ky_source where source_name = (?)", content.Source)
-        if len(result) > 0:
-            source_tid = result.fetchone()[0]
-        if len(result) == 0:
+        cursor.execute(
+            "select ky_source_tid from ky_source where source_name = (?)", (content.Source,))
+        fetch = cursor.fetchone()
+        if fetch is not None:
+            source_tid = fetch[0]
+        else:
             cursor.execute(
                 "insert into ky_source (sql_created_datetime, source_name) values (?, ?)", (now, content.Source))
             source_tid = cursor.lastrowid
@@ -56,18 +58,22 @@ class KyoroDatabase:
             sentence_tid = cursor.lastrowid
 
             # Combine the sentence features into one array and insert at once
-            all_features = List[Tuple[str, str]]([])  # (feature_type, feature)
-            all_features.append(
-                [("jp_word", w) for w in sentence.Features.Words])
-            all_features.append(
-                [("jp_lemma", l) for l in sentence.Features.Lemmas])
-            all_features.append(
-                [("jp_reading", r) for r in sentence.Features.Readings])
-            all_features.append(
-                [("jp_word_position", f"{wp.Start},{wp.End}") for wp in sentence.Features.WordPositions])
+            # (feature_type, feature, feature_index)
+            all_features = list[Tuple[str, str, int]]([])
+            all_features.extend(
+                [("jp_word", w, i) for (i, w) in enumerate(sentence.Features.Words)])
+            all_features.extend(
+                [("jp_lemma", l, i) for (i, l) in enumerate(sentence.Features.Lemmas)])
+            all_features.extend(
+                [("jp_reading", r, i) for (i, r) in enumerate(sentence.Features.Readings)])
+            all_features.extend(
+                [("jp_word_position", f"{wp.Start},{wp.End}", i) for (i, wp) in enumerate(sentence.Features.WordPositions)])
 
-            insert = [(now, sentence_tid, feature[1][1], feature[1][0], feature[0])
-                      for feature in enumerate(all_features)]
+            insert = [(now,
+                       sentence_tid,
+                       feature[1],
+                       feature[0],
+                       feature[2]) for feature in all_features]
 
             cursor.executemany(
                 """
@@ -80,12 +86,24 @@ class KyoroDatabase:
                 values (?, ?, ?, ?, ?)
                 """, insert)
 
+        self.sqlite.commit()
+
     def _create_or_open_db(self, path: str):
         con = sqlite3.connect(path)
-        is_created_test = con.execute(
+        cur = con.cursor()
+        cur.execute(
             "select null from sqlite_master where type = 'table' and name = 'ky_source'")
-        if len(is_created_test) == 0:
-            with open(path.join("sql", "schema_1.sql")) as f:
+        fetch = cur.fetchone()
+        if fetch is None:
+            with open(os.path.join("sql", "schema_1.sql")) as f:
                 c = f.read()
-            con.execute(c)
+            cur.executescript(c)
+            con.commit()
         return con
+
+
+if __name__ == '__main__':
+    tokenizer = KuromojiJavaTokenizer()
+    results = tokenizer.tokenize_file("/home/james/Desktop/datasmall.txt")
+    db = KyoroDatabase("content2.db")
+    db.update_source_sentences(results)
