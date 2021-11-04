@@ -1,3 +1,9 @@
+CREATE TABLE ky_error_log (
+	ky_error_log	INTEGER PRIMARY KEY,
+	sql_created_datetime	TEXT NOT NULL,
+	sql_modified_datetime	TEXT NULL,
+	error_text	TEXT NOT NULL
+);
 CREATE TABLE ky_source (
 	ky_source_tid	INTEGER PRIMARY KEY,
 	sql_created_datetime	TEXT NOT NULL,

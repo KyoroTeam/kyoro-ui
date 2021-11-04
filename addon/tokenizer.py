@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 import subprocess
 import json
-from typing import List
+from typing import List, Optional, Union
 
 
 class KyWordPosition:
@@ -32,7 +32,7 @@ class KyTokenizeResult:
 
 
 class KuromojiJavaTokenizer:
-    def tokenize_file(self, filename: str) -> KyTokenizeResult:
+    def tokenize_file(self, filename: str) -> Optional[KyTokenizeResult]:
         result = subprocess.run(
             ["java", "-jar", "/home/james/Desktop/Git/kyoro-ui/tokenizer/target/kuromoji-tokenizer-1.0-SNAPSHOT.jar", filename], capture_output=True)
         if result.returncode == 0:
@@ -42,4 +42,4 @@ class KuromojiJavaTokenizer:
             return x
         else:
             print("Oh no")
-            return []
+            return None

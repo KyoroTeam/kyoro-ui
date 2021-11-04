@@ -11,6 +11,7 @@ import sqlite3
 from content import KyoroContentManager
 
 from database import KyoroDatabase
+from tokenizer import KuromojiJavaTokenizer
 
 addon_path = os.path.dirname(__file__)
 files_path = os.path.join(addon_path, "content")
@@ -96,17 +97,27 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
 
     if cmd == "Kyoro.getIndexedSources":
         db = KyoroDatabase(conn)
-        results = db.get_indexed_source_names()
-        return (True, results)
+        tokens = db.get_indexed_source_names()
+        return (True, tokens)
     elif cmd == "Kyoro.getTokenizedSentences":
         contentName = cmds[1].strip()
         db = KyoroDatabase(conn)
-        results = db.get_sentences_for_source(contentName)
-        return (True, results)
+        tokens = db.get_sentences_for_source(contentName)
+        return (True, tokens)
     elif cmd == "Kyoro.getLocalSources":
         content = KyoroContentManager()
-        results = content.get_current_content_info()
-        return (True, results)
+        tokens = content.get_current_content_info()
+        return (True, tokens)
+    elif cmd == "Kyoro.tokenizeSource":
+        contentName = cmds[1].strip()
+        tokenizer = KuromojiJavaTokenizer()
+        tokens = tokenizer.tokenize_file(contentName)
+        if tokens is None:
+            return (True, {"err": "Failed to parse file.", "success": False})
+        db = KyoroDatabase()
+        if db.update_source_sentences(tokens) == False:
+            return (True, {"err": "Failed to write to database. Check error log.", "success": False})
+        return (True, {"err": None, "success": True})
 
     return handled
 
