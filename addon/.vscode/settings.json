@@ -1,4 +1,9 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.defaultInterpreterPath": "/home/james/Desktop/Git/kyoro-ui/addon/kyoro-env/bin/python3.8"
+    "python.defaultInterpreterPath": "/home/james/Desktop/Git/kyoro-ui/addon/kyoro-env/bin/python3.8",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
