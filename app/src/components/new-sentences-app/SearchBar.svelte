@@ -4,12 +4,14 @@
   import SentenceSourceSelect from '../SentenceSourceSelect.svelte';
   import { OfflineIndex } from '../../stores/offlineIndexStore';
   import { toKatakana } from 'wanakana';
+  import type { KyoTokenResult } from 'src/models/SolrResponse';
+  import type { RootObject } from 'src/models/FlexSearchModels';
 
   export let sentences: JibikiSenteceResponse[];
 
   let searchValue = '';
 
-  function getHighloteSentenceParts(s: Solr.KyoTokenResult, searchWord: string): SentecePart[] {
+  function getHighloteSentenceParts(s: KyoTokenResult, searchWord: string): SentecePart[] {
     let foundIndex = s.Words.indexOf(searchWord);
     if (foundIndex === -1) {
       foundIndex = s.Lemmas.indexOf(searchWord);
@@ -50,11 +52,11 @@
   $: {
     const result = OfflineIndex.search(searchValue, {
       enrich: true,
-    }) as FlexSearch.RootObject[];
+    }) as RootObject[];
 
     console.log(searchValue, JSON.stringify(result));
 
-    const b = new Set(result.flatMap(a => a.result.map(r => r.doc)));
+    const b = new Set(result.flatMap((a) => a.result.map((r) => r.doc)));
     const a = Array.from(b.values());
 
     sentences = a.map((s, i) => ({

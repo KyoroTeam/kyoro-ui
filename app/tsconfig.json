@@ -1,4 +1,5 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "include": ["src", "types"],
   "compilerOptions": {
     "module": "esnext",
@@ -6,6 +7,7 @@
     "moduleResolution": "node",
     "jsx": "preserve",
     "baseUrl": "./",
+    "types": ["node", "svelte"],
     /* paths - import rewriting/resolving */
     "paths": {
       // If you configured any Snowpack aliases, add them here.

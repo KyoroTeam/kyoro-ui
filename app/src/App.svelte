@@ -22,7 +22,7 @@
 
   let offlineSources: string[] = [];
   SentenceSourceStore.subscribe(
-    items => (offlineSources = items.filter(i => i.offline === true).map(s => s.name)),
+    (items) => (offlineSources = items.filter((i) => i.offline === true).map((s) => s.name)),
   );
 </script>
 

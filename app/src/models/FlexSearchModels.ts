@@ -1,11 +1,11 @@
-declare module FlexSearch {
-  export interface Result {
-    id: number;
-    doc: Solr.KyoTokenResult;
-  }
+import type { KyoTokenResult } from './SolrResponse';
 
-  export interface RootObject {
-    field: string;
-    result: Result[];
-  }
+export interface Result {
+  id: number;
+  doc: KyoTokenResult;
+}
+
+export interface RootObject {
+  field: string;
+  result: Result[];
 }
