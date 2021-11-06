@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 import subprocess
 import json
-from typing import List, Optional, Union
+from typing import List, Optional
 
 
 class KyWordPosition:

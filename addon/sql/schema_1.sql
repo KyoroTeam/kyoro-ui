@@ -1,5 +1,5 @@
 CREATE TABLE ky_error_log (
-	ky_error_log	INTEGER PRIMARY KEY,
+	ky_error_log_tid	INTEGER PRIMARY KEY,
 	sql_created_datetime	TEXT NOT NULL,
 	sql_modified_datetime	TEXT NULL,
 	error_text	TEXT NOT NULL

@@ -1,17 +1,20 @@
 from sqlite3.dbapi2 import Connection
-from tokenizer import KyTokenizeResult, KuromojiJavaTokenizer
 import sqlite3
-from typing import List, Optional, Tuple, Union
+from typing import List, Tuple
 import time
 import os
+
+from .tokenizer import KyTokenizeResult, KuromojiJavaTokenizer
+
+addon_path = os.path.dirname(__file__)
 
 
 class KyoroDatabase:
     DEFALT_DB_PATH = "content.db"
 
-    def __init__(self, path: Union[str, None]) -> None:
-        used_path = KyoroDatabase.DEFALT_DB_PATH if path is None else path
-        self.sqlite = self._create_or_open_db(used_path)
+    def __init__(self) -> None:
+        path = os.path.join(addon_path, KyoroDatabase.DEFALT_DB_PATH)
+        self.sqlite = self._create_or_open_db(path)
 
     def get_indexed_source_names(self) -> List[Tuple[str, int, float]]:
         cursor = self.sqlite.cursor()
@@ -114,7 +117,7 @@ class KyoroDatabase:
             "select null from sqlite_master where type = 'table' and name = 'ky_source'")
         fetch = cur.fetchone()
         if fetch is None:
-            with open(os.path.join("sql", "schema_1.sql")) as f:
+            with open(os.path.join(addon_path, "sql", "schema_1.sql")) as f:
                 c = f.read()
             cur.executescript(c)
             con.commit()
@@ -124,5 +127,5 @@ class KyoroDatabase:
 if __name__ == '__main__':
     tokenizer = KuromojiJavaTokenizer()
     results = tokenizer.tokenize_file("/home/james/Desktop/datasmall.txt")
-    db = KyoroDatabase("content2.db")
+    db = KyoroDatabase()
     db.update_source_sentences(results)

@@ -7,11 +7,10 @@ from aqt import gui_hooks
 from aqt.qt import *
 import os
 import json
-import sqlite3
-from content import KyoroContentManager
 
-from database import KyoroDatabase
-from tokenizer import KuromojiJavaTokenizer
+from .content import KyoroContentManager
+from .database import KyoroDatabase
+from .tokenizer import KuromojiJavaTokenizer
 
 addon_path = os.path.dirname(__file__)
 files_path = os.path.join(addon_path, "content")
@@ -83,9 +82,6 @@ def loadJson() -> List[Any]:
 
 # items = loadJson()
 
-conn = sqlite3.connect(os.path.join(addon_path, "content.db"))
-
-
 def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
     print("Kyoro Command -->", handled, message, context)
 
@@ -96,12 +92,12 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
     cmd = cmds[0].strip()
 
     if cmd == "Kyoro.getIndexedSources":
-        db = KyoroDatabase(conn)
+        db = KyoroDatabase()
         tokens = db.get_indexed_source_names()
         return (True, tokens)
     elif cmd == "Kyoro.getTokenizedSentences":
         contentName = cmds[1].strip()
-        db = KyoroDatabase(conn)
+        db = KyoroDatabase()
         tokens = db.get_sentences_for_source(contentName)
         return (True, tokens)
     elif cmd == "Kyoro.getLocalSources":
