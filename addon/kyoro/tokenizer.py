@@ -12,10 +12,10 @@ class KyWordPosition:
 
 class KyJapaneseFeatures:
     def __init__(self) -> None:
-        self.Words = List[str]([])
-        self.WordPositions = List[KyWordPosition]([])
-        self.Lemmas = List[str]([])
-        self.Readings = List[str]([])
+        self.Words: List[str] = []
+        self.WordPositions: List[KyWordPosition] = []
+        self.Lemmas: List[str] = []
+        self.Readings: List[str] = []
 
 
 class KyJapaneseSentence:
@@ -28,7 +28,7 @@ class KyJapaneseSentence:
 class KyTokenizeResult:
     def __init__(self) -> None:
         self.Source = ""
-        self.Sentences = List[KyJapaneseSentence]([])
+        self.Sentences: List[KyJapaneseSentence] = []
 
 
 class KuromojiJavaTokenizer:
