@@ -12,9 +12,9 @@ addon_path = os.path.dirname(__file__)
 class KyoroDatabase:
     DEFALT_DB_PATH = "content.db"
 
-    def __init__(self) -> None:
-        path = os.path.join(addon_path, KyoroDatabase.DEFALT_DB_PATH)
-        self.sqlite = self._create_or_open_db(path)
+    def __init__(self, path=DEFALT_DB_PATH) -> None:
+        realPath = os.path.join(addon_path, path)
+        self.sqlite = self._create_or_open_db(realPath)
 
     def get_indexed_source_names(self) -> List[Tuple[str, int, float]]:
         cursor = self.sqlite.cursor()
@@ -97,6 +97,7 @@ class KyoroDatabase:
             self.sqlite.commit()
             return True
         except Exception as e:
+            print(str(e))
             self._insert_error_log(str(e))
             return False
 
