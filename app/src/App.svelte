@@ -10,20 +10,11 @@
     HeaderNavMenu,
     SideNavDivider,
     SideNavMenu,
-    SideNavMenuItem,
   } from 'carbon-components-svelte';
-  import AnkiConectGate from './components/AnkiConectGate.svelte';
 
-  import AnkiConnectProvider from './services/AnkiConnectProvider.svelte';
   import NewSentencesTab from './components/new-sentences-app/NewSentencesTab.svelte';
-  import { SentenceSourceStore } from './stores/sentenceSourcesStore';
 
   let isSideNavOpen = false;
-
-  let offlineSources: string[] = [];
-  SentenceSourceStore.subscribe(
-    (items) => (offlineSources = items.filter((i) => i.offline === true).map((s) => s.name)),
-  );
 </script>
 
 <Header company="Kyoro" platformName="Anki UI" bind:isSideNavOpen>
@@ -43,18 +34,10 @@
     <SideNavLink isSelected text="New Cards" />
     <SideNavLink text="Modify Cards" />
     <SideNavDivider />
-    <SideNavMenu expanded text="Sentence Sources">
-      {#each offlineSources as source}
-        <SideNavMenuItem href="/" text={source} />
-      {/each}
-    </SideNavMenu>
+    <SideNavMenu expanded text="Sentence Sources" />
   </SideNavItems>
 </SideNav>
 
 <Content>
-  <AnkiConnectProvider>
-    <AnkiConectGate>
-      <NewSentencesTab />
-    </AnkiConectGate>
-  </AnkiConnectProvider>
+  <NewSentencesTab />
 </Content>

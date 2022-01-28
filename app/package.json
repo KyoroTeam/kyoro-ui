@@ -8,10 +8,7 @@
     "@snowpack/plugin-webpack": "^3.0.0",
     "carbon-components-svelte": "^0.56.1",
     "carbon-icons-svelte": "^10.44.4",
-    "fast-myers-diff": "^3.0.1",
-    "flexsearch": "^0.7.21",
-    "svelte": "^3.46.3",
-    "wanakana": "^4.0.2"
+    "svelte": "^3.46.3"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.2.0",
@@ -23,7 +20,6 @@
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "@types/snowpack-env": "^2.3.4",
-    "@types/wanakana": "^4.0.3",
     "@web/test-runner": "^0.13.26",
     "carbon-preprocess-svelte": "^0.6.0",
     "chai": "^4.3.6",
