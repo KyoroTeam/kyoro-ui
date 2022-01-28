@@ -1,15 +1,10 @@
 <script lang="ts">
-  import {
-    Row,
-    Button,
-    ToastNotification,
-    Column,
-  } from "carbon-components-svelte";
-  import Add16 from "carbon-icons-svelte/lib/Add16";
-  import { cardMappingStore } from "../../stores/settingsStore";
-  import type { ICardMapping } from "../../stores/settingsStore";
-  import MappingCreator from "./MappingCreator.svelte";
-  import MappingAddModal from "./MappingAddModal.svelte";
+  import { Row, Button, ToastNotification, Column } from 'carbon-components-svelte';
+  import Add16 from 'carbon-icons-svelte/lib/Add16';
+  import { cardMappingStore } from '../../stores/settingsStore';
+  import type { ICardMapping } from '../../stores/settingsStore';
+  import MappingCreator from './MappingCreator.svelte';
+  import MappingAddModal from './MappingAddModal.svelte';
 
   let cardMappings: ICardMapping[];
   cardMappingStore.subscribe((value) => (cardMappings = value));
@@ -40,7 +35,7 @@
 <Row style="margin-top: 15px">
   <Button
     hasIconOnly
-    iconDescription={"Add New"}
+    iconDescription={'Add New'}
     tooltipPosition="top"
     icon={Add16}
     on:click={() => {
@@ -57,9 +52,9 @@
       cardMappingStore.update((value) => [
         ...value,
         {
-          deckName: "",
+          deckName: '',
           mappingName: mappingName,
-          modelName: "",
+          modelName: '',
           modelFieldMappings: {},
         },
       ]);

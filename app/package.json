@@ -5,28 +5,30 @@
     "test": "web-test-runner \"src/**/*.test.ts\""
   },
   "dependencies": {
-    "@snowpack/plugin-webpack": "^2.3.1",
-    "carbon-components-svelte": "^0.44.4",
+    "@snowpack/plugin-webpack": "^3.0.0",
+    "carbon-components-svelte": "^0.56.1",
+    "carbon-icons-svelte": "^10.44.4",
     "fast-myers-diff": "^3.0.1",
-    "flexsearch": "^0.7.2",
-    "svelte": "^3.24.0",
+    "flexsearch": "^0.7.21",
+    "svelte": "^3.46.3",
     "wanakana": "^4.0.2"
   },
   "devDependencies": {
-    "@snowpack/plugin-dotenv": "^2.0.5",
-    "@snowpack/plugin-svelte": "^3.5.0",
-    "@snowpack/plugin-typescript": "^1.2.0",
-    "@snowpack/web-test-runner-plugin": "^0.2.0",
-    "@testing-library/svelte": "^3.0.0",
-    "@tsconfig/svelte": "^2.0.1",
-    "@types/chai": "^4.2.13",
-    "@types/mocha": "^8.2.0",
-    "@types/snowpack-env": "^2.3.2",
+    "@snowpack/plugin-dotenv": "^2.2.0",
+    "@snowpack/plugin-svelte": "^3.7.0",
+    "@snowpack/plugin-typescript": "^1.2.1",
+    "@snowpack/web-test-runner-plugin": "^0.2.2",
+    "@testing-library/svelte": "^3.0.3",
+    "@tsconfig/svelte": "^3.0.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/snowpack-env": "^2.3.4",
     "@types/wanakana": "^4.0.3",
-    "@web/test-runner": "^0.12.0",
-    "chai": "^4.2.0",
-    "snowpack": "^3.0.1",
-    "svelte-preprocess": "^4.0.8",
-    "typescript": "^4.0.0"
+    "@web/test-runner": "^0.13.26",
+    "carbon-preprocess-svelte": "^0.6.0",
+    "chai": "^4.3.6",
+    "snowpack": "^3.8.8",
+    "svelte-preprocess": "^4.10.2",
+    "typescript": "^4.5.5"
   }
 }
