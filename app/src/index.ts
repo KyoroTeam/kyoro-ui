@@ -1,6 +1,10 @@
 import App from './App.svelte';
 import 'carbon-components-svelte/css/all.css';
 
+if ((window as any).pycmd === undefined) {
+  console.log('Liar!');
+}
+
 var app = new App({
   target: document.body,
 });
