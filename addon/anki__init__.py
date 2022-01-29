@@ -7,10 +7,7 @@ from aqt import gui_hooks
 from aqt.qt import *
 import os
 import json
-
-from kyoro import KyoroContentManager
-from kyoro import KyoroDatabase
-from kyoro import KuromojiJavaTokenizer
+from command_processor import kyoro_pycmd_handler
 
 addon_path = os.path.dirname(__file__)
 files_path = os.path.join(addon_path, "content")
@@ -72,50 +69,9 @@ def showApp():
     mw.kyoro.activateWindow()
 
 
-KYORO_COMMAND_PREFIX = "Kyoro."
-
-
 def loadJson() -> List[Any]:
     with open(os.path.join(addon_path, "all_v11_out.json"), "r") as f:
         return json.loads(f.read())
-
-
-# items = loadJson()
-
-def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
-    print("Kyoro Command -->", handled, message, context)
-
-    if not message.startswith(KYORO_COMMAND_PREFIX):
-        return handled
-
-    cmds = message.split(":")
-    cmd = cmds[0].strip()
-
-    if cmd == "Kyoro.getIndexedSources":
-        db = KyoroDatabase()
-        tokens = db.get_indexed_source_names()
-        return (True, tokens)
-    elif cmd == "Kyoro.getTokenizedSentences":
-        contentName = cmds[1].strip()
-        db = KyoroDatabase()
-        tokens = db.get_sentences_for_source(contentName)
-        return (True, tokens)
-    elif cmd == "Kyoro.getLocalSources":
-        content = KyoroContentManager()
-        tokens = content.get_current_content_info()
-        return (True, tokens)
-    elif cmd == "Kyoro.tokenizeSource":
-        contentName = cmds[1].strip()
-        tokenizer = KuromojiJavaTokenizer()
-        tokens = tokenizer.tokenize_file(contentName)
-        if tokens is None:
-            return (True, {"err": "Failed to parse file.", "success": False})
-        db = KyoroDatabase()
-        if db.update_source_sentences(tokens) == False:
-            return (True, {"err": "Failed to write to database. Check error log.", "success": False})
-        return (True, {"err": None, "success": True})
-
-    return handled
 
 
 gui_hooks.webview_did_receive_js_message.append(kyoro_pycmd_handler)

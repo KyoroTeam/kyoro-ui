@@ -2,6 +2,7 @@ import { Application, Router } from "https://deno.land/x/oak@v8.0.0/mod.ts";
 import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
 const content = Deno.readTextFileSync("./all_v11_out.json");
+// deno-lint-ignore no-explicit-any
 const SentenceData = JSON.parse(content) as any[];
 
 const router = new Router();
@@ -9,8 +10,8 @@ const router = new Router();
 console.log("Ready to Run");
 
 router
-  .get("/getLocalContentList", (context) => {
-    console.log("getLocalContentList");
+  .get("/getIndexedSources", (context) => {
+    console.log("getIndexedSources");
     const sources = SentenceData.map((d) => d.Source);
     const uniqueSources = new Set(sources);
     context.response.body = Array.from(uniqueSources.values());

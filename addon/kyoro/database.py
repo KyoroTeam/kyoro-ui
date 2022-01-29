@@ -67,7 +67,7 @@ class KyoroDatabase:
 
                 # Combine the sentence features into one array and insert at once
                 # (feature_type, feature, feature_index)
-                all_features = list[Tuple[str, str, int]]([])
+                all_features: List[Tuple[str, str, int]] = []
                 all_features.extend(
                     [("jp_word", w, i) for (i, w) in enumerate(sentence.Features.Words)])
                 all_features.extend(
