@@ -10,9 +10,14 @@
     HeaderNavMenu,
     SideNavDivider,
     SideNavMenu,
+    SideNavMenuItem,
   } from 'carbon-components-svelte';
 
   import NewSentencesTab from './components/new-sentences-app/NewSentencesTab.svelte';
+  import { getIndexedSources, getOnDiskSources } from './services/anki';
+
+  let indexedSources = getIndexedSources();
+  let localSources = getOnDiskSources();
 
   let isSideNavOpen = false;
 </script>
@@ -34,7 +39,24 @@
     <SideNavLink isSelected text="New Cards" />
     <SideNavLink text="Modify Cards" />
     <SideNavDivider />
-    <SideNavMenu expanded text="Sentence Sources" />
+    <SideNavMenu expanded text="Indexed Sources">
+      {#await indexedSources}
+        <p>Wait...</p>
+      {:then sources}
+        {#each sources as source}
+          <SideNavMenuItem>{source}</SideNavMenuItem>
+        {/each}
+      {/await}
+    </SideNavMenu>
+    <SideNavMenu expanded text="Local Sources">
+      {#await localSources}
+        <p>Wait...</p>
+      {:then sources}
+        {#each sources as source}
+          <SideNavMenuItem>{source.name}</SideNavMenuItem>
+        {/each}
+      {/await}
+    </SideNavMenu>
   </SideNavItems>
 </SideNav>
 

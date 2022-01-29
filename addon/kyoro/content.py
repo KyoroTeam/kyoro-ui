@@ -6,7 +6,7 @@ files_path = os.path.join(addon_path, "content")
 
 
 class KyContentInfo:
-    def __init__(self, name: str, filetype: str, is_supported: bool) -> None:
+    def __init__(self, name: str, filetype: str, is_supported: bool):
         self.name = name
         self.filetype = filetype
         self.is_supported = is_supported
@@ -17,11 +17,12 @@ class KyoroContentManager:
 
     # Return some information about all the current existing files
     # in the content directory
-    def get_current_content_info() -> List[KyContentInfo]:
+    def get_current_content_info(self) -> List[KyContentInfo]:
         result: List[KyContentInfo] = []
         for file in os.listdir(files_path):
             split = os.path.splitext(file)
             ext = "none" if split[1] == "" else split[1]
             supported = ext in KyoroContentManager.SUPPORTED_FILE_EXTENSIONS
             result.append(KyContentInfo(file, ext, supported))
+        print(str(result))
         return result

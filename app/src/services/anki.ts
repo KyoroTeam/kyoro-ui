@@ -1,9 +1,15 @@
-interface KyoSuccessResponse {
+interface KySuccessResponse {
   err: string;
   success: boolean;
 }
 
-export interface KyoTokenResult {
+interface KyLocalContentInfo {
+  name: string;
+  filetype: string;
+  is_supported: boolean;
+}
+
+export interface KyTokenResult {
   Source: string;
   Sentence: string;
   Translation?: string;
@@ -18,29 +24,29 @@ export function getIndexedSources(): Promise<string[]> {
     if (window.pycmd !== undefined) {
       window.pycmd<string[]>('Kyoro.getIndexedSources', resolve);
     } else {
-      fetch('http://localhost:8006/getIndexedSources')
+      fetch('http://localhost:8006/getIndexedSources/')
         .then((r) => r.json())
         .then((json) => resolve(json));
     }
   });
 }
 
-export function getTokenizedSentences(source: string): Promise<KyoTokenResult[]> {
+export function getTokenizedSentences(source: string): Promise<KyTokenResult[]> {
   return new Promise((resolve) => {
     if (window.pycmd !== undefined) {
-      window.pycmd<KyoTokenResult[]>(`Kyoro.getTokenizedSentences:${source}`, resolve);
+      window.pycmd<KyTokenResult[]>(`Kyoro.getTokenizedSentences:${source}`, resolve);
     } else {
-      fetch(`http://localhost:8006/getTokenizedSentences/${encodeURIComponent(source)}`)
+      fetch(`http://localhost:8006/getTokenizedSentences/${encodeURIComponent(source)}/`)
         .then((r) => r.json())
         .then((json) => resolve(json));
     }
   });
 }
 
-export function getOnDiskSources(): Promise<string[]> {
+export function getOnDiskSources(): Promise<KyLocalContentInfo[]> {
   return new Promise((resolve) => {
     if (window.pycmd !== undefined) {
-      window.pycmd<string[]>(`Kyoro.getOnDiskSources`, resolve);
+      window.pycmd<KyLocalContentInfo[]>(`Kyoro.getOnDiskSources`, resolve);
     } else {
       fetch(`http://localhost:8006/getOnDiskSources/`)
         .then((r) => r.json())
@@ -49,12 +55,12 @@ export function getOnDiskSources(): Promise<string[]> {
   });
 }
 
-export function tokenizeOnDiskSource(sourceName: string): Promise<KyoSuccessResponse> {
+export function tokenizeOnDiskSource(sourceName: string): Promise<KySuccessResponse> {
   return new Promise((resolve) => {
     if (window.pycmd !== undefined) {
-      window.pycmd<KyoSuccessResponse>(`Kyoro.tokenizeOnDiskSource:${sourceName}`, resolve);
+      window.pycmd<KySuccessResponse>(`Kyoro.tokenizeOnDiskSource:${sourceName}`, resolve);
     } else {
-      fetch(`http://localhost:8006/tokenizeOnDiskSource/${sourceName}`)
+      fetch(`http://localhost:8006/tokenizeOnDiskSource/${sourceName}/`)
         .then((r) => r.json())
         .then((json) => resolve(json));
     }
