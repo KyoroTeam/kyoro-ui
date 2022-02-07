@@ -1,9 +1,0 @@
-{
-    "deno.enable": true,
-    "deno.lint": true,
-    "deno.unstable": true,
-    "deno.path": "/home/james/.deno/bin/deno",
-    "deno.suggest.imports.hosts": {
-        "https://deno.land": true
-    }
-}
