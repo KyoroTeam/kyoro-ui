@@ -68,3 +68,19 @@ export function tokenizeOnDiskSource(sourceName: string): Promise<KySuccessRespo
     }
   });
 }
+
+export function getMinisearchIndex(): Promise<KyTokenResult> {
+  function decodeData(base64Data: string) {}
+
+  return new Promise((resolve) => {
+    if (window.pycmd !== undefined) {
+      window.pycmd<string>(`Kyoro.getMinisearchIndexGzip`, decodeData);
+    } else {
+      fetch(`http://localhost:8006/getMinisearchIndexGzip/`)
+        .then((r) => r.text())
+        .then((base64Data) => {
+          decodeData(base64Data);
+        });
+    }
+  });
+}

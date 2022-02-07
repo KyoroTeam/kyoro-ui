@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {
     DataTable,
     Toolbar,
@@ -10,6 +10,7 @@
     Button,
   } from 'carbon-components-svelte';
   import Save16 from 'carbon-icons-svelte/lib/Save16';
+  import MiniSearchBar from './MiniSearchBar.svelte';
 
   const headers = [
     { key: 'name', value: 'Sentence' },
@@ -42,7 +43,7 @@
       >
     </ToolbarBatchActions>
     <ToolbarContent>
-      <ToolbarSearch />
+      <MiniSearchBar />
       <ToolbarMenu>
         <ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
         <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">
