@@ -20,18 +20,19 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
         tokens = db.get_indexed_source_names()
         return (True, tokens)
     elif cmd == "Kyoro.getTokenizedSentences":
-        contentName = cmds[1].strip()
+        sourceTidStr = cmds[1].strip()
+        sounceTid = int(sourceTidStr)
         db = KyoroDatabase()
-        tokens = db.get_sentences_for_source(contentName)
+        tokens = db.get_sentences_for_source(sounceTid)
         return (True, tokens)
     elif cmd == "Kyoro.getOnDiskSources":
         content = KyoroContentManager()
         tokens = content.get_current_content_info()
         return (True, tokens)
     elif cmd == "Kyoro.tokenizeOnDiskSource":
-        contentName = cmds[1].strip()
+        sourceTidStr = cmds[1].strip()
         tokenizer = KuromojiJavaTokenizer()
-        tokens = tokenizer.tokenize_file(contentName)
+        tokens = tokenizer.tokenize_file(sourceTidStr)
         if tokens is None:
             return (True, {"err": "Failed to parse file.", "success": False})
         db = KyoroDatabase()

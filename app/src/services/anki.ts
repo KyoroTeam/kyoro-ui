@@ -19,10 +19,12 @@ export interface KyTokenResult {
   Readings: string[];
 }
 
-export function getIndexedSources(): Promise<string[]> {
+type KyIndexSourceInfo = [string, number, string];
+
+export function getIndexedSources(): Promise<KyIndexSourceInfo[]> {
   return new Promise((resolve) => {
     if (window.pycmd !== undefined) {
-      window.pycmd<string[]>('Kyoro.getIndexedSources', resolve);
+      window.pycmd<KyIndexSourceInfo[]>('Kyoro.getIndexedSources', resolve);
     } else {
       fetch('http://localhost:8006/getIndexedSources/')
         .then((r) => r.json())
@@ -31,12 +33,12 @@ export function getIndexedSources(): Promise<string[]> {
   });
 }
 
-export function getTokenizedSentences(source: string): Promise<KyTokenResult[]> {
+export function getTokenizedSentences(sourceTid: number): Promise<KyTokenResult[]> {
   return new Promise((resolve) => {
     if (window.pycmd !== undefined) {
-      window.pycmd<KyTokenResult[]>(`Kyoro.getTokenizedSentences:${source}`, resolve);
+      window.pycmd<KyTokenResult[]>(`Kyoro.getTokenizedSentences:${sourceTid}`, resolve);
     } else {
-      fetch(`http://localhost:8006/getTokenizedSentences/${encodeURIComponent(source)}/`)
+      fetch(`http://localhost:8006/getTokenizedSentences/${sourceTid}/`)
         .then((r) => r.json())
         .then((json) => resolve(json));
     }

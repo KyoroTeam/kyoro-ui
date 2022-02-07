@@ -14,7 +14,7 @@
   } from 'carbon-components-svelte';
 
   import NewSentencesTab from './components/new-sentences-app/NewSentencesTab.svelte';
-  import { getIndexedSources, getOnDiskSources } from './services/anki';
+  import { getIndexedSources, getOnDiskSources, getTokenizedSentences } from './services/anki';
 
   let indexedSources = getIndexedSources();
   let localSources = getOnDiskSources();
@@ -44,7 +44,11 @@
         <p>Wait...</p>
       {:then sources}
         {#each sources as source}
-          <SideNavMenuItem>{source}</SideNavMenuItem>
+          <SideNavMenuItem
+            on:click={() => {
+              getTokenizedSentences(source[1]).then(console.log);
+            }}>{source[0]}</SideNavMenuItem
+          >
         {/each}
       {/await}
     </SideNavMenu>
