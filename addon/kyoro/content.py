@@ -1,3 +1,4 @@
+import base64
 from typing import *
 import os
 
@@ -26,3 +27,9 @@ class KyoroContentManager:
             result.append(KyContentInfo(file, ext, supported))
         print(str(result))
         return result
+
+    def get_current_search_index_b64(self) -> str:
+        with open(os.path.join(files_path, "minisearch_index.json.gz"), "rb") as f:
+            bytes = f.read()
+            a = base64.b64encode(bytes).decode("utf-8")
+            return a

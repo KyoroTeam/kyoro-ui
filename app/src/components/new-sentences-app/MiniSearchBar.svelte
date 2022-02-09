@@ -2,7 +2,8 @@
   import { ToolbarSearch } from 'carbon-components-svelte';
   import MiniSearch from 'minisearch';
   import type { Options } from 'minisearch';
-  import type { KyTokenResult } from 'src/services/anki';
+  import { getMinisearchJsonIndex, type KyTokenResult } from '../../services/anki';
+  import { onMount } from 'svelte';
 
   type MiniKyTokenResult = Omit<KyTokenResult, 'Readings' | 'Translation'>;
 
@@ -21,8 +22,21 @@
   };
 
   function onSearchChanged(event: any) {
-    console.log(event.target?.value);
+    const boxContent: string = event.target.value;
+    console.log(boxContent);
+    if (miniSearch) {
+      const results = miniSearch.search(boxContent);
+      console.log(results);
+    }
   }
+
+  let miniSearch: MiniSearch<MiniKyTokenResult>;
+
+  onMount(() => {
+    getMinisearchJsonIndex().then((index) => {
+      miniSearch = MiniSearch.loadJSON(index, indexOptions);
+    });
+  });
 </script>
 
 <ToolbarSearch persistent on:input={onSearchChanged} />

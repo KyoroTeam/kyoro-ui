@@ -6,7 +6,7 @@
     "target": "esnext",
     "moduleResolution": "node",
     "jsx": "preserve",
-    "baseUrl": "./",
+    "baseUrl": "src",
     "types": ["node", "svelte"],
     /* paths - import rewriting/resolving */
     "paths": {

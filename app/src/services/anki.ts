@@ -1,3 +1,6 @@
+import { Base64Binary } from '../base64-binary';
+import { inflate } from 'pako';
+
 interface KySuccessResponse {
   err: string;
   success: boolean;
@@ -69,17 +72,27 @@ export function tokenizeOnDiskSource(sourceName: string): Promise<KySuccessRespo
   });
 }
 
-export function getMinisearchIndex(): Promise<KyTokenResult> {
-  function decodeData(base64Data: string) {}
+export function getMinisearchJsonIndex(): Promise<string> {
+  function decodeData(base64Data: string): string {
+    const uint8array = Base64Binary.decode(base64Data);
+    const jsonByteArray = inflate(uint8array);
+    const jsonString = new TextDecoder().decode(jsonByteArray);
+    return jsonString;
+  }
 
   return new Promise((resolve) => {
     if (window.pycmd !== undefined) {
-      window.pycmd<string>(`Kyoro.getMinisearchIndexGzip`, decodeData);
+      window.pycmd<string>(`Kyoro.getMinisearchIndexGzip`, (base64Data) => {
+        const json = decodeData(base64Data);
+        resolve(json);
+      });
     } else {
       fetch(`http://localhost:8006/getMinisearchIndexGzip/`)
         .then((r) => r.text())
         .then((base64Data) => {
-          decodeData(base64Data);
+          const json = decodeData(base64Data);
+          console.log('Ok');
+          resolve(json);
         });
     }
   });

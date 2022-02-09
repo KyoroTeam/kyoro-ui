@@ -39,5 +39,11 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
         if db.update_source_sentences(tokens) == False:
             return (True, {"err": "Failed to write to database. Check error log.", "success": False})
         return (True, {"err": None, "success": True})
+    elif cmd == "Kyoro.getMinisearchIndexGzip":
+        content = KyoroContentManager()
+        index = content.get_current_search_index_b64()
+        print(len(index))
+        return (True, index)
+        pass
 
     return handled
