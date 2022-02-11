@@ -3,7 +3,6 @@
     DataTable,
     Toolbar,
     ToolbarContent,
-    ToolbarSearch,
     ToolbarMenu,
     ToolbarMenuItem,
     ToolbarBatchActions,
@@ -13,26 +12,24 @@
   import MiniSearchBar from './MiniSearchBar.svelte';
 
   const headers = [
-    { key: 'name', value: 'Sentence' },
-    { key: 'port', value: 'English' },
-    { key: 'rule', value: 'Source' },
+    { key: 'sentence', value: 'Sentence' },
+    { key: 'source', value: 'Source' },
   ];
 
-  const rows = [
-    { id: 'a', name: 'Load Balancer 3', port: 3000, rule: 'Round robin' },
-    { id: 'b', name: 'Load Balancer 1', port: 443, rule: 'Round robin' },
-    { id: 'c', name: 'Load Balancer 2', port: 80, rule: 'DNS delegation' },
-    { id: 'd', name: 'Load Balancer 6', port: 3000, rule: 'Round robin' },
-    { id: 'e', name: 'Load Balancer 4', port: 443, rule: 'Round robin' },
-    { id: 'f', name: 'Load Balancer 5', port: 80, rule: 'DNS delegation' },
-  ];
+  interface Row {
+    id: number;
+    sentence: string;
+    source: string;
+  }
+
+  let rows: Row[] = [];
 
   let selectedRowIds: any[] = [];
 
   $: console.log('selectedRowIds', selectedRowIds);
 </script>
 
-<DataTable size="short" batchSelection bind:selectedRowIds {headers} {rows}>
+<DataTable sortable batchSelection size="short" bind:selectedRowIds {headers} {rows}>
   <Toolbar>
     <ToolbarBatchActions>
       <Button
@@ -44,8 +41,12 @@
     </ToolbarBatchActions>
     <ToolbarContent>
       <MiniSearchBar
-        onSearchResults={(res) => {
-          console.log(res);
+        onSearchResults={(results) => {
+          rows = results.map((result, i) => ({
+            id: i,
+            sentence: result.sentence,
+            source: result.source,
+          }));
         }}
       />
       <ToolbarMenu>
