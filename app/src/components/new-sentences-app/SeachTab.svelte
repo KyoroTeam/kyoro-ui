@@ -43,7 +43,11 @@
       >
     </ToolbarBatchActions>
     <ToolbarContent>
-      <MiniSearchBar />
+      <MiniSearchBar
+        onSearchResults={(res) => {
+          console.log(res);
+        }}
+      />
       <ToolbarMenu>
         <ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
         <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">

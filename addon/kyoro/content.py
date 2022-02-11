@@ -31,5 +31,5 @@ class KyoroContentManager:
     def get_current_search_index_b64(self) -> str:
         with open(os.path.join(files_path, "minisearch_index.json.gz"), "rb") as f:
             bytes = f.read()
-            a = base64.b64encode(bytes).decode("utf-8")
-            return a
+            b64 = base64.b64encode(bytes).decode("utf-8")
+            return b64

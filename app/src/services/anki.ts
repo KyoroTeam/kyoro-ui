@@ -12,12 +12,17 @@ interface KyLocalContentInfo {
   is_supported: boolean;
 }
 
+export interface KyWordPosition {
+  Start: number;
+  End: number;
+}
+
 export interface KyTokenResult {
   Source: string;
   Sentence: string;
   Translation?: string;
   Words: string[];
-  WordPositions: { Start: number; End: number }[];
+  WordPositions: KyWordPosition[];
   Lemmas: string[];
   Readings: string[];
 }

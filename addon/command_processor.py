@@ -44,6 +44,5 @@ def kyoro_pycmd_handler(handled: Tuple[bool, Any], message: str, context: Any):
         index = content.get_current_search_index_b64()
         print(len(index))
         return (True, index)
-        pass
 
     return handled
