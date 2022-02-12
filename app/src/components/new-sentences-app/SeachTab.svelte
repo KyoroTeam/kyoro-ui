@@ -16,9 +16,14 @@
     { key: 'source', value: 'Source' },
   ];
 
+  interface KySentenceChunk {
+    str: string;
+    highlight: boolean;
+  }
+
   interface Row {
     id: number;
-    sentence: string;
+    sentence: KySentenceChunk[];
     source: string;
   }
 
@@ -26,10 +31,28 @@
 
   let selectedRowIds: any[] = [];
 
+  function generateHighlightHtml(sentenceChunks: KySentenceChunk[]): string {
+    function getString(chunk: KySentenceChunk) {
+      if (chunk.highlight) {
+        return `<span class='sentence-highlight'>${chunk.str}</span>`;
+      } else {
+        return `<span>${chunk.str}</span>`;
+      }
+    }
+    return sentenceChunks.reduce((prev, cur) => `${prev}${getString(cur)}`, '');
+  }
+
   $: console.log('selectedRowIds', selectedRowIds);
 </script>
 
 <DataTable sortable batchSelection size="short" bind:selectedRowIds {headers} {rows}>
+  <svelte:fragment slot="cell" let:row let:cell>
+    {#if cell.key === 'sentence'}
+      {@html generateHighlightHtml(row['sentence'])}
+    {:else}
+      {cell.value}
+    {/if}
+  </svelte:fragment>
   <Toolbar>
     <ToolbarBatchActions>
       <Button
@@ -44,7 +67,7 @@
         onSearchResults={(results) => {
           rows = results.map((result, i) => ({
             id: i,
-            sentence: result.sentence,
+            sentence: result.sentenceChunks,
             source: result.source,
           }));
         }}
@@ -59,3 +82,10 @@
     </ToolbarContent>
   </Toolbar>
 </DataTable>
+
+<style global>
+  .sentence-highlight {
+    background-color: lightblue;
+    border-radius: 6px;
+  }
+</style>
