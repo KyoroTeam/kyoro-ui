@@ -2,11 +2,7 @@
   import { ToolbarSearch } from 'carbon-components-svelte';
   import MiniSearch, { type SearchResult } from 'minisearch';
   import type { Options } from 'minisearch';
-  import {
-    getMinisearchJsonIndex,
-    type KyTokenResult,
-    type KyWordPosition,
-  } from '../../services/anki';
+  import { getMinisearchJsonIndex, type KyTokenResult, type KyWordPosition } from '../../services/anki';
   import { onMount } from 'svelte';
 
   export let onSearchResults: (result: KySearchResult[]) => void;
@@ -39,15 +35,15 @@
     },
   };
 
-  function findAllIndiciesOfString(string: string, search: string): number[] {
+  function findAllIndiciesOfString(sourceString: string, searchString: string): number[] {
     const incidies: number[] = [];
     let startIndex = 0;
     while (true) {
-      const newIndex = string.indexOf(search, startIndex);
+      const newIndex = sourceString.indexOf(searchString, startIndex);
       if (newIndex === -1) {
         break;
       }
-      startIndex = newIndex + search.length;
+      startIndex = newIndex + searchString.length;
       incidies.push(newIndex);
     }
     return incidies;
@@ -67,25 +63,24 @@
     return wordIndicies;
   }
 
-  function getSentenceChunks(sentence: string, wordPositions: KyWordPosition[]): KySentenceChunk[] {
+  function getSentenceChunks(fullSentence: string, wordPositions: KyWordPosition[]): KySentenceChunk[] {
     const results: KySentenceChunk[] = [];
     let startIndex = 0;
     for (const position of wordPositions) {
-      const preStringSlice = sentence.substring(startIndex, position.Start);
-      const termSlice = sentence.substring(position.Start, position.End);
+      const preStringSlice = fullSentence.substring(startIndex, position.Start);
+      const termSlice = fullSentence.substring(position.Start, position.End);
       results.push({ str: preStringSlice, highlight: false });
       results.push({ str: termSlice, highlight: true });
       startIndex = position.End;
     }
-    const lastStringSlice = sentence.substring(wordPositions[wordPositions.length - 1].End);
+    const lastStringSlice = fullSentence.substring(wordPositions[wordPositions.length - 1].End);
     results.push({ str: lastStringSlice, highlight: false });
     return results;
   }
 
   function convertSearchResult(term: string, result: SearchResult): KySearchResult {
     const wordIndicies = get0BasedWordPositionForTerms(term, result);
-    const wordPositionArray: KyWordPosition[] = result['WordPositions'];
-    const wordPositions = wordIndicies.map((index) => wordPositionArray[index]);
+    const wordPositions: KyWordPosition[] = wordIndicies.map((index) => result['WordPositions'][index]);
     const sentence: string = result['Sentence'];
     const chunks = getSentenceChunks(sentence, wordPositions);
     return {
@@ -96,11 +91,10 @@
   }
 
   function onSearchChanged(event: any) {
-    const boxContent: string = event.target.value;
-    console.log(boxContent);
+    const searchText: string = event.target.value;
     if (miniSearch) {
-      const results = miniSearch.search(boxContent).slice(0, maxResults);
-      const kyResult = results.map((r) => convertSearchResult(boxContent, r));
+      const results = miniSearch.search(searchText).slice(0, maxResults);
+      const kyResult = results.map((r) => convertSearchResult(searchText, r));
       onSearchResults(kyResult);
     }
   }
