@@ -1,16 +1,24 @@
 import base64
+from types import SimpleNamespace
 from typing import *
 import os
+import json
+from pathlib import Path
 
 addon_path = os.path.dirname(__file__)
 files_path = os.path.join(addon_path, "content")
 
 
-class KyContentInfo:
-    def __init__(self, name: str, filetype: str, is_supported: bool):
-        self.name = name
-        self.filetype = filetype
-        self.is_supported = is_supported
+class IKyContentInfo:
+    def __init__(self, name: str, index_state: str):
+        self.name: str = name
+        self.index_state: str = index_state
+
+
+class IKyIndexJson:
+    def __init__(self, filename: str, last_modified_time: float) -> None:
+        self.filename: str = filename
+        self.last_modified_time: float = last_modified_time
 
 
 class KyoroContentManager:
@@ -18,18 +26,46 @@ class KyoroContentManager:
 
     # Return some information about all the current existing files
     # in the content directory
-    def get_current_content_info(self) -> List[KyContentInfo]:
-        result: List[KyContentInfo] = []
-        for file in os.listdir(files_path):
-            split = os.path.splitext(file)
-            ext = "none" if split[1] == "" else split[1]
-            supported = ext in KyoroContentManager.SUPPORTED_FILE_EXTENSIONS
-            result.append(KyContentInfo(file, ext, supported))
-        print(str(result))
+    def get_current_content_info(self) -> List[IKyContentInfo]:
+        files_now = self._ky_index_json_dict_by_filename(
+            self._get_files_in_contect_directory())
+        files_last_known = self._ky_index_json_dict_by_filename(
+            self._load_current_index_json())
+
+        result: List[IKyContentInfo] = []
+        for filename, ky_file in files_now.items():
+            indexed_state = "not-indexed"
+            if filename in files_last_known:
+                indexed_file = files_last_known[filename]
+                if ky_file.last_modified_time == indexed_file.last_modified_time:
+                    indexed_state = "fully-indexed"
+                else:
+                    indexed_state = "needs-reindex"
+            result.append(IKyContentInfo(filename, indexed_state))
         return result
 
-    def get_current_search_index_b64(self) -> str:
+    def get_current_minisearch_index_b64(self) -> str:
         with open(os.path.join(files_path, "minisearch_index.json.gz"), "rb") as f:
             bytes = f.read()
-            b64 = base64.b64encode(bytes).decode("utf-8")
-            return b64
+            return base64.b64encode(bytes).decode("utf-8")
+
+    def _load_current_index_json(self) -> List[IKyIndexJson]:
+        filename = os.path.join(files_path, "index_stats.json")
+        index_file = Path(filename)
+        if index_file.is_file():
+            with open(filename, "r") as f:
+                return json.load(f, object_hook=lambda obj: SimpleNamespace(**obj))
+        return []
+
+    def _get_files_in_contect_directory(self) -> List[IKyIndexJson]:
+        result: List[IKyIndexJson] = []
+        with os.scandir(files_path) as entries:
+            result = list(map(lambda e: IKyIndexJson(
+                e.name, e.stat().st_mtime), entries))
+        return result
+
+    def _ky_index_json_dict_by_filename(self, items: Iterable[IKyIndexJson]) -> Dict[str, IKyIndexJson]:
+        result: Dict[str, IKyIndexJson] = {}
+        for i in items:
+            result[i.filename] = i
+        return result

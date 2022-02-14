@@ -59,8 +59,10 @@
         icon={Save16}
         on:click={() => {
           console.log(selectedRowIds);
-        }}>Save</Button
+        }}
       >
+        Save
+      </Button>
     </ToolbarBatchActions>
     <ToolbarContent>
       <MiniSearchBar
@@ -74,9 +76,7 @@
       />
       <ToolbarMenu>
         <ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
-        <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">
-          API documentation
-        </ToolbarMenuItem>
+        <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">API documentation</ToolbarMenuItem>
         <ToolbarMenuItem danger>Stop all</ToolbarMenuItem>
       </ToolbarMenu>
     </ToolbarContent>

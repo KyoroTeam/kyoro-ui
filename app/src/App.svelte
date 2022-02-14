@@ -12,13 +12,17 @@
     SideNavMenu,
     SideNavMenuItem,
   } from 'carbon-components-svelte';
+  import Checkmark16 from 'carbon-icons-svelte/lib/Checkmark16';
+  import RecentlyViewed16 from 'carbon-icons-svelte/lib/RecentlyViewed16';
+  import NewTab16 from 'carbon-icons-svelte/lib/NewTab16';
+  import Error16 from 'carbon-icons-svelte/lib/Error16';
 
   import NewSentencesTab from './components/new-sentences-app/NewSentencesTab.svelte';
-  import { getIndexedSources, getOnDiskSources, getTokenizedSentences } from './services/anki';
+  import { getCurrentIndexState } from './services/anki';
 
-  let indexedSources = getIndexedSources();
-  let localSources = getOnDiskSources();
+  const indexIconStyles = 'vertical-align: text-bottom; margin-right: 3px';
 
+  let indexState = getCurrentIndexState();
   let isSideNavOpen = false;
 </script>
 
@@ -39,25 +43,25 @@
     <SideNavLink isSelected text="New Cards" />
     <SideNavLink text="Modify Cards" />
     <SideNavDivider />
-    <SideNavMenu expanded text="Indexed Sources">
-      {#await indexedSources}
+    <SideNavMenu expanded text="Content Folder">
+      {#await indexState}
         <p>Wait...</p>
       {:then sources}
         {#each sources as source}
-          <SideNavMenuItem
-            on:click={() => {
-              getTokenizedSentences(source[1]).then(console.log);
-            }}>{source[0]}</SideNavMenuItem
-          >
-        {/each}
-      {/await}
-    </SideNavMenu>
-    <SideNavMenu expanded text="Local Sources">
-      {#await localSources}
-        <p>Wait...</p>
-      {:then sources}
-        {#each sources as source}
-          <SideNavMenuItem>{source.name}</SideNavMenuItem>
+          <SideNavMenuItem>
+            <span>
+              {#if source.index_state == 'fully-indexed'}
+                <Checkmark16 title="Up to Date" style={`color: green; ${indexIconStyles}`} />
+              {:else if source.index_state == 'needs-reindex'}
+                <RecentlyViewed16 title="Needs Re-Index" style={indexIconStyles} />
+              {:else if source.index_state == 'not-indexed'}
+                <NewTab16 title="New Unindexed Content" style={`color: blue; ${indexIconStyles}`} />
+              {:else}
+                <Error16 style={indexIconStyles} />
+              {/if}
+              {source.name}
+            </span>
+          </SideNavMenuItem>
         {/each}
       {/await}
     </SideNavMenu>
