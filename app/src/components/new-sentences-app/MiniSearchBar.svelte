@@ -108,4 +108,4 @@
   });
 </script>
 
-<ToolbarSearch persistent on:input={onSearchChanged} />
+<ToolbarSearch placeholder="Enter a term..." persistent on:input={onSearchChanged} />

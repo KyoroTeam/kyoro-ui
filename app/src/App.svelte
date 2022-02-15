@@ -30,7 +30,6 @@
 <Header company="Kyoro" platformName="Anki UI" bind:isSideNavOpen>
   <HeaderNav>
     <HeaderNavItem href="/" text="Start" />
-    <HeaderNavItem href="/" text="Account" />
     <HeaderNavItem href="/" text="Local Storage" />
     <HeaderNavMenu text="About">
       <HeaderNavItem href="/" text="Kyoro" />
