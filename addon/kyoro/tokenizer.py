@@ -51,10 +51,10 @@ class KuromojiJavaTokenizer:
                 "/home/james/Desktop/Git/kyoro-ui/tokenizer/target/kuromoji-tokenizer-1.0-SNAPSHOT.jar",
                 os.path.join(files_path, filename)
             ],
-            capture_output=True)
+            capture_output=True,
+            text=True)
         if result.returncode == 0:
-            json_results = result.stdout
-            return json_results
+            return result.stdout
         else:
             print("Oh no")
             return None

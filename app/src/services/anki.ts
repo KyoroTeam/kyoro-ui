@@ -1,11 +1,6 @@
 import { Base64Binary } from '../base64-binary';
 import { inflate } from 'pako';
 
-interface KySuccessResponse {
-  error: string;
-  success: boolean;
-}
-
 export interface KyTokenResult {
   Source: string;
   Sentence: string;
@@ -27,27 +22,11 @@ export interface KyTokenizedStatInfo {
 }
 
 export function getCurrentIndexState(): Promise<KyTokenizedStatInfo[]> {
-  return new Promise((resolve) => {
-    if (window.pycmd !== undefined) {
-      window.pycmd<KyTokenizedStatInfo[]>('Kyoro.getCurrentIndexState', resolve);
-    } else {
-      fetch('http://localhost:8006/getCurrentIndexState/')
-        .then((r) => r.json())
-        .then((json) => resolve(json));
-    }
-  });
+  return receivePyCmd<KyTokenizedStatInfo[]>('getCurrentIndexState');
 }
 
 export function tokenizeOnDiskSource(sourceName: string): Promise<KyTokenResult[]> {
-  return new Promise((resolve) => {
-    if (window.pycmd !== undefined) {
-      window.pycmd<KyTokenResult[]>(`Kyoro.tokenizeOnDiskSource:${sourceName}`, resolve);
-    } else {
-      fetch(`http://localhost:8006/tokenizeOnDiskSource/${sourceName}/`)
-        .then((r) => r.json())
-        .then((json) => resolve(json));
-    }
-  });
+  return receivePyCmd<KyTokenResult[]>('tokenizeOnDiskSource', sourceName);
 }
 
 export function getMinisearchJsonIndex(): Promise<string> {
@@ -58,20 +37,32 @@ export function getMinisearchJsonIndex(): Promise<string> {
     return jsonString;
   }
 
-  return new Promise((resolve) => {
+  return receivePyCmd<string>('getMinisearchIndexGzip').then(decodeData);
+}
+
+interface KyPyCmdResponse<T> {
+  error: string | null;
+  result: T | undefined;
+}
+
+function receivePyCmd<T>(command: string, argument?: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    function onData(data: KyPyCmdResponse<T>) {
+      if (!data.error) {
+        resolve(data.result!);
+      } else {
+        reject(data.error);
+      }
+    }
+
     if (window.pycmd !== undefined) {
-      window.pycmd<string>(`Kyoro.getMinisearchIndexGzip`, (base64Data) => {
-        const json = decodeData(base64Data);
-        resolve(json);
-      });
+      const argument_s = argument ? `:${argument}` : '';
+      window.pycmd<KyPyCmdResponse<T>>(`Kyoro.${command}${argument_s}`, onData);
     } else {
-      fetch(`http://localhost:8006/getMinisearchIndexGzip/`)
-        .then((r) => r.text())
-        .then((base64Data) => {
-          const json = decodeData(base64Data);
-          console.log('Ok');
-          resolve(json);
-        });
+      const argument_s = argument ? `${argument}/` : '';
+      fetch(`http://localhost:8006/${command}/${argument_s}`)
+        .then((r) => r.json())
+        .then(onData);
     }
   });
 }

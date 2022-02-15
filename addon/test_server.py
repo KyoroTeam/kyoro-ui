@@ -17,4 +17,5 @@ def runKyoroCommand(command: str, arg: Union[None, str] = None):
     commandString = f"Kyoro.{command}{argSting}"
     handled = (False, None)
     resp = kyoro_pycmd_handler(handled, commandString, None)
-    return json.dumps(resp[1], default=vars)
+    # This must be json.dumps() only to be compatible with Anki's intenrals
+    return json.dumps(resp[1])

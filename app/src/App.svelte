@@ -15,6 +15,7 @@
   import Checkmark16 from 'carbon-icons-svelte/lib/Checkmark16';
   import RecentlyViewed16 from 'carbon-icons-svelte/lib/RecentlyViewed16';
   import NewTab16 from 'carbon-icons-svelte/lib/NewTab16';
+  import WarningAlt16 from 'carbon-icons-svelte/lib/WarningAlt16';
   import Error16 from 'carbon-icons-svelte/lib/Error16';
 
   import NewSentencesTab from './components/new-sentences-app/NewSentencesTab.svelte';
@@ -63,6 +64,12 @@
             </span>
           </SideNavMenuItem>
         {/each}
+      {:catch error}
+        <SideNavMenuItem>
+          <span>
+            <WarningAlt16 title={error} style={`color: red; ${indexIconStyles}`} /> Failed to load content list
+          </span>
+        </SideNavMenuItem>
       {/await}
     </SideNavMenu>
   </SideNavItems>
