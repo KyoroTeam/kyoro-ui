@@ -27,10 +27,8 @@ class KyoroContentManager:
     # Return some information about all the current existing files
     # in the content directory
     def get_current_content_info(self) -> List[IKyContentInfo]:
-        files_now = self._ky_index_json_dict_by_filename(
-            self._get_files_in_contect_directory())
-        files_last_known = self._ky_index_json_dict_by_filename(
-            self._load_current_index_json())
+        files_now = self._index_to_dict(self._index_contect_directory())
+        files_last_known = self._index_to_dict(self._load_current_index_json())
 
         result: List[IKyContentInfo] = []
         for filename, ky_file in files_now.items():
@@ -57,15 +55,12 @@ class KyoroContentManager:
                 return json.load(f, object_hook=lambda obj: SimpleNamespace(**obj))
         return []
 
-    def _get_files_in_contect_directory(self) -> List[IKyIndexJson]:
+    def _index_contect_directory(self) -> List[IKyIndexJson]:
         result: List[IKyIndexJson] = []
         with os.scandir(files_path) as entries:
             result = list(map(lambda e: IKyIndexJson(
                 e.name, e.stat().st_mtime), entries))
         return result
 
-    def _ky_index_json_dict_by_filename(self, items: Iterable[IKyIndexJson]) -> Dict[str, IKyIndexJson]:
-        result: Dict[str, IKyIndexJson] = {}
-        for i in items:
-            result[i.filename] = i
-        return result
+    def _index_to_dict(self, items: Iterable[IKyIndexJson]) -> Dict[str, IKyIndexJson]:
+        return { item.filename: item for item in items }
